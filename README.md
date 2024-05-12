@@ -20,6 +20,14 @@ yarn install
 bun install
 ```
 
+Generate SSL Key
+
+- Install mkcert on your system. The installation instructions for macOS, Windows and Linux can be found in the mkcert Github repository.
+
+- Create a valid certificate by running the following command in your project folder `mkcert localhost`
+
+
+
 ## Development Server
 
 Start the development server on `http://localhost:3000`:
@@ -36,6 +44,22 @@ yarn dev
 
 # bun
 bun run dev
+```
+
+Start the development server on `https://localhost:3000`:
+
+```bash
+# npm
+npm run dev:ssl
+
+# pnpm
+pnpm run dev:ssl
+
+# yarn
+yarn dev:ssl
+
+# bun
+bun run dev:ssl
 ```
 
 ## Production
