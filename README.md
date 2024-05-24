@@ -26,8 +26,6 @@ Generate SSL Key
 
 - Create a valid certificate by running the following command in your project folder `mkcert localhost`
 
-
-
 ## Development Server
 
 Start the development server on `http://localhost:3000`:
