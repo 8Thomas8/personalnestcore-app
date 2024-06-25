@@ -9,23 +9,34 @@ enum STEPS {
   SIGNIN_SUCCESS = 'signinSuccess',
 }
 
+enum FIELD_TYPE {
+  PASSWORD = 'password',
+  TEXT = 'text',
+}
+
 const { opened, toggleAuthDialog } = useAuthDialog()
 const formValidation = useFormValidation()
-const authStore = useAuthStore()
+const { login, signin } = useAuthStore()
 const step: STEPS = ref(STEPS.LOGIN)
-const form = ref({ nickname: '', email: '', password: '' })
+const form = ref({ nickname: '', email: 'thomas.rousseau1@gmail.com', password: 'aaAA11!!' })
 const loginFormIsValid = ref(false)
 const signinFormIsValid = ref(false)
 const loginForm = ref(null)
 const signinForm = ref(null)
 const formError = ref(null)
+const passwordFieldType = ref(FIELD_TYPE.PASSWORD)
 
 watch(opened, value => {
   if (!value) {
-    loginForm.value.reset()
-    loginForm.value.resetValidation()
-    signinForm.value.reset()
-    signinForm.value.resetValidation()
+    if (step.value === STEPS.LOGIN) {
+      loginForm.value.reset()
+      loginForm.value.resetValidation()
+    }
+
+    if (step.value === STEPS.SIGNIN || step.value === STEPS.SIGNIN_SUCCESS) {
+      signinForm.value.reset()
+      signinForm.value.resetValidation()
+    }
   }
 })
 
@@ -33,11 +44,11 @@ watch(step, () => {
   formError.value = null
 })
 
-const login = async () => {
+const submitLogin = async () => {
   try {
     if (loginFormIsValid.value) {
       const { email, password } = form.value
-      await authStore.login(email, password)
+      await login(email, password)
       toggleAuthDialog(false)
     }
   } catch (error) {
@@ -49,11 +60,11 @@ const login = async () => {
   }
 }
 
-const signin = async () => {
+const submitSignin = async () => {
   try {
     if (signinFormIsValid.value) {
       const { nickname, email, password } = form.value
-      await authStore.signin(email, password, nickname)
+      await signin(email, password, nickname)
       step.value = STEPS.SIGNIN_SUCCESS
     }
   } catch (error) {
@@ -75,6 +86,14 @@ const signin = async () => {
     return (formError.value = "Une erreur s'est produite, réessayez.")
   }
 }
+
+const togglePasswordVisibility = () => {
+  if (passwordFieldType.value === FIELD_TYPE.PASSWORD) {
+    return (passwordFieldType.value = FIELD_TYPE.TEXT)
+  }
+
+  passwordFieldType.value = FIELD_TYPE.PASSWORD
+}
 </script>
 
 <template>
@@ -88,7 +107,7 @@ const signin = async () => {
       </v-card-title>
       <v-window v-model="step">
         <v-window-item :value="STEPS.LOGIN">
-          <v-form ref="loginForm" v-model="loginFormIsValid" @submit.prevent="login">
+          <v-form ref="loginForm" v-model="loginFormIsValid" @submit.prevent="submitLogin">
             <v-card-text>
               <v-row>
                 <v-col cols="12">
@@ -103,11 +122,17 @@ const signin = async () => {
                 <v-col cols="12">
                   <v-text-field
                     v-model="form.password"
-                    type="password"
+                    :type="passwordFieldType"
                     :rules="[formValidation.required]"
                     placeholder="Mot de passe*"
                     required
-                  />
+                  >
+                    <template #append-inner>
+                      <v-icon @click="togglePasswordVisibility">
+                        {{ `mdi-eye${passwordFieldType === FIELD_TYPE.TEXT ? '-off' : ''}` }}
+                      </v-icon>
+                    </template>
+                  </v-text-field>
                 </v-col>
                 <span class="text-error mx-auto py-1">{{ formError }}</span>
               </v-row>
@@ -120,7 +145,7 @@ const signin = async () => {
           </v-form>
         </v-window-item>
         <v-window-item :value="STEPS.SIGNIN">
-          <v-form ref="signinForm" v-model="signinFormIsValid" @submit.prevent="signin">
+          <v-form ref="signinForm" v-model="signinFormIsValid" @submit.prevent="submitSignin">
             <v-card-text>
               <v-row>
                 <v-col cols="12">
@@ -148,7 +173,7 @@ const signin = async () => {
                 <v-col cols="12">
                   <v-text-field
                     v-model="form.password"
-                    type="password"
+                    :type="passwordFieldType"
                     :rules="[
                       formValidation.required,
                       formValidation.password,
@@ -156,7 +181,13 @@ const signin = async () => {
                     ]"
                     placeholder="Mot de passe*"
                     required
-                  />
+                  >
+                    <template #append-inner>
+                      <v-icon @click="togglePasswordVisibility">
+                        {{ `mdi-eye${passwordFieldType === FIELD_TYPE.TEXT ? '-off' : ''}` }}
+                      </v-icon>
+                    </template>
+                  </v-text-field>
                 </v-col>
                 <span class="text-error mx-auto py-1">{{ formError }}</span>
               </v-row>
