@@ -40,7 +40,7 @@ export const useAuthStore = defineStore('authStore', () => {
       userStore.user = res.user
       toggleAuthDialog(false)
     } catch (e) {
-      setToastMessage({ type: ToastMessageType.TypeError, text: 'Vérifiez vos identifiants' })
+      setToastMessage(ToastMessageType.TypeError, 'Vérifiez vos identifiants')
     }
   }
 

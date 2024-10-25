@@ -1,7 +1,6 @@
 import { ToastMessageType } from '~/type/constants'
 import { useAuthStore } from '~/store/auth'
-import { useAuth } from '~/composables/useAuth' // Assumes useAuth is a composable
-import { useToastMessage } from '~/composables/useToastMessage' // Assumes useToastMessage is a composable
+import { useToastMessage } from '~/composables/useToastMessage'
 
 export const useUserStore = defineStore('userStore', () => {
   const { setToastMessage } = useToastMessage()
@@ -23,7 +22,7 @@ export const useUserStore = defineStore('userStore', () => {
       })
     } catch (e) {
       authStore.removeJwt()
-      setToastMessage({ type: ToastMessageType.TypeError, text: 'Connexion impossible' })
+      setToastMessage(ToastMessageType.TypeError, 'Connexion impossible')
     }
   }
 
