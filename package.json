@@ -30,6 +30,6 @@
     "prettier": "^3.2.5",
     "typescript": "^5.4.5",
     "vite-plugin-vuetify": "^2.0.3",
-    "vuetify": "^3.6.8"
+    "vuetify": "^3.6.5"
   }
 }

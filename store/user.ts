@@ -1,10 +1,9 @@
 import { defineStore } from 'pinia'
-import type { User } from '~/types/User'
 
 export const useUserStore = defineStore('user', {
   state: () =>
     <{ user: User }>{
-      user: null,
+      user: {},
     },
   actions: {
     async getData() {
@@ -12,16 +11,10 @@ export const useUserStore = defineStore('user', {
       this.setUser(res)
     },
     setUser(data: User) {
-      if (!data) {
-        return (this.user = null)
-      }
-
-      this.user = {
-        email: data.email || null,
-        firstname: data.firstname || null,
-        lastname: data.lastname || null,
-        nickname: data.nickname || null,
-      }
+      this.user['email'] = data.email
+      this.user['firstname'] = data.firstname || null
+      this.user['lastname'] = data.lastname || null
+      this.user['nickname'] = data.nickname || null
     },
   },
 })
