@@ -1,9 +1,19 @@
+<script setup lang="ts">
+import AppHeader from '~/components/commons/AppHeader.vue'
+
+const drawerIsOpened = ref(null)
+</script>
+
 <template>
-  <v-app>
-    <v-layout>
+  <div>
+    <slot name="navDrawer" />
+    <AppHeader v-model="drawerIsOpened" />
+
+    <v-main>
       <slot />
-      <DialogsAuthDialog />
-      <ToastMessage />
-    </v-layout>
-  </v-app>
+    </v-main>
+
+    <DialogsAuthDialog />
+    <ToastMessage />
+  </div>
 </template>
