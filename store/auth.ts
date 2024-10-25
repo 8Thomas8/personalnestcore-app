@@ -7,6 +7,7 @@ export const useAuthStore = defineStore('authStore', () => {
   const userStore = useUserStore()
   const { toggleAuthDialog } = useAuth()
   const { setToastMessage } = useToastMessage()
+  const config = useRuntimeConfig()
 
   // States
   const jwt = ref(null)
@@ -31,7 +32,7 @@ export const useAuthStore = defineStore('authStore', () => {
 
   const login = async (identifier: string, password: string) => {
     try {
-      const res = await $fetch('https://admin.mes-drugs.flamboez-server.fr/api/auth/local', {
+      const res = await $fetch(`${config.public.apiBase}/api/auth/local`, {
         method: 'POST',
         body: { identifier, password },
       })
