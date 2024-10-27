@@ -5,3 +5,7 @@ export enum ToastMessageType {
 }
 
 export const ToastMessageDelay = 5000
+
+export enum HttpError {
+  Forbidden = 403,
+}
