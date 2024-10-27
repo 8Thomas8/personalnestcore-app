@@ -2,21 +2,23 @@ import { useUserStore } from '~/store/user'
 import { ToastMessageType } from '~/type/constants'
 import { useAuth } from '~/composables/useAuth'
 import { useToastMessage } from '~/composables/useToastMessage'
+import { AuthRoutes, PublicRoutes } from '~/type/routes'
 
 export const useAuthStore = defineStore('authStore', () => {
   const userStore = useUserStore()
   const { toggleAuthDialog } = useAuth()
   const { setToastMessage } = useToastMessage()
-  const config = useRuntimeConfig()
+  const router = useRouter()
+  const { $apiFetch } = useNuxtApp()
 
   // States
-  const jwt = ref(null)
+  const jwt = ref<string | null>(null)
 
   // Getters
-  const isAuthenticated = computed(() => jwt.value && userStore.user)
+  const isAuthenticated = computed(() => !!jwt.value && !!userStore.user)
 
   // Actions
-  const setJwt = value => {
+  const setJwt = (value: string) => {
     localStorage.setItem('jwt', value)
     jwt.value = value
   }
@@ -32,7 +34,7 @@ export const useAuthStore = defineStore('authStore', () => {
 
   const login = async (identifier: string, password: string) => {
     try {
-      const res = await $fetch(`${config.public.apiBase}/api/auth/local`, {
+      const res = await $apiFetch('/api/auth/local', {
         method: 'POST',
         body: { identifier, password },
       })
@@ -40,14 +42,16 @@ export const useAuthStore = defineStore('authStore', () => {
       setJwt(res.jwt)
       userStore.user = res.user
       toggleAuthDialog(false)
+      await router.replace(AuthRoutes.App)
     } catch (e) {
       setToastMessage(ToastMessageType.TypeError, 'Vérifiez vos identifiants')
     }
   }
 
-  const logout = () => {
+  const logout = async () => {
     removeJwt()
     userStore.user = null
+    await router.replace(PublicRoutes.Home)
   }
 
   return {

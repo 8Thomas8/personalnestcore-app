@@ -1,9 +1,14 @@
 <template>
-  <v-app>
-    <v-layout>
+  <div>
+    <CommonsAppHeader />
+
+    <v-main>
       <slot />
-      <DialogsAuthDialog />
-      <ToastMessage />
-    </v-layout>
-  </v-app>
+    </v-main>
+
+    <CommonsAppFooter />
+
+    <DialogsAuthDialog />
+    <ToastMessage />
+  </div>
 </template>
