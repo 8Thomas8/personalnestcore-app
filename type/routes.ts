@@ -1,6 +1,6 @@
 export enum PublicRoutes {
   Home = '/',
-  Connexion = '/connexion'
+  Connexion = '/connexion',
 }
 
 export enum AuthRoutes {

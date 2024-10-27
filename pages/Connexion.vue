@@ -2,7 +2,7 @@
 import { useUserStore } from '~/store/user'
 import { useAuthStore } from '~/store/auth'
 import { PublicRoutes } from '~/type/routes'
-import type {AuthRoutes} from '~/type/routes'
+import type { AuthRoutes } from '~/type/routes'
 
 const userStore = useUserStore()
 const authStore = useAuthStore()
@@ -14,7 +14,7 @@ onBeforeMount(async () => {
   await userStore.fetchUser()
   if (!authStore.isAuthenticated) {
     await router.replace(PublicRoutes.Home)
-    if(route.query['from'] !== PublicRoutes.Home) {
+    if (route.query['from'] !== PublicRoutes.Home) {
       toggleAuthDialog(true)
     }
   } else {
@@ -22,7 +22,6 @@ onBeforeMount(async () => {
   }
 })
 </script>
-
 
 <template>
   <h1>Connexion en cours ...</h1>
