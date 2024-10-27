@@ -2,7 +2,7 @@
   <div>
     <CommonsAppHeader />
 
-    <v-main class="flex-grow-1">
+    <v-main>
       <slot />
     </v-main>
 

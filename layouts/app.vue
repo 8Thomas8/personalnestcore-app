@@ -7,7 +7,7 @@ const drawerIsOpened = ref(null)
     <CommonsNavDrawer v-model="drawerIsOpened" />
     <CommonsAppHeader v-model="drawerIsOpened" show-toggle-drawer />
 
-    <v-main class="flex-grow-1">
+    <v-main>
       <slot />
     </v-main>
 
