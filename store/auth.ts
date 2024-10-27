@@ -10,6 +10,7 @@ export const useAuthStore = defineStore('authStore', () => {
   const { setToastMessage } = useToastMessage()
   const config = useRuntimeConfig()
   const router = useRouter()
+  const { $apiFetch } = useNuxtApp()
 
   // States
   const jwt = ref<string | null>(null)
@@ -34,7 +35,7 @@ export const useAuthStore = defineStore('authStore', () => {
 
   const login = async (identifier: string, password: string) => {
     try {
-      const res = await $fetch(`${config.public.apiBase}/api/auth/local`, {
+      const res = await $apiFetch('/api/auth/local', {
         method: 'POST',
         body: { identifier, password },
       })
