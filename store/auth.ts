@@ -8,7 +8,6 @@ export const useAuthStore = defineStore('authStore', () => {
   const userStore = useUserStore()
   const { toggleAuthDialog } = useAuth()
   const { setToastMessage } = useToastMessage()
-  const config = useRuntimeConfig()
   const router = useRouter()
   const { $apiFetch } = useNuxtApp()
 

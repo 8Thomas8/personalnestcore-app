@@ -5,7 +5,6 @@ import { useToastMessage } from '~/composables/useToastMessage'
 export const useUserStore = defineStore('userStore', () => {
   const { setToastMessage } = useToastMessage()
   const authStore = useAuthStore()
-  const config = useRuntimeConfig()
   const { $apiFetch } = useNuxtApp()
 
   // State
