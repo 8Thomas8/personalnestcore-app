@@ -3,10 +3,11 @@ import { useAuth } from '~/composables/useAuth'
 import { useAuthStore } from '~/store/auth'
 import { AuthRoutes, PublicRoutes } from '~/type/routes'
 
+defineProps<{ showToggleDrawer?: boolean }>()
+
 const { toggleAuthDialog } = useAuth()
 const authStore = useAuthStore()
 const router = useRouter()
-const route = useRoute()
 const drawerIsOpened = defineModel<boolean>({ default: false })
 
 const menu = [
@@ -17,10 +18,7 @@ const menu = [
 
 <template>
   <v-app-bar>
-    <v-app-bar-nav-icon
-      v-if="route.path === AuthRoutes.App"
-      @click="drawerIsOpened = !drawerIsOpened"
-    />
+    <v-app-bar-nav-icon v-if="showToggleDrawer" @click="drawerIsOpened = !drawerIsOpened" />
 
     <v-app-bar-title @click="router.push(PublicRoutes.Home)"> MesDrugs </v-app-bar-title>
 
