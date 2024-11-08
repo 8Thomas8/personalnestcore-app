@@ -1,6 +1,8 @@
 import { ToastMessageType } from '~/type/constants'
 import { useAuthStore } from '~/store/auth'
 import { useToastMessage } from '~/composables/useToastMessage'
+import { plainToInstance } from 'class-transformer'
+import UserDto from '~/type/dto/UserDto'
 
 export const useUserStore = defineStore('userStore', () => {
   const { setToastMessage } = useToastMessage()
@@ -8,7 +10,7 @@ export const useUserStore = defineStore('userStore', () => {
   const { $apiFetch } = useNuxtApp()
 
   // State
-  const user = ref(null)
+  const user = ref<UserDto>(null)
 
   // Actions
   const fetchUser = async () => {
@@ -17,10 +19,12 @@ export const useUserStore = defineStore('userStore', () => {
     if (!authStore.token) return
 
     try {
-      user.value = await $apiFetch('/api/users/me', {
+      const res = await $apiFetch('/api/v1/me', {
         headers: { Authorization: `Bearer ${authStore.token}` },
         method: 'GET',
       })
+
+      user.value = plainToInstance(UserDto, res)
     } catch (e) {
       authStore.removeToken()
       setToastMessage(ToastMessageType.TypeError, 'Connexion impossible')

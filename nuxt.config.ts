@@ -26,6 +26,7 @@ export default defineNuxtConfig({
         transformAssetUrls,
       },
     },
+    esbuild: { tsconfigRaw: { compilerOptions: { experimentalDecorators: true } } },
   },
 
   compatibilityDate: '2024-09-27',
