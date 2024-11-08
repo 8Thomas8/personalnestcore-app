@@ -7,9 +7,6 @@ export const useFormValidation = () => {
   }
 
   const email = (value: string) => {
-    if (!value) {
-      return 'Ce champ est requis.'
-    }
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
     if (!emailPattern.test(value)) {
       return 'Adresse email invalide.'
@@ -17,8 +14,17 @@ export const useFormValidation = () => {
     return true
   }
 
+  const password = (value: string) => {
+    const emailPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+    if (!emailPattern.test(value)) {
+      return 'Le mot de passe doit contenir au moins 8 caractères dont 1 lettre majuscule, 1 lettre minuscule, 1 chiffre et 1 caractère spécial.'
+    }
+    return true
+  }
+
   return {
     required,
     email,
+    password,
   }
 }
