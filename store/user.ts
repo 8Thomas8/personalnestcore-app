@@ -12,17 +12,17 @@ export const useUserStore = defineStore('userStore', () => {
 
   // Actions
   const fetchUser = async () => {
-    authStore.getJwt()
+    authStore.getToken()
 
-    if (!authStore.jwt) return
+    if (!authStore.token) return
 
     try {
       user.value = await $apiFetch('/api/users/me', {
-        headers: { Authorization: `Bearer ${authStore.jwt}` },
+        headers: { Authorization: `Bearer ${authStore.token}` },
         method: 'GET',
       })
     } catch (e) {
-      authStore.removeJwt()
+      authStore.removeToken()
       setToastMessage(ToastMessageType.TypeError, 'Connexion impossible')
     }
   }
