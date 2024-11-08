@@ -4,12 +4,12 @@ import { useAuthStore } from '~/store/auth'
 import { useFormValidation } from '~/composables/formValidation'
 
 const { authDialogIsOpened, toggleAuthDialog } = useAuth()
-const { required, email } = useFormValidation()
+const { required, email, password } = useFormValidation()
 const authStore = useAuthStore()
 const isLoading = ref(false)
 
 const loginForm = ref({
-  identifier: '',
+  email: '',
   password: '',
 })
 
@@ -24,14 +24,14 @@ watch(authDialogIsOpened, (isOpened: boolean) => {
 const onSubmit = async () => {
   if (!formIsValid.value) return
 
-  const { identifier, password } = loginForm.value
+  const { email, password } = loginForm.value
   isLoading.value = true
-  await authStore.login(identifier, password)
+  await authStore.login(email, password)
   isLoading.value = false
 }
 
 const resetForm = () => {
-  loginForm.value.identifier = ''
+  loginForm.value.email = ''
   loginForm.value.password = ''
 }
 </script>
@@ -45,7 +45,7 @@ const resetForm = () => {
           <v-row>
             <v-col cols="12">
               <v-text-field
-                v-model.trim="loginForm.identifier"
+                v-model.trim="loginForm.email"
                 placeholder="Email *"
                 type="email"
                 :rules="[required, email]"
@@ -56,7 +56,7 @@ const resetForm = () => {
                 v-model="loginForm.password"
                 placeholder="Mot de passe *"
                 type="password"
-                :rules="[required]"
+                :rules="[required, password]"
               />
             </v-col>
           </v-row>

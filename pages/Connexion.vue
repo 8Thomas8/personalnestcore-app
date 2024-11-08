@@ -1,17 +1,18 @@
 <script setup lang="ts">
-import { useUserStore } from '~/store/user'
+// import { useUserStore } from '~/store/user'
 import { useAuthStore } from '~/store/auth'
 import { PublicRoutes } from '~/type/routes'
 import type { AuthRoutes } from '~/type/routes'
 
-const userStore = useUserStore()
+// const userStore = useUserStore()
 const authStore = useAuthStore()
 const route = useRoute()
 const router = useRouter()
 const { toggleAuthDialog } = useAuth()
 
 onBeforeMount(async () => {
-  await userStore.fetchUser()
+  // TODO Fetch user
+  // await userStore.fetchUser()
   if (!authStore.isAuthenticated) {
     await router.replace(PublicRoutes.Home)
     if (route.query['from'] !== PublicRoutes.Home) {

@@ -12,34 +12,35 @@ export const useAuthStore = defineStore('authStore', () => {
   const { $apiFetch } = useNuxtApp()
 
   // States
-  const jwt = ref<string | null>(null)
+  const token = ref<string | null>(null)
 
   // Getters
-  const isAuthenticated = computed(() => !!jwt.value && !!userStore.user)
+  // const isAuthenticated = computed(() => !!token.value && !!userStore.user)
+  const isAuthenticated = computed(() => !!token.value)
 
   // Actions
-  const setJwt = (value: string) => {
-    localStorage.setItem('jwt', value)
-    jwt.value = value
+  const setToken = (value: string) => {
+    localStorage.setItem('token', value)
+    token.value = value
   }
 
-  const getJwt = () => {
-    jwt.value = localStorage.getItem('jwt')
+  const getToken = () => {
+    token.value = localStorage.getItem('token')
   }
 
-  const removeJwt = () => {
-    localStorage.removeItem('jwt')
-    jwt.value = null
+  const removeToken = () => {
+    localStorage.removeItem('token')
+    token.value = null
   }
 
-  const login = async (identifier: string, password: string) => {
+  const login = async (email: string, password: string) => {
     try {
-      const res = await $apiFetch('/api/auth/local', {
+      const res = await $apiFetch('/api/v1/auth/login', {
         method: 'POST',
-        body: { identifier, password },
+        body: { email, password },
       })
 
-      setJwt(res.jwt)
+      setToken(res.token)
       userStore.user = res.user
       toggleAuthDialog(false)
       await router.replace(AuthRoutes.App)
@@ -49,16 +50,20 @@ export const useAuthStore = defineStore('authStore', () => {
   }
 
   const logout = async () => {
-    removeJwt()
+    await $apiFetch('/api/v1/auth/logout', {
+      method: 'POST',
+    })
+
+    removeToken()
     userStore.user = null
     await router.replace(PublicRoutes.Home)
   }
 
   return {
-    jwt,
-    setJwt,
-    getJwt,
-    removeJwt,
+    token,
+    setToken,
+    getToken,
+    removeToken,
     isAuthenticated,
     logout,
     login,
