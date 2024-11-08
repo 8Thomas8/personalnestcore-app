@@ -14,15 +14,11 @@ const userStore = useUserStore()
 
           <v-card-text>
             <v-row no-gutters>
-              <v-alert type="info" class="mb-6"
-                >Les informations de votre profil ne sont pas modifiables pour le moment. Vous
-                pouvez faire une demande en ce sens via la page
-                <nuxt-link :to="AuthRoutes.Support">Support</nuxt-link></v-alert
-              >
-
-              <v-col cols="12">
-                <v-text-field readonly label="Pseudo" active :value="userStore.user?.username" />
-              </v-col>
+              <v-alert type="info" class="mb-6">
+                Les informations de votre profil ne sont pas modifiables pour le moment. Vous pouvez
+                faire une demande en ce sens via la page
+                <nuxt-link :to="AuthRoutes.Support">Support</nuxt-link>
+              </v-alert>
               <v-col cols="12">
                 <v-text-field readonly label="Email" active :value="userStore.user?.email" />
               </v-col>
