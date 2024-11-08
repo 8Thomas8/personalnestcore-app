@@ -1,11 +1,10 @@
 <script lang="ts" setup>
-// import { useUserStore } from '~/store/user'
+import { useUserStore } from '~/store/user'
 
-// const userStore = useUserStore()
+const userStore = useUserStore()
 
 onBeforeMount(async () => {
-  // TODO Fetch user
-  // await userStore.fetchUser()
+  await userStore.fetchUser()
 })
 </script>
 
