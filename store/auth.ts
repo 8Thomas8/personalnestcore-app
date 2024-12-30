@@ -48,6 +48,17 @@ export const useAuthStore = defineStore('authStore', () => {
     }
   }
 
+  const register = async (email: string, password: string) => {
+    try {
+      await $apiFetch('/api/v1/auth/register', {
+        method: 'POST',
+        body: { email, password },
+      })
+    } catch (e) {
+      setToastMessage(ToastMessageType.TypeError, 'Vérifiez vos identifiants')
+    }
+  }
+
   const logout = async () => {
     await $apiFetch('/api/v1/auth/logout', {
       method: 'POST',
@@ -66,5 +77,6 @@ export const useAuthStore = defineStore('authStore', () => {
     isAuthenticated,
     logout,
     login,
+    register,
   }
 })

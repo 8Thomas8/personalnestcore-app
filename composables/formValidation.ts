@@ -22,9 +22,17 @@ export const useFormValidation = () => {
     return true
   }
 
+  const passwordConfirmation = (value: string, password: string) => {
+    if (value !== password) {
+      return 'La confirmation du mot de passe doit être identique au mot de passe.'
+    }
+    return true
+  }
+
   return {
     required,
     email,
     password,
+    passwordConfirmation,
   }
 }
