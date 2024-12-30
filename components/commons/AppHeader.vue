@@ -37,7 +37,7 @@ const menu = [
           </v-list>
         </v-menu>
       </v-btn>
-      <v-btn v-else variant="elevated" color="primary" @click="toggleAuthDialog()">Login</v-btn>
+      <v-btn v-else variant="elevated" color="primary" @click="toggleAuthDialog()">Connexion</v-btn>
     </div>
   </v-app-bar>
 </template>
