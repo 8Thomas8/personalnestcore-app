@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useToastMessage } from '~/composables/useToastMessage'
-import { ToastMessageDelay } from '~/type/constants'
+import { ToastMessageDelay } from '~/types/constants'
 
 const { toastMessage, toastType, toastIsOpened, resetToastMessage } = useToastMessage()
 </script>

@@ -1,5 +1,5 @@
 import { useStorage } from '@vueuse/core'
-import { ToastMessageType } from '~/type/constants'
+import { ToastMessageType } from '~/types/constants'
 
 export const useToastMessage = () => {
   const toastMessage = useStorage('toastMessage', '')

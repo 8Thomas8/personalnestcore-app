@@ -1,4 +1,4 @@
-import { HttpError } from '~/type/constants'
+import { type CustomError, HttpError } from '~/types/constants'
 import { useAuthStore } from '~/store/auth'
 
 export default defineNuxtPlugin(nuxtApp => {
@@ -21,20 +21,18 @@ export default defineNuxtPlugin(nuxtApp => {
             ...options?.headers,
           },
         })
-      } catch (error: unknown) {
-        if (error?.statusCode) {
-          console.error(`Erreur lors de l'appel à ${request}: ${error.statusMessage}`)
-          if (error.statusCode === HttpError.Forbidden) {
-            await authStore.logout()
-          }
-        } else {
-          console.error('Erreur réseau ou autre:', error)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
+        if (error?.response.status === HttpError.Forbidden) {
+          await authStore.logout()
         }
 
-        throw createError({
-          statusCode: error?.statusCode || 500,
-          statusMessage: error?.statusMessage || 'Une erreur inconnue est survenue',
-        })
+        const customError: CustomError = {
+          status: error?.response?.status || 500,
+          message: error?.response?._data?.message || 'Une erreur inconnue est survenue',
+        }
+
+        throw createError(customError)
       }
     },
   )

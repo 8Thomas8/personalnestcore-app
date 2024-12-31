@@ -14,7 +14,4 @@ export default class UserDto {
   @Expose()
   @Transform(({ value }) => (value ? new Date(value) : value), { toClassOnly: true })
   updatedAt!: Date
-
-  @Expose()
-  active!: boolean
 }
