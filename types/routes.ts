@@ -3,8 +3,10 @@ export enum PublicRoutes {
   Connexion = '/connexion',
 }
 
-export enum AuthRoutes {
-  App = '/app',
+export enum AccountRoutes {
   Profile = '/profil',
-  Support = '/support',
+}
+
+export enum ServiceRoutes {
+  Drugs = '/drugs',
 }

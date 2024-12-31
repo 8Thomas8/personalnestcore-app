@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useUserStore } from '~/store/user'
 import { useAuthStore } from '~/store/auth'
-import { PublicRoutes } from '~/type/routes'
-import type { AuthRoutes } from '~/type/routes'
+import type { AccountRoutes, ServiceRoutes } from '~/types/routes'
+import { PublicRoutes } from '~/types/routes'
 
 const userStore = useUserStore()
 const authStore = useAuthStore()
@@ -18,7 +18,7 @@ onBeforeMount(async () => {
       toggleAuthDialog(true)
     }
   } else {
-    await router.replace(route.query['from'] as AuthRoutes)
+    await router.replace(route.query['from'] as AccountRoutes | ServiceRoutes)
   }
 })
 </script>

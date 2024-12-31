@@ -29,10 +29,45 @@ export const useFormValidation = () => {
     return true
   }
 
+  const isFloat = (value: string) => {
+    const floatPattern = /^\d+(\.\d{1,2})?$/
+    if (!floatPattern.test(value)) {
+      return 'Veuillez entrer un nombre valide.'
+    }
+    return true
+  }
+
+  const isDateisFormatFr = (value: string) => {
+    const datePattern = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/
+    if (!datePattern.test(value)) {
+      return 'Veuillez entrer une date au format JJ/MM/AAAA.'
+    }
+    return true
+  }
+
+  const isNumber = (value: string) => {
+    const numberPattern = /^\d+$/
+    if (!numberPattern.test(value)) {
+      return 'Veuillez entrer un nombre valide.'
+    }
+    return true
+  }
+
+  const min = (value: string | undefined, min: number) => {
+    if (value && Number(value) < min) {
+      return `Veuillez entrer une valeur minimum de ${min}.`
+    }
+    return true
+  }
+
   return {
     required,
     email,
     password,
     passwordConfirmation,
+    isFloat,
+    isDateisFormatFr,
+    isNumber,
+    min,
   }
 }

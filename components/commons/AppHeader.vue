@@ -1,26 +1,21 @@
 <script setup lang="ts">
 import { useAuth } from '~/composables/useAuth'
 import { useAuthStore } from '~/store/auth'
-import { AuthRoutes, PublicRoutes } from '~/type/routes'
-
-defineProps<{ showToggleDrawer?: boolean }>()
+import { AccountRoutes, PublicRoutes } from '~/types/routes'
 
 const { toggleAuthDialog } = useAuth()
 const authStore = useAuthStore()
 const router = useRouter()
-const drawerIsOpened = defineModel<boolean>({ default: false })
+const drawerIsOpened = defineModel<boolean | null>({ default: false })
 
-const menu = [
-  { title: 'Mon profil', to: AuthRoutes.Profile },
-  { title: 'Support', to: AuthRoutes.Support },
-]
+const menu = [{ title: 'Mon profil', to: AccountRoutes.Profile }]
 </script>
 
 <template>
   <v-app-bar>
-    <v-app-bar-nav-icon v-if="showToggleDrawer" @click="drawerIsOpened = !drawerIsOpened" />
+    <v-app-bar-nav-icon @click="drawerIsOpened = !drawerIsOpened" />
 
-    <v-app-bar-title @click="router.push(PublicRoutes.Home)"> MesDrugs </v-app-bar-title>
+    <v-app-bar-title @click="router.push(PublicRoutes.Home)"> PersonalNestCore </v-app-bar-title>
 
     <div class="mx-4">
       <v-btn v-if="authStore.isAuthenticated" variant="tonal" color="primary">
