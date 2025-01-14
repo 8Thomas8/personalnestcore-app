@@ -1,8 +1,8 @@
 import { useUserStore } from '~/store/user'
-import { ToastMessageType } from '~/type/constants'
+import { ToastMessageType } from '~/types/constants'
 import { useAuth } from '~/composables/useAuth'
 import { useToastMessage } from '~/composables/useToastMessage'
-import { AuthRoutes, PublicRoutes } from '~/type/routes'
+import { PublicRoutes, ServiceRoutes } from '~/types/routes'
 
 export const useAuthStore = defineStore('authStore', () => {
   const userStore = useUserStore()
@@ -42,7 +42,7 @@ export const useAuthStore = defineStore('authStore', () => {
       setToken(res.token)
       userStore.user = res.user
       toggleAuthDialog(false)
-      await router.replace(AuthRoutes.App)
+      await router.replace(ServiceRoutes.Drugs)
     } catch (e) {
       setToastMessage(ToastMessageType.TypeError, 'Vérifiez vos identifiants')
     }

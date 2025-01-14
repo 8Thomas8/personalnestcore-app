@@ -1,11 +1,11 @@
 import { useAuthStore } from '~/store/auth'
-import { AuthRoutes, PublicRoutes } from '~/type/routes'
+import { PublicRoutes, ServiceRoutes } from '~/types/routes'
 
 export default defineNuxtRouteMiddleware(to => {
   const authStore = useAuthStore()
 
   if (authStore.isAuthenticated && to.path === PublicRoutes.Home) {
-    return navigateTo(AuthRoutes.App)
+    return navigateTo(ServiceRoutes.Drugs)
   }
 
   if (

@@ -1,4 +1,4 @@
-import type { ToastMessageType } from '~/type/constants'
+import type { ToastMessageType } from '~/types/constants'
 
 export type ToastMessage = {
   type: ToastMessageType
