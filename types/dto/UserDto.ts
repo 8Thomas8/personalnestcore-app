@@ -2,7 +2,7 @@ import { Expose, Transform } from 'class-transformer'
 
 export default class UserDto {
   @Expose()
-  id!: number
+  id!: string
 
   @Expose()
   email!: string
