@@ -3,19 +3,31 @@ import { useAuth } from '~/composables/useAuth'
 import { useAuthStore } from '~/store/auth'
 import { AccountRoutes, PublicRoutes } from '~/types/routes'
 
+defineProps<{ navDrawerIsActive?: boolean }>()
+
 const { toggleAuthDialog } = useAuth()
 const authStore = useAuthStore()
 const router = useRouter()
 const drawerIsOpened = defineModel<boolean | null>({ default: false })
 
-const menu = [{ title: 'Mon profil', to: AccountRoutes.Profile }]
+const menu = ref([{ title: 'Mon profil', to: AccountRoutes.Profile }])
+
+watch(
+  () => authStore.isAuthenticated,
+  (isAuthenticated: boolean) => {
+    if (isAuthenticated) {
+      menu.value.push({ title: 'Utilisateurs', to: AccountRoutes.Users })
+    }
+  },
+  { immediate: true },
+)
 </script>
 
 <template>
   <v-app-bar>
-    <v-app-bar-nav-icon @click="drawerIsOpened = !drawerIsOpened" />
+    <v-app-bar-nav-icon v-if="navDrawerIsActive" @click="drawerIsOpened = !drawerIsOpened" />
 
-    <v-app-bar-title @click="router.push(PublicRoutes.Home)"> PersonalNestCore </v-app-bar-title>
+    <v-app-bar-title @click="router.push(PublicRoutes.Home)"> PersonalNestCore</v-app-bar-title>
 
     <div class="mx-4">
       <v-btn v-if="authStore.isAuthenticated" variant="tonal" color="primary">

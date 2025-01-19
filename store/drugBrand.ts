@@ -2,7 +2,7 @@ import { ToastMessageType } from '~/types/constants'
 import { useAuthStore } from '~/store/auth'
 import { useToastMessage } from '~/composables/useToastMessage'
 import { plainToInstance } from 'class-transformer'
-import DrugBrand from '~/types/dto/DrugBrand'
+import DrugBrandDto from '~/types/dto/DrugBrandDto'
 
 export const useDrugBrandStore = defineStore('drugBrandStore', () => {
   const { setToastMessage } = useToastMessage()
@@ -10,7 +10,7 @@ export const useDrugBrandStore = defineStore('drugBrandStore', () => {
   const { $apiFetch } = useNuxtApp()
 
   // State
-  const drugBrands = ref<DrugBrand[]>([])
+  const drugBrands = ref<DrugBrandDto[]>([])
 
   // Actions
   const fetchAll = async () => {
@@ -24,7 +24,7 @@ export const useDrugBrandStore = defineStore('drugBrandStore', () => {
         method: 'GET',
       })
 
-      drugBrands.value = res.map((drugBrand: unknown) => plainToInstance(DrugBrand, drugBrand))
+      drugBrands.value = res.map((drugBrand: unknown) => plainToInstance(DrugBrandDto, drugBrand))
     } catch (e) {
       setToastMessage(
         ToastMessageType.TypeError,
@@ -41,7 +41,7 @@ export const useDrugBrandStore = defineStore('drugBrandStore', () => {
     try {
       drugBrands.value.push(
         plainToInstance(
-          DrugBrand,
+          DrugBrandDto,
           await $apiFetch('/api/v1/drug-brand', {
             headers: { Authorization: `Bearer ${authStore.token}` },
             method: 'POST',

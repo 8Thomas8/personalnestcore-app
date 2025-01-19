@@ -2,7 +2,7 @@
 import { DrugFormTranslations, ItemPerPage } from '~/types/constants'
 import AddOrUpdateDrugDialog from '~/components/dialogs/AddOrUpdateDrugDialog.vue'
 import { useUserDrugStore } from '~/store/userDrug'
-import type UserDrug from '~/types/dto/UserDrug'
+import type UserDrugDto from '~/types/dto/UserDrugDto'
 import { useDisplay } from 'vuetify'
 import ConfirmationDialog from '~/components/dialogs/ConfirmationDialog.vue'
 import { stringToDate } from '~/utils/date'
@@ -22,10 +22,10 @@ const searchTerms = ref('')
 const isLoading = ref(false)
 const itemPerPage = ref(ItemPerPage)
 const currentPage = ref(1)
-const itemToDelete = ref<UserDrug | null>(null)
+const itemToDelete = ref<UserDrugDto | null>(null)
 const confirmationDialogIsOpened = ref(false)
 const updateMode = ref(false)
-const itemToUpdate = ref<UserDrug | null>(null)
+const itemToUpdate = ref<UserDrugDto | null>(null)
 const quantityChange = ref(0)
 
 const headers = [
@@ -34,13 +34,13 @@ const headers = [
   { title: 'Marque', key: 'drugBrand.name', sortable: true },
   {
     title: 'Dose',
-    value: (item: UserDrug) => `${item.dose || ''} ${item.unit || ''}`,
+    value: (item: UserDrugDto) => `${item.dose || ''} ${item.unit || ''}`,
     key: 'dose',
     sortable: false,
   },
   {
     title: 'Forme',
-    value: (item: UserDrug) => DrugFormTranslations[item.form || ''],
+    value: (item: UserDrugDto) => DrugFormTranslations[item.form || ''],
     key: 'form',
     align: 'center',
   },
@@ -100,17 +100,17 @@ const expirationDateTimeSort = (a: string, b: string) => {
   return dateA.getTime() - dateB.getTime()
 }
 
-const onClickDelete = (item: UserDrug) => {
+const onClickDelete = (item: UserDrugDto) => {
   itemToDelete.value = item
   confirmationDialogIsOpened.value = true
 }
 
-const onDeleteConfirmation = () => {
+const onDeleteConfirmation = async () => {
   if (itemToDelete.value) {
     isLoading.value = true
-    userDrugStore.deleteOne(itemToDelete.value.id)
+    await userDrugStore.deleteOne(itemToDelete.value.id)
     itemToDelete.value = null
-    userDrugStore.fetchAll(
+    await userDrugStore.fetchAll(
       currentPage.value,
       itemPerPage.value,
       searchTerms.value,
@@ -127,7 +127,7 @@ const onCancelDelete = () => {
   confirmationDialogIsOpened.value = false
 }
 
-const onClickUpdate = (item: UserDrug) => {
+const onClickUpdate = (item: UserDrugDto) => {
   updateMode.value = true
   itemToUpdate.value = item
   addOrUpdateDrugDialogIsOpened.value = true
@@ -139,7 +139,7 @@ const onAddDrug = () => {
   addOrUpdateDrugDialogIsOpened.value = true
 }
 
-const addQuantityWithDebounce = useDebounceFn(async (item: UserDrug) => {
+const addQuantityWithDebounce = useDebounceFn(async (item: UserDrugDto) => {
   const { id } = item
 
   await userDrugStore.updateQuantity(id, item.quantity + quantityChange.value)
@@ -155,7 +155,7 @@ const addQuantityWithDebounce = useDebounceFn(async (item: UserDrug) => {
   )
 }, DebounceDelay)
 
-const removeQuantityWithDebounce = useDebounceFn(async (item: UserDrug) => {
+const removeQuantityWithDebounce = useDebounceFn(async (item: UserDrugDto) => {
   const { id } = item
 
   await userDrugStore.updateQuantity(id, item.quantity - quantityChange.value)
@@ -171,12 +171,12 @@ const removeQuantityWithDebounce = useDebounceFn(async (item: UserDrug) => {
   )
 }, DebounceDelay)
 
-const onAddQuantity = (item: UserDrug) => {
+const onAddQuantity = (item: UserDrugDto) => {
   quantityChange.value += 1
   addQuantityWithDebounce(item)
 }
 
-const onRemoveQuantity = (item: UserDrug) => {
+const onRemoveQuantity = (item: UserDrugDto) => {
   quantityChange.value += 1
   removeQuantityWithDebounce(item)
 }
@@ -248,10 +248,10 @@ const onRemoveQuantity = (item: UserDrug) => {
               </v-tooltip>
             </template>
             <template #[`item.actions`]="{ item }">
-              <v-btn color="warning" @click="onClickUpdate(item)">
-                <v-icon>mdi-file-edit</v-icon>
+              <v-btn variant="text" color="warning" @click="onClickUpdate(item)">
+                <v-icon>mdi-pencil</v-icon>
               </v-btn>
-              <v-btn class="ml-2" color="error" @click="onClickDelete(item)">
+              <v-btn variant="text" class="ml-2" color="error" @click="onClickDelete(item)">
                 <v-icon>mdi-delete</v-icon>
               </v-btn>
             </template>

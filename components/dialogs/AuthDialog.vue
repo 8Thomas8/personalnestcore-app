@@ -13,6 +13,7 @@ const { required, email, password, passwordConfirmation } = useFormValidation()
 const authStore = useAuthStore()
 const isLoading = ref(false)
 const step = ref(STEP.LOGIN)
+const adminCanRegister = ref(false)
 
 const form = ref({
   email: '',
@@ -47,13 +48,20 @@ const resetForm = () => {
   form.value.password = ''
   form.value.passwordConfirmation = ''
 }
+
+onBeforeMount(async () => {
+  adminCanRegister.value = await authStore.adminCanRegister()
+  if (adminCanRegister.value) {
+    step.value = STEP.SIGNIN
+  }
+})
 </script>
 
 <template>
   <v-dialog v-model="authDialogIsOpened" max-width="600px">
     <v-card>
       <v-card-title class="d-flex justify-space-between">
-        {{ step === STEP.LOGIN ? 'Connexion' : 'Création de compte' }}
+        {{ step === STEP.LOGIN ? 'Connexion' : 'Création du compte admin' }}
         <v-btn color="grey" variant="text" @click="toggleAuthDialog(false)"
           ><v-icon>mdi-close</v-icon></v-btn
         >
@@ -89,12 +97,8 @@ const resetForm = () => {
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn v-if="step === STEP.LOGIN" @click="step = STEP.SIGNIN">
-            Je n'ai pas de compte
-          </v-btn>
-          <v-btn v-if="step === STEP.SIGNIN" @click="step = STEP.LOGIN">J'ai déjà un compte</v-btn>
           <v-btn type="submit" :loading="isLoading">
-            {{ step === STEP.SIGNIN ? ' Création' : 'Connexion' }}
+            {{ adminCanRegister && step === STEP.SIGNIN ? ' Création' : 'Connexion' }}
           </v-btn>
         </v-card-actions>
       </v-form>

@@ -1,6 +1,6 @@
 import { Expose } from 'class-transformer'
 
-export default class ApiMeta {
+export default class ApiMetaDto {
   @Expose()
   total!: number
 

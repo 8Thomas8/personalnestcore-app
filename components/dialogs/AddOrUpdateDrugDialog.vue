@@ -4,7 +4,7 @@ import { useDrugBrandStore } from '~/store/drugBrand'
 import { useDrugNameStore } from '~/store/drugName'
 import { DrugForm, DrugFormTranslations, DrugUnit, ToastMessageType } from '~/types/constants'
 import { useUserDrugStore } from '~/store/userDrug'
-import type UserDrug from '~/types/dto/UserDrug'
+import type UserDrugDto from '~/types/dto/UserDrugDto'
 import { capitalize } from 'vue'
 import { formatDateFr } from '~/utils/date'
 import type { VAutocomplete, VDialog, VTextField } from 'vuetify/components'
@@ -22,7 +22,7 @@ const props = defineProps<{
   expiredOnly: boolean
   expiringSoon: boolean
   updateMode: boolean
-  itemToUpdate: UserDrug | null
+  itemToUpdate: UserDrugDto | null
 }>()
 
 const { required, isFloat, isDateisFormatFr, isNumber, min } = useFormValidation()
