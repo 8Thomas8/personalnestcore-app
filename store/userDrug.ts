@@ -3,8 +3,8 @@ import { ApiError, ToastMessageType } from '~/types/constants'
 import { useAuthStore } from '~/store/auth'
 import { useToastMessage } from '~/composables/useToastMessage'
 import { plainToInstance } from 'class-transformer'
-import UserDrug from '~/types/dto/UserDrug'
-import ApiMeta from '~/types/dto/ApiMeta'
+import UserDrugDto from '~/types/dto/UserDrugDto'
+import ApiMetaDto from '~/types/dto/ApiMetaDto'
 
 export const useUserDrugStore = defineStore('userDrugStore', () => {
   const { setToastMessage } = useToastMessage()
@@ -12,8 +12,8 @@ export const useUserDrugStore = defineStore('userDrugStore', () => {
   const { $apiFetch } = useNuxtApp()
 
   // State
-  const userDrugs = ref<UserDrug[]>([])
-  const userDrugsMeta = ref<ApiMeta>({
+  const userDrugs = ref<UserDrugDto[]>([])
+  const userDrugsMeta = ref<ApiMetaDto>({
     total: 0,
     perPage: 0,
     currentPage: 0,
@@ -40,8 +40,8 @@ export const useUserDrugStore = defineStore('userDrugStore', () => {
         method: 'GET',
       })
 
-      userDrugs.value = res.data.map((userDrug: unknown) => plainToInstance(UserDrug, userDrug))
-      userDrugsMeta.value = plainToInstance(ApiMeta, res.meta)
+      userDrugs.value = res.data.map((userDrug: unknown) => plainToInstance(UserDrugDto, userDrug))
+      userDrugsMeta.value = plainToInstance(ApiMetaDto, res.meta)
     } catch (e) {
       setToastMessage(ToastMessageType.TypeError, 'Impossible de récupérer vos médicaments')
     }

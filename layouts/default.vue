@@ -1,10 +1,21 @@
 <script lang="ts" setup>
-import { useUserStore } from '~/store/user'
+import { useAuthStore } from '~/store/auth'
+import { ServiceRoutes } from '~/types/routes'
 
-const userStore = useUserStore()
+const authStore = useAuthStore()
+const router = useRouter()
+
+watch(
+  () => authStore.isAuthenticated,
+  async isAuthenticated => {
+    if (isAuthenticated) {
+      await router.replace(ServiceRoutes.Drugs)
+    }
+  },
+)
 
 onBeforeMount(async () => {
-  await userStore.fetchUser()
+  await authStore.fetchUser()
 })
 </script>
 

@@ -5,7 +5,7 @@ const drawerIsOpened = ref(null)
 <template>
   <div class="bg-grey-lighten-5">
     <CommonsNavDrawer v-model="drawerIsOpened" />
-    <CommonsAppHeader v-model="drawerIsOpened" />
+    <CommonsAppHeader v-model="drawerIsOpened" nav-drawer-is-active />
 
     <v-main>
       <div class="pa-6">

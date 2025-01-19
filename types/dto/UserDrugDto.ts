@@ -1,10 +1,10 @@
 import { Expose, Transform } from 'class-transformer'
-import type DrugName from '~/types/dto/DrugName'
+import type DrugNameDto from '~/types/dto/DrugNameDto'
 import type { DrugForm, DrugUnit } from '~/types/constants'
-import type DrugBrand from '~/types/dto/DrugBrand'
+import type DrugBrandDto from '~/types/dto/DrugBrandDto'
 import { dateToString, stringToDate } from '~/utils/date'
 
-export default class UserDrug {
+export default class UserDrugDto {
   @Expose()
   id!: number
 
@@ -12,13 +12,13 @@ export default class UserDrug {
   drugBrandId!: number
 
   @Expose()
-  drugBrand?: DrugBrand
+  drugBrand?: DrugBrandDto
 
   @Expose()
   drugNameId!: number
 
   @Expose()
-  drugName?: DrugName
+  drugName?: DrugNameDto
 
   @Expose()
   form!: DrugForm
