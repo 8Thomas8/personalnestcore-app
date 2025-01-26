@@ -50,13 +50,13 @@ const onSubmit = async () => {
   isLoading.value = true
 
   if (props.updateMode) {
-    await userStore.updateUser({ ...userForm.value, ...{ id: props.userToUpdate!.id } })
-    await userStore.fetchUsers()
+    await userStore.update({ ...userForm.value, ...{ id: props.userToUpdate!.id } })
+    await userStore.fetchAll()
     setToastMessage(ToastMessageType.TypeSuccess, 'Utilisateur modifié avec succès')
     closeDialog()
   } else {
-    await userStore.createUser(userForm.value)
-    await userStore.fetchUsers()
+    await userStore.create(userForm.value)
+    await userStore.fetchAll()
 
     setToastMessage(ToastMessageType.TypeSuccess, 'Médicament ajouté avec succès')
     closeDialog()

@@ -13,7 +13,7 @@ export const useUserStore = defineStore('userStore', () => {
   const users = ref<UserDto[]>([])
 
   // Actions
-  const fetchUsers = async () => {
+  const fetchAll = async () => {
     authStore.getToken()
 
     if (!authStore.token) return
@@ -33,7 +33,7 @@ export const useUserStore = defineStore('userStore', () => {
     }
   }
 
-  const updateUser = async ({
+  const update = async ({
     id,
     email,
     password,
@@ -59,7 +59,7 @@ export const useUserStore = defineStore('userStore', () => {
     }
   }
 
-  const createUser = async ({ email, password }: { email: string; password: string }) => {
+  const create = async ({ email, password }: { email: string; password: string }) => {
     authStore.getToken()
 
     if (!authStore.token) return
@@ -77,7 +77,7 @@ export const useUserStore = defineStore('userStore', () => {
     }
   }
 
-  const deleteUser = async (id: string) => {
+  const deleteOne = async (id: string) => {
     authStore.getToken()
 
     if (!authStore.token) return
@@ -96,9 +96,9 @@ export const useUserStore = defineStore('userStore', () => {
 
   return {
     users,
-    fetchUsers,
-    updateUser,
-    createUser,
-    deleteUser,
+    fetchAll,
+    update,
+    create,
+    deleteOne,
   }
 })
