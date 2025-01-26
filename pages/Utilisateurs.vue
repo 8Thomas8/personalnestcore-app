@@ -29,7 +29,7 @@ onBeforeMount(async () => {
 const fetchUsersData = async () => {
   try {
     isLoading.value = true
-    await userStore.fetchUsers()
+    await userStore.fetchAll()
   } catch (e) {
     console.error(e)
   }
@@ -49,9 +49,9 @@ const onClickDelete = (user: UserDto) => {
 const onDeleteConfirmation = async () => {
   if (userToDelete.value) {
     isLoading.value = true
-    await userStore.deleteUser(userToDelete.value.id)
+    await userStore.deleteOne(userToDelete.value.id)
     userToDelete.value = null
-    await userStore.fetchUsers()
+    await userStore.fetchAll()
     isLoading.value = false
     confirmationDialogIsOpened.value = false
   }
