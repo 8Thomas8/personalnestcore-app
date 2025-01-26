@@ -6,6 +6,13 @@ export const useFormValidation = () => {
     return true
   }
 
+  const requiredIf = (value: string | number | null | undefined, condition: boolean) => {
+    if (condition && !value && value !== 0) {
+      return 'Champs requis.'
+    }
+    return true
+  }
+
   const email = (value: string) => {
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
     if (!emailPattern.test(value)) {
@@ -62,6 +69,7 @@ export const useFormValidation = () => {
 
   return {
     required,
+    requiredIf,
     email,
     password,
     passwordConfirmation,

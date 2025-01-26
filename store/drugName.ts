@@ -2,7 +2,7 @@ import { ToastMessageType } from '~/types/constants'
 import { useAuthStore } from '~/store/auth'
 import { useToastMessage } from '~/composables/useToastMessage'
 import { plainToInstance } from 'class-transformer'
-import DrugName from '~/types/dto/DrugName'
+import DrugNameDto from '~/types/dto/DrugNameDto'
 
 export const useDrugNameStore = defineStore('drugNameStore', () => {
   const { setToastMessage } = useToastMessage()
@@ -10,7 +10,7 @@ export const useDrugNameStore = defineStore('drugNameStore', () => {
   const { $apiFetch } = useNuxtApp()
 
   // State
-  const drugNames = ref<DrugName[]>([])
+  const drugNames = ref<DrugNameDto[]>([])
 
   // Actions
   const fetchAll = async (drugBrandId: number) => {
@@ -25,7 +25,7 @@ export const useDrugNameStore = defineStore('drugNameStore', () => {
         params: { drugBrandId },
       })
 
-      drugNames.value = res.map((drugName: unknown) => plainToInstance(DrugName, drugName))
+      drugNames.value = res.map((drugName: unknown) => plainToInstance(DrugNameDto, drugName))
     } catch (e) {
       setToastMessage(ToastMessageType.TypeError, 'Impossible de récupérer les noms de médicaments')
     }
@@ -42,7 +42,7 @@ export const useDrugNameStore = defineStore('drugNameStore', () => {
         method: 'GET',
       })
 
-      return plainToInstance(DrugName, res)
+      return plainToInstance(DrugNameDto, res)
     } catch (e) {
       setToastMessage(ToastMessageType.TypeError, 'Impossible de récupérer le nom de médicament')
     }

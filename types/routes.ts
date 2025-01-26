@@ -5,6 +5,7 @@ export enum PublicRoutes {
 
 export enum AccountRoutes {
   Profile = '/profil',
+  Users = '/utilisateurs',
 }
 
 export enum ServiceRoutes {

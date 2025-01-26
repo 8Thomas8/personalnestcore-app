@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { defineProps, defineEmits } from 'vue'
-
 defineProps<{
   text: string
 }>()
@@ -11,7 +9,7 @@ const emits = defineEmits(['confirm', 'cancel'])
 <template>
   <v-dialog persistent max-width="600px">
     <v-card>
-      <v-card-title class="d-flex justify-space-between"> Confirmation </v-card-title>
+      <v-card-title class="d-flex justify-space-between"> Confirmation</v-card-title>
       <v-card-text>
         {{ text }}
       </v-card-text>

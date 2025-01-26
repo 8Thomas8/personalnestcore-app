@@ -1,11 +1,11 @@
-import { useUserStore } from '~/store/user'
 import { ToastMessageType } from '~/types/constants'
 import { useAuth } from '~/composables/useAuth'
 import { useToastMessage } from '~/composables/useToastMessage'
 import { PublicRoutes, ServiceRoutes } from '~/types/routes'
+import UserDto from '~/types/dto/UserDto'
+import { plainToInstance } from 'class-transformer'
 
 export const useAuthStore = defineStore('authStore', () => {
-  const userStore = useUserStore()
   const { toggleAuthDialog } = useAuth()
   const { setToastMessage } = useToastMessage()
   const router = useRouter()
@@ -13,9 +13,10 @@ export const useAuthStore = defineStore('authStore', () => {
 
   // States
   const token = ref<string | null>(null)
+  const user = ref<UserDto | null>(null)
 
   // Getters
-  const isAuthenticated = computed(() => !!token.value && !!userStore.user)
+  const isAuthenticated = computed(() => !!token.value && !!user.value)
 
   // Actions
   const setToken = (value: string) => {
@@ -40,7 +41,7 @@ export const useAuthStore = defineStore('authStore', () => {
       })
 
       setToken(res.token)
-      userStore.user = res.user
+      user.value = res.user
       toggleAuthDialog(false)
       await router.replace(ServiceRoutes.Drugs)
     } catch (e) {
@@ -65,11 +66,44 @@ export const useAuthStore = defineStore('authStore', () => {
     })
 
     removeToken()
-    userStore.user = null
+    user.value = null
     await router.replace(PublicRoutes.Home)
   }
 
+  const fetchUser = async () => {
+    getToken()
+
+    if (!token.value) return
+
+    try {
+      const res = await $apiFetch('/api/v1/me', {
+        headers: { Authorization: `Bearer ${token.value}` },
+        method: 'GET',
+      })
+
+      user.value = plainToInstance(UserDto, res)
+    } catch (e) {
+      removeToken()
+      setToastMessage(ToastMessageType.TypeError, 'Connexion impossible')
+    }
+  }
+
+  const adminCanRegister = async () => {
+    try {
+      const res = await $apiFetch('/api/v1/admin-can-register')
+      return res === 'true'
+    } catch (e) {
+      setToastMessage(
+        ToastMessageType.TypeError,
+        'Impossible de vérifier si un administrateur peut être créé.',
+      )
+      return false
+    }
+  }
+
   return {
+    fetchUser,
+    user,
     token,
     setToken,
     getToken,
@@ -78,5 +112,6 @@ export const useAuthStore = defineStore('authStore', () => {
     logout,
     login,
     register,
+    adminCanRegister,
   }
 })

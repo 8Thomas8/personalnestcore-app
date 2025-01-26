@@ -1,4 +1,5 @@
 import { Expose, Transform } from 'class-transformer'
+import { dateToString } from '~/utils/date'
 
 export default class UserDto {
   @Expose()
@@ -8,10 +9,20 @@ export default class UserDto {
   email!: string
 
   @Expose()
-  @Transform(({ value }) => (value ? new Date(value) : value), { toClassOnly: true })
+  role!: string
+
+  @Expose()
+  @Transform(({ value }: { value: string }) => (value ? dateToString(new Date(value)) : value), {
+    toClassOnly: true,
+  })
   createdAt!: Date
 
   @Expose()
-  @Transform(({ value }) => (value ? new Date(value) : value), { toClassOnly: true })
+  @Transform(({ value }: { value: string }) => (value ? dateToString(new Date(value)) : value), {
+    toClassOnly: true,
+  })
   updatedAt!: Date
+
+  @Expose()
+  password?: string
 }
