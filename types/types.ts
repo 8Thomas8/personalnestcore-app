@@ -4,3 +4,7 @@ export type ToastMessage = {
   type: ToastMessageType
   text: string
 }
+export type CustomError = {
+  status: number
+  message: string
+}

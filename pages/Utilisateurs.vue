@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useUserStore } from '~/store/user'
 import AddOrUpdateUserDialog from '~/components/dialogs/AddOrUpdateUserDialog.vue'
-import type UserDto from '~/types/dto/UserDto'
+import type UserDto from '~/dto/UserDto'
 import ConfirmationDialog from '~/components/dialogs/ConfirmationDialog.vue'
 
 const userStore = useUserStore()
@@ -89,8 +89,7 @@ const onClickUpdate = (user: UserDto) => {
                   loading-text="Récupération des utilisateurs en cours..."
                   :items="userStore.users"
                   :items-length="userStore.users?.length ?? 0"
-                  no-data-text="Aucun utilisateur"
-                >
+                  no-data-text="Aucun utilisateur">
                   <template #[`item.action`]="{ item }">
                     <v-btn variant="text" color="warning" @click="onClickUpdate(item)">
                       <v-icon>mdi-pencil</v-icon>
@@ -111,14 +110,12 @@ const onClickUpdate = (user: UserDto) => {
       v-model="addOrUpdateMemberDialogIsOpened"
       :update-mode="updateMode"
       :user-to-update="userToUpdate"
-      @update:add-or-update-member-dialog-is-opened="addOrUpdateMemberDialogIsOpened = false"
-    />
+      @update:add-or-update-member-dialog-is-opened="addOrUpdateMemberDialogIsOpened = false" />
 
     <ConfirmationDialog
       v-model="confirmationDialogIsOpened"
       text="Voulez-vous supprimer cet utilisateur ?"
       @confirm="onDeleteConfirmation"
-      @cancel="onCancelDelete"
-    />
+      @cancel="onCancelDelete" />
   </v-container>
 </template>

@@ -6,7 +6,7 @@ import { md2 } from 'vuetify/blueprints'
 import * as components from 'vuetify/components'
 import * as labsComponents from 'vuetify/labs/components'
 
-export default defineNuxtPlugin(app => {
+export default defineNuxtPlugin((app) => {
   const vuetify = createVuetify({
     blueprint: md2,
     components: {

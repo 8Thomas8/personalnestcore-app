@@ -133,13 +133,3 @@ export const DrugFormTranslations = {
 export enum ApiError {
   API_ERROR_SIMILAR_DATA = 'A similar user drug already exists',
 }
-
-export type CustomError = {
-  status: number
-  message: string
-}
-
-export enum UserRole {
-  Admin = 'ROLE_ADMIN',
-  User = 'ROLE_USER',
-}

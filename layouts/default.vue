@@ -7,11 +7,11 @@ const router = useRouter()
 
 watch(
   () => authStore.isAuthenticated,
-  async isAuthenticated => {
+  async (isAuthenticated) => {
     if (isAuthenticated) {
       await router.replace(ServiceRoutes.Drugs)
     }
-  },
+  }
 )
 
 onBeforeMount(async () => {

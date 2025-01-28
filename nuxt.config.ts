@@ -10,7 +10,7 @@ export default defineNuxtConfig({
 
   modules: [
     (_options, nuxt) => {
-      nuxt.hooks.hook('vite:extendConfig', config => {
+      nuxt.hooks.hook('vite:extendConfig', (config) => {
         config.plugins = config.plugins || []
         config.plugins.push(vuetify({ autoImport: true }))
       })

@@ -19,7 +19,7 @@ watch(
       menu.value.push({ title: 'Utilisateurs', to: AccountRoutes.Users })
     }
   },
-  { immediate: true },
+  { immediate: true }
 )
 </script>
 
