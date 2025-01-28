@@ -2,7 +2,7 @@ import { ToastMessageType } from '~/types/constants'
 import { useAuth } from '~/composables/useAuth'
 import { useToastMessage } from '~/composables/useToastMessage'
 import { PublicRoutes, ServiceRoutes } from '~/types/routes'
-import UserDto from '~/types/dto/UserDto'
+import UserDto from '~/dto/UserDto'
 import { plainToInstance } from 'class-transformer'
 
 export const useAuthStore = defineStore('authStore', () => {
@@ -44,7 +44,7 @@ export const useAuthStore = defineStore('authStore', () => {
       user.value = res.user
       toggleAuthDialog(false)
       await router.replace(ServiceRoutes.Drugs)
-    } catch (e) {
+    } catch {
       setToastMessage(ToastMessageType.TypeError, 'Vérifiez vos identifiants')
     }
   }
@@ -55,7 +55,7 @@ export const useAuthStore = defineStore('authStore', () => {
         method: 'POST',
         body: { email, password },
       })
-    } catch (e) {
+    } catch {
       setToastMessage(ToastMessageType.TypeError, 'Vérifiez vos identifiants')
     }
   }
@@ -82,7 +82,7 @@ export const useAuthStore = defineStore('authStore', () => {
       })
 
       user.value = plainToInstance(UserDto, res)
-    } catch (e) {
+    } catch {
       removeToken()
       setToastMessage(ToastMessageType.TypeError, 'Connexion impossible')
     }
@@ -92,11 +92,8 @@ export const useAuthStore = defineStore('authStore', () => {
     try {
       const res = await $apiFetch('/api/v1/admin-can-register')
       return res === 'true'
-    } catch (e) {
-      setToastMessage(
-        ToastMessageType.TypeError,
-        'Impossible de vérifier si un administrateur peut être créé.',
-      )
+    } catch {
+      setToastMessage(ToastMessageType.TypeError, 'Impossible de vérifier si un administrateur peut être créé.')
       return false
     }
   }

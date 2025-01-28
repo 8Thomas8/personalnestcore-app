@@ -20,8 +20,7 @@ const drawerIsOpened = defineModel<boolean | null>({ default: false })
         :to="service.to"
         :prepend-icon="service.icon"
         :title="service.title"
-        @click="drawerIsOpened = !drawerIsOpened"
-      />
+        @click="drawerIsOpened = !drawerIsOpened" />
     </v-list>
   </v-navigation-drawer>
 </template>

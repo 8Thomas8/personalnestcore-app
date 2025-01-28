@@ -1,14 +1,15 @@
-import { type CustomError, HttpError } from '~/types/constants'
+import { HttpError } from '~/types/constants'
 import { useAuthStore } from '~/store/auth'
+import type { CustomError } from '~/types/types'
 
-export default defineNuxtPlugin(nuxtApp => {
+export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.provide(
     'apiFetch',
     async (
       request: string,
       options = {
         headers: {},
-      },
+      }
     ) => {
       const authStore = useAuthStore()
       const config = useRuntimeConfig()
@@ -34,6 +35,6 @@ export default defineNuxtPlugin(nuxtApp => {
 
         throw createError(customError)
       }
-    },
+    }
   )
 })

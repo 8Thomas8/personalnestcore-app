@@ -2,7 +2,7 @@
 import { useFormValidation } from '~/composables/formValidation'
 import { ToastMessageType } from '~/types/constants'
 import type { VDialog, VTextField } from 'vuetify/components'
-import type UserDto from '~/types/dto/UserDto'
+import type UserDto from '~/dto/UserDto'
 import { useUserStore } from '~/store/user'
 
 const addOrUpdateMemberDialogIsOpened = defineModel('addOrUpdateMemberDialogIsOpened', {
@@ -28,9 +28,7 @@ const formIsValid = ref(false)
 const addUserForm = ref<HTMLFormElement | null>(null)
 const displayEmptyError = ref(false)
 
-const isDialogOpened: ComputedRef<boolean> = computed(
-  () => addOrUpdateMemberDialog.value?.modelValue ?? false,
-)
+const isDialogOpened: ComputedRef<boolean> = computed(() => addOrUpdateMemberDialog.value?.modelValue ?? false)
 
 const userForm = ref<{
   email: string | null
@@ -93,7 +91,7 @@ watch(
       addUserForm.value?.resetValidation()
     }
   },
-  { deep: true },
+  { deep: true }
 )
 
 onBeforeUnmount(() => {
@@ -120,20 +118,16 @@ const closeDialog = () => {
               <v-text-field
                 v-model="userForm.email"
                 :label="`Email ${updateMode ? '' : '*'}`"
-                :rules="[updateMode ? () => true : required, email]"
-              />
+                :rules="[updateMode ? () => true : required, email]" />
             </v-col>
             <v-col cols="12" sm="6">
               <v-text-field
                 v-model="userForm.password"
                 :label="`Mot de passe ${updateMode ? '' : '*'}`"
-                :rules="[updateMode ? () => true : required, password]"
-              />
+                :rules="[updateMode ? () => true : required, password]" />
             </v-col>
           </v-row>
-          <p v-if="displayEmptyError" class="text-center text-error">
-            Au moins une valeur doit être renseignée.
-          </p>
+          <p v-if="displayEmptyError" class="text-center text-error">Au moins une valeur doit être renseignée.</p>
         </v-card-text>
         <v-card-actions>
           <v-spacer />

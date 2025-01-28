@@ -3,8 +3,8 @@ import { ApiError, ToastMessageType } from '~/types/constants'
 import { useAuthStore } from '~/store/auth'
 import { useToastMessage } from '~/composables/useToastMessage'
 import { plainToInstance } from 'class-transformer'
-import UserDrugDto from '~/types/dto/UserDrugDto'
-import ApiMetaDto from '~/types/dto/ApiMetaDto'
+import UserDrugDto from '~/dto/UserDrugDto'
+import ApiMetaDto from '~/dto/ApiMetaDto'
 
 export const useUserDrugStore = defineStore('userDrugStore', () => {
   const { setToastMessage } = useToastMessage()
@@ -27,7 +27,7 @@ export const useUserDrugStore = defineStore('userDrugStore', () => {
     itemPerPage: number,
     terms: string,
     expiredOnly: boolean,
-    expireSoon: boolean,
+    expireSoon: boolean
   ) => {
     authStore.getToken()
 
@@ -42,7 +42,7 @@ export const useUserDrugStore = defineStore('userDrugStore', () => {
 
       userDrugs.value = res.data.map((userDrug: unknown) => plainToInstance(UserDrugDto, userDrug))
       userDrugsMeta.value = plainToInstance(ApiMetaDto, res.meta)
-    } catch (e) {
+    } catch {
       setToastMessage(ToastMessageType.TypeError, 'Impossible de récupérer vos médicaments')
     }
   }
@@ -91,7 +91,7 @@ export const useUserDrugStore = defineStore('userDrugStore', () => {
         ToastMessageType.TypeError,
         e.message === ApiError.API_ERROR_SIMILAR_DATA
           ? 'Un médicament similaire existe déjà'
-          : 'Impossible de créer votre médicament',
+          : 'Impossible de créer votre médicament'
       )
     }
 
@@ -109,7 +109,7 @@ export const useUserDrugStore = defineStore('userDrugStore', () => {
       unit: DrugUnit | null
       expirationDateTime: string | undefined
       quantity: string | null
-    },
+    }
   ) => {
     authStore.getToken()
 
@@ -133,7 +133,7 @@ export const useUserDrugStore = defineStore('userDrugStore', () => {
         },
       })
       return true
-    } catch (e) {
+    } catch {
       setToastMessage(ToastMessageType.TypeError, 'Impossible de mettre à jour votre médicament')
     }
   }
@@ -149,11 +149,8 @@ export const useUserDrugStore = defineStore('userDrugStore', () => {
         method: 'PATCH',
         body: { quantity },
       })
-    } catch (e) {
-      setToastMessage(
-        ToastMessageType.TypeError,
-        'Impossible de mettre à jour la quantité de votre médicament',
-      )
+    } catch {
+      setToastMessage(ToastMessageType.TypeError, 'Impossible de mettre à jour la quantité de votre médicament')
     }
   }
 
@@ -167,7 +164,7 @@ export const useUserDrugStore = defineStore('userDrugStore', () => {
         headers: { Authorization: `Bearer ${authStore.token}` },
         method: 'DELETE',
       })
-    } catch (e) {
+    } catch {
       setToastMessage(ToastMessageType.TypeError, 'Suppression impossible')
     }
   }
