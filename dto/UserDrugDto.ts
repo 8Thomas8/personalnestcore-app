@@ -1,7 +1,7 @@
 import { Expose, Transform } from 'class-transformer'
-import type DrugNameDto from '~/types/dto/DrugNameDto'
+import type DrugNameDto from '~/dto/DrugNameDto'
 import type { DrugForm, DrugUnit } from '~/types/constants'
-import type DrugBrandDto from '~/types/dto/DrugBrandDto'
+import type DrugBrandDto from '~/dto/DrugBrandDto'
 import { dateToString, stringToDate } from '~/utils/date'
 
 export default class UserDrugDto {

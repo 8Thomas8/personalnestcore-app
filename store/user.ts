@@ -2,7 +2,7 @@ import { ToastMessageType } from '~/types/constants'
 import { useAuthStore } from '~/store/auth'
 import { useToastMessage } from '~/composables/useToastMessage'
 import { plainToInstance } from 'class-transformer'
-import UserDto from '~/types/dto/UserDto'
+import UserDto from '~/dto/UserDto'
 
 export const useUserStore = defineStore('userStore', () => {
   const { setToastMessage } = useToastMessage()

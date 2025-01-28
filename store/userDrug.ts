@@ -3,8 +3,8 @@ import { ApiError, ToastMessageType } from '~/types/constants'
 import { useAuthStore } from '~/store/auth'
 import { useToastMessage } from '~/composables/useToastMessage'
 import { plainToInstance } from 'class-transformer'
-import UserDrugDto from '~/types/dto/UserDrugDto'
-import ApiMetaDto from '~/types/dto/ApiMetaDto'
+import UserDrugDto from '~/dto/UserDrugDto'
+import ApiMetaDto from '~/dto/ApiMetaDto'
 
 export const useUserDrugStore = defineStore('userDrugStore', () => {
   const { setToastMessage } = useToastMessage()

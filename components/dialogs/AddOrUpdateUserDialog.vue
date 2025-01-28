@@ -2,7 +2,7 @@
 import { useFormValidation } from '~/composables/formValidation'
 import { ToastMessageType } from '~/types/constants'
 import type { VDialog, VTextField } from 'vuetify/components'
-import type UserDto from '~/types/dto/UserDto'
+import type UserDto from '~/dto/UserDto'
 import { useUserStore } from '~/store/user'
 
 const addOrUpdateMemberDialogIsOpened = defineModel('addOrUpdateMemberDialogIsOpened', {

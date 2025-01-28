@@ -1,5 +1,6 @@
-import { type CustomError, HttpError } from '~/types/constants'
+import { HttpError } from '~/types/constants'
 import { useAuthStore } from '~/store/auth'
+import type { CustomError } from '~/types/types'
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.provide(

@@ -1,5 +1,5 @@
 import { Expose, Transform } from 'class-transformer'
-import type DrugBrandDto from '~/types/dto/DrugBrandDto'
+import type DrugBrandDto from '~/dto/DrugBrandDto'
 
 export default class DrugNameDto {
   @Expose()

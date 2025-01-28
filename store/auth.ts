@@ -2,7 +2,7 @@ import { ToastMessageType } from '~/types/constants'
 import { useAuth } from '~/composables/useAuth'
 import { useToastMessage } from '~/composables/useToastMessage'
 import { PublicRoutes, ServiceRoutes } from '~/types/routes'
-import UserDto from '~/types/dto/UserDto'
+import UserDto from '~/dto/UserDto'
 import { plainToInstance } from 'class-transformer'
 
 export const useAuthStore = defineStore('authStore', () => {

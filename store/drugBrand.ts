@@ -2,7 +2,7 @@ import { ToastMessageType } from '~/types/constants'
 import { useAuthStore } from '~/store/auth'
 import { useToastMessage } from '~/composables/useToastMessage'
 import { plainToInstance } from 'class-transformer'
-import DrugBrandDto from '~/types/dto/DrugBrandDto'
+import DrugBrandDto from '~/dto/DrugBrandDto'
 
 export const useDrugBrandStore = defineStore('drugBrandStore', () => {
   const { setToastMessage } = useToastMessage()

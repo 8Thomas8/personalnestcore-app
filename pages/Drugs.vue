@@ -2,7 +2,7 @@
 import { DrugFormTranslations, ItemPerPage } from '~/types/constants'
 import AddOrUpdateDrugDialog from '~/components/dialogs/AddOrUpdateDrugDialog.vue'
 import { useUserDrugStore } from '~/store/userDrug'
-import type UserDrugDto from '~/types/dto/UserDrugDto'
+import type UserDrugDto from '~/dto/UserDrugDto'
 import { useDisplay } from 'vuetify'
 import ConfirmationDialog from '~/components/dialogs/ConfirmationDialog.vue'
 import { stringToDate } from '~/utils/date'
@@ -222,9 +222,9 @@ const onRemoveQuantity = (item: UserDrugDto) => {
               </div>
             </template>
             <template #[`item.expirationDateTime`]="{ item }">
-              <v-chip tile :color="item.isExpired ? 'error' : item.isExpireSoon ? 'warning' : 'green-lighten-1'">{{
-                item.expirationDateTime
-              }}</v-chip>
+              <v-chip tile :color="item.isExpired ? 'error' : item.isExpireSoon ? 'warning' : 'green-lighten-1'"
+                >{{ item.expirationDateTime }}
+              </v-chip>
             </template>
             <template #[`item.note`]="{ item }">
               <v-tooltip v-if="item.note" :text="item.note">
