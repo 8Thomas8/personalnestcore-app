@@ -25,11 +25,8 @@ export const useDrugBrandStore = defineStore('drugBrandStore', () => {
       })
 
       drugBrands.value = res.map((drugBrand: unknown) => plainToInstance(DrugBrandDto, drugBrand))
-    } catch (e) {
-      setToastMessage(
-        ToastMessageType.TypeError,
-        'Impossible de récupérer les marques de médicaments',
-      )
+    } catch {
+      setToastMessage(ToastMessageType.TypeError, 'Impossible de récupérer les marques de médicaments')
     }
   }
 
@@ -46,10 +43,10 @@ export const useDrugBrandStore = defineStore('drugBrandStore', () => {
             headers: { Authorization: `Bearer ${authStore.token}` },
             method: 'POST',
             body: { name },
-          }),
-        ),
+          })
+        )
       )
-    } catch (e) {
+    } catch {
       setToastMessage(ToastMessageType.TypeError, 'Impossible de créer la marque de médicament')
     }
   }
@@ -64,7 +61,7 @@ export const useDrugBrandStore = defineStore('drugBrandStore', () => {
         headers: { Authorization: `Bearer ${authStore.token}` },
         method: 'DELETE',
       })
-    } catch (e) {
+    } catch {
       setToastMessage(ToastMessageType.TypeError, 'Impossible de supprimer la marque de médicament')
     }
   }

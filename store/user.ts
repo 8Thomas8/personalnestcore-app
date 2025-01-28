@@ -25,23 +25,12 @@ export const useUserStore = defineStore('userStore', () => {
       })
 
       users.value = res?.map((user: unknown) => plainToInstance(UserDto, user)) ?? []
-    } catch (e) {
-      setToastMessage(
-        ToastMessageType.TypeError,
-        'Impossible de récupérer la liste des utilisateurs',
-      )
+    } catch {
+      setToastMessage(ToastMessageType.TypeError, 'Impossible de récupérer la liste des utilisateurs')
     }
   }
 
-  const update = async ({
-    id,
-    email,
-    password,
-  }: {
-    id: string
-    email: string
-    password: string
-  }) => {
+  const update = async ({ id, email, password }: { id: string; email: string; password: string }) => {
     authStore.getToken()
 
     if (!authStore.token) return
@@ -54,7 +43,7 @@ export const useUserStore = defineStore('userStore', () => {
       })
 
       setToastMessage(ToastMessageType.TypeSuccess, 'Utilisateur modifié avec succès')
-    } catch (e) {
+    } catch {
       setToastMessage(ToastMessageType.TypeError, "Impossible de modifier l'utilisateur")
     }
   }
@@ -72,7 +61,7 @@ export const useUserStore = defineStore('userStore', () => {
       })
 
       setToastMessage(ToastMessageType.TypeSuccess, 'Utilisateur créé avec succès')
-    } catch (e) {
+    } catch {
       setToastMessage(ToastMessageType.TypeError, "Impossible de créer l'utilisateur")
     }
   }
@@ -89,7 +78,7 @@ export const useUserStore = defineStore('userStore', () => {
       })
 
       setToastMessage(ToastMessageType.TypeSuccess, 'Utilisateur supprimé avec succès')
-    } catch (e) {
+    } catch {
       setToastMessage(ToastMessageType.TypeError, "Impossible de supprimer l'utilisateur")
     }
   }

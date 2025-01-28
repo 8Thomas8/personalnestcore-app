@@ -43,9 +43,7 @@ const addDrugForm = ref<HTMLFormElement | null>(null)
 const searchDrugBrandInput = ref<string | undefined>(undefined)
 const searchDrugNameInput = ref<string | undefined>(undefined)
 
-const isDialogOpened: ComputedRef<boolean> = computed(
-  () => addOrUpdateDrugDialog.value?.modelValue ?? false,
-)
+const isDialogOpened: ComputedRef<boolean> = computed(() => addOrUpdateDrugDialog.value?.modelValue ?? false)
 
 const itemForm = ref<{
   drugBrandId: number | null
@@ -77,7 +75,7 @@ const onSubmit = async () => {
         props.itemPerPage,
         props.searchTerms,
         props.expiredOnly,
-        props.expiringSoon,
+        props.expiringSoon
       )
       setToastMessage(ToastMessageType.TypeSuccess, 'Médicament modifié avec succès')
       closeDialog()
@@ -89,7 +87,7 @@ const onSubmit = async () => {
         props.itemPerPage,
         props.searchTerms,
         props.expiredOnly,
-        props.expiringSoon,
+        props.expiringSoon
       )
       resetForm()
 
@@ -113,7 +111,7 @@ const resetForm = () => {
   addDrugForm.value?.resetValidation()
 }
 
-const drugFormItems = Object.entries(DrugForm).map(([_, value]) => ({
+const drugFormItems = Object.entries(DrugForm).map(([, value]) => ({
   label: DrugFormTranslations[value],
   value,
 }))
@@ -123,7 +121,7 @@ watch(
   () => {
     itemForm.value.drugNameId = null
     searchDrugNameInput.value = undefined
-  },
+  }
 )
 
 watch(isDialogOpened, async (isOpened: boolean) => {
@@ -154,7 +152,7 @@ watch(
       itemForm.value.drugNameId = drugNameId
       itemToUpdateIsFilled.value = true
     }
-  },
+  }
 )
 
 onBeforeUnmount(() => {
@@ -222,13 +220,9 @@ const replaceNonNumberCharacters = (value: string) => {
                 :items="drugBrandStore.drugBrands"
                 item-title="name"
                 item-value="id"
-                @focus="onFocusBrandField"
-              >
+                @focus="onFocusBrandField">
                 <template #no-data>
-                  <v-list-item
-                    prepend-icon="mdi-plus"
-                    @click="createDrugBrand(searchDrugBrandInput!)"
-                  >
+                  <v-list-item prepend-icon="mdi-plus" @click="createDrugBrand(searchDrugBrandInput!)">
                     Créer la marque: {{ searchDrugBrandInput }}
                   </v-list-item>
                 </template>
@@ -248,13 +242,9 @@ const replaceNonNumberCharacters = (value: string) => {
                 :items="drugNameStore.drugNames"
                 item-title="name"
                 item-value="id"
-                @focus="onFocusNameField"
-              >
+                @focus="onFocusNameField">
                 <template #no-data>
-                  <v-list-item
-                    prepend-icon="mdi-plus"
-                    @click="createDrugName(searchDrugNameInput!)"
-                  >
+                  <v-list-item prepend-icon="mdi-plus" @click="createDrugName(searchDrugNameInput!)">
                     Créer le nom: {{ searchDrugNameInput }}
                   </v-list-item>
                 </template>
@@ -267,8 +257,7 @@ const replaceNonNumberCharacters = (value: string) => {
                 :rules="[required]"
                 label="Forme *"
                 item-title="label"
-                item-value="value"
-              />
+                item-value="value" />
             </v-col>
             <v-col cols="6" lg="4">
               <v-text-field
@@ -277,8 +266,7 @@ const replaceNonNumberCharacters = (value: string) => {
                 label="Dose *"
                 hint="Exemple: 1.5 ou 2"
                 persistent-hint
-                @input="itemForm.dose = replaceNonFloatCharacters(itemForm.dose!)"
-              />
+                @input="itemForm.dose = replaceNonFloatCharacters(itemForm.dose!)" />
             </v-col>
             <v-col cols="6" lg="3">
               <v-select
@@ -287,8 +275,7 @@ const replaceNonNumberCharacters = (value: string) => {
                 :rules="[required]"
                 label="Unité *"
                 item-title="label"
-                item-value="value"
-              />
+                item-value="value" />
             </v-col>
             <v-col cols="12" sm="6">
               <v-text-field
@@ -298,16 +285,14 @@ const replaceNonNumberCharacters = (value: string) => {
                 hint="Exemple: 31/12/2022"
                 persistent-hint
                 maxlength="10"
-                @input="itemForm.expirationDateTime = formatDateFr(itemForm.expirationDateTime!)"
-              />
+                @input="itemForm.expirationDateTime = formatDateFr(itemForm.expirationDateTime!)" />
             </v-col>
             <v-col cols="12" sm="6">
               <v-text-field
                 v-model="itemForm.quantity"
                 :rules="[required, isNumber, min(itemForm.quantity, 1)]"
                 label="Quantité *"
-                @input="itemForm.quantity = replaceNonNumberCharacters(itemForm.quantity!)"
-              />
+                @input="itemForm.quantity = replaceNonNumberCharacters(itemForm.quantity!)" />
             </v-col>
             <v-col cols="12">
               <v-textarea v-model="itemForm.note" />

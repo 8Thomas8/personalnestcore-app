@@ -61,7 +61,7 @@ useAsyncData(async () => {
 
     searchTerms.value,
     expiredOnly.value,
-    expiringSoon.value,
+    expiringSoon.value
   )
   isLoading.value = false
 })
@@ -87,11 +87,11 @@ watchDebounced(
       itemPerPage.value,
       searchTerms.value,
       expiredOnly.value,
-      expiringSoon.value,
+      expiringSoon.value
     )
     isLoading.value = false
   },
-  { debounce: DebounceDelay },
+  { debounce: DebounceDelay }
 )
 
 const expirationDateTimeSort = (a: string, b: string) => {
@@ -115,7 +115,7 @@ const onDeleteConfirmation = async () => {
       itemPerPage.value,
       searchTerms.value,
       expiredOnly.value,
-      expiringSoon.value,
+      expiringSoon.value
     )
     isLoading.value = false
     confirmationDialogIsOpened.value = false
@@ -151,7 +151,7 @@ const addQuantityWithDebounce = useDebounceFn(async (item: UserDrugDto) => {
     itemPerPage.value,
     searchTerms.value,
     expiredOnly.value,
-    expiringSoon.value,
+    expiringSoon.value
   )
 }, DebounceDelay)
 
@@ -167,7 +167,7 @@ const removeQuantityWithDebounce = useDebounceFn(async (item: UserDrugDto) => {
     itemPerPage.value,
     searchTerms.value,
     expiredOnly.value,
-    expiringSoon.value,
+    expiringSoon.value
   )
 }, DebounceDelay)
 
@@ -193,16 +193,8 @@ const onRemoveQuantity = (item: UserDrugDto) => {
         </v-col>
         <v-col cols="12" class="d-flex">
           <v-text-field v-model="searchTerms" label="Recherche *" max-width="80%" clearable />
-          <v-checkbox
-            v-model="expiredOnly"
-            label="Expiré uniquement"
-            @change="handleCheckboxChange('expiredOnly')"
-          />
-          <v-checkbox
-            v-model="expiringSoon"
-            label="Expire bientôt"
-            @change="handleCheckboxChange('expiringSoon')"
-          />
+          <v-checkbox v-model="expiredOnly" label="Expiré uniquement" @change="handleCheckboxChange('expiredOnly')" />
+          <v-checkbox v-model="expiringSoon" label="Expire bientôt" @change="handleCheckboxChange('expiringSoon')" />
         </v-col>
         <v-col cols="12">
           <v-data-table-server
@@ -217,8 +209,7 @@ const onRemoveQuantity = (item: UserDrugDto) => {
             :items="userDrugStore.userDrugs"
             :custom-key-sort="{
               expirationDateTime: expirationDateTimeSort,
-            }"
-          >
+            }">
             <template #[`item.quantity`]="{ item }">
               <div>
                 <v-btn icon size="24" variant="text" color="success" @click="onAddQuantity(item)">
@@ -231,13 +222,9 @@ const onRemoveQuantity = (item: UserDrugDto) => {
               </div>
             </template>
             <template #[`item.expirationDateTime`]="{ item }">
-              <v-chip
-                tile
-                :color="
-                  item.isExpired ? 'error' : item.isExpireSoon ? 'warning' : 'green-lighten-1'
-                "
-                >{{ item.expirationDateTime }}</v-chip
-              >
+              <v-chip tile :color="item.isExpired ? 'error' : item.isExpireSoon ? 'warning' : 'green-lighten-1'">{{
+                item.expirationDateTime
+              }}</v-chip>
             </template>
             <template #[`item.note`]="{ item }">
               <v-tooltip v-if="item.note" :text="item.note">
@@ -269,14 +256,12 @@ const onRemoveQuantity = (item: UserDrugDto) => {
       :search-terms="searchTerms"
       :update-mode="updateMode"
       :item-to-update="itemToUpdate"
-      @update:add-or-update-drug-dialog-is-opened="updateAddOrUpdateDrugDialogIsOpened"
-    />
+      @update:add-or-update-drug-dialog-is-opened="updateAddOrUpdateDrugDialogIsOpened" />
 
     <ConfirmationDialog
       v-model="confirmationDialogIsOpened"
       text="Voulez-vous supprimer ce médicament ?"
       @confirm="onDeleteConfirmation"
-      @cancel="onCancelDelete"
-    />
+      @cancel="onCancelDelete" />
   </div>
 </template>

@@ -62,36 +62,27 @@ onBeforeMount(async () => {
     <v-card>
       <v-card-title class="d-flex justify-space-between">
         {{ step === STEP.LOGIN ? 'Connexion' : 'Création du compte admin' }}
-        <v-btn color="grey" variant="text" @click="toggleAuthDialog(false)"
-          ><v-icon>mdi-close</v-icon></v-btn
-        >
+        <v-btn color="grey" variant="text" @click="toggleAuthDialog(false)"><v-icon>mdi-close</v-icon></v-btn>
       </v-card-title>
       <v-form v-model="formIsValid" @submit.prevent="onSubmit">
         <v-card-text>
           <v-row>
             <v-col cols="12">
-              <v-text-field
-                v-model.trim="form.email"
-                placeholder="Email *"
-                type="email"
-                :rules="[required, email]"
-              />
+              <v-text-field v-model.trim="form.email" placeholder="Email *" type="email" :rules="[required, email]" />
             </v-col>
             <v-col cols="12">
               <v-text-field
                 v-model="form.password"
                 placeholder="Mot de passe *"
                 type="password"
-                :rules="[required, password]"
-              />
+                :rules="[required, password]" />
             </v-col>
             <v-col v-if="step === STEP.SIGNIN" cols="12">
               <v-text-field
                 v-model="form.passwordConfirmation"
                 placeholder="Confirmation du mot de passe *"
                 type="password"
-                :rules="[required, passwordConfirmation(form.passwordConfirmation, form.password)]"
-              />
+                :rules="[required, passwordConfirmation(form.passwordConfirmation, form.password)]" />
             </v-col>
           </v-row>
         </v-card-text>

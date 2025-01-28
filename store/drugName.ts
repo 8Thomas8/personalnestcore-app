@@ -26,7 +26,7 @@ export const useDrugNameStore = defineStore('drugNameStore', () => {
       })
 
       drugNames.value = res.map((drugName: unknown) => plainToInstance(DrugNameDto, drugName))
-    } catch (e) {
+    } catch {
       setToastMessage(ToastMessageType.TypeError, 'Impossible de récupérer les noms de médicaments')
     }
   }
@@ -43,7 +43,7 @@ export const useDrugNameStore = defineStore('drugNameStore', () => {
       })
 
       return plainToInstance(DrugNameDto, res)
-    } catch (e) {
+    } catch {
       setToastMessage(ToastMessageType.TypeError, 'Impossible de récupérer le nom de médicament')
     }
   }
@@ -59,7 +59,7 @@ export const useDrugNameStore = defineStore('drugNameStore', () => {
         method: 'POST',
         body: { name, drugBrandId },
       })
-    } catch (e) {
+    } catch {
       setToastMessage(ToastMessageType.TypeError, 'Création du nom de médicament impossible')
     }
   }
@@ -74,7 +74,7 @@ export const useDrugNameStore = defineStore('drugNameStore', () => {
         headers: { Authorization: `Bearer ${authStore.token}` },
         method: 'DELETE',
       })
-    } catch (e) {
+    } catch {
       setToastMessage(ToastMessageType.TypeError, 'Suppression du nom de médicament impossible')
     }
   }
