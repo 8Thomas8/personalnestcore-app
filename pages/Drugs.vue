@@ -222,8 +222,8 @@ const onRemoveQuantity = (item: UserDrugDto) => {
               </div>
             </template>
             <template #[`item.expirationDateTime`]="{ item }">
-              <v-chip tile :color="item.isExpired ? 'error' : item.isExpireSoon ? 'warning' : 'green-lighten-1'"
-                >{{ item.expirationDateTime }}
+              <v-chip tile :color="item.isExpired ? 'error' : item.isExpireSoon ? 'warning' : 'green-lighten-1'">
+                {{ item.expirationDateTime }}
               </v-chip>
             </template>
             <template #[`item.note`]="{ item }">
