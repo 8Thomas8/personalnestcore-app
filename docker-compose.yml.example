@@ -1,0 +1,18 @@
+version: "3.8"
+services:
+  personalnestcore-app:
+    container_name: personalnestcore-app
+    image: 8thomas8/personalnestcore-app:latest
+    build:
+      context: .
+    environment:
+      - NODE_ENV=production
+      - NUXT_PUBLIC_API_BASE=http://localhost:3333
+    networks:
+      - personalnestcore
+    ports:
+      - "3000:3000"
+
+networks:
+  personalnestcore:
+    driver: bridge
