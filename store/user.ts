@@ -19,7 +19,7 @@ export const useUserStore = defineStore('userStore', () => {
     if (!authStore.token) return
 
     try {
-      const res = await $apiFetch('/api/v1/user', {
+      const res = await $apiFetch('/v1/user', {
         headers: { Authorization: `Bearer ${authStore.token}` },
         method: 'GET',
       })
@@ -36,7 +36,7 @@ export const useUserStore = defineStore('userStore', () => {
     if (!authStore.token) return
 
     try {
-      await $apiFetch(`/api/v1/user/${id}`, {
+      await $apiFetch(`/v1/user/${id}`, {
         headers: { Authorization: `Bearer ${authStore.token}` },
         method: 'PATCH',
         body: { email, password },
@@ -54,7 +54,7 @@ export const useUserStore = defineStore('userStore', () => {
     if (!authStore.token) return
 
     try {
-      await $apiFetch('/api/v1/user', {
+      await $apiFetch('/v1/user', {
         headers: { Authorization: `Bearer ${authStore.token}` },
         method: 'POST',
         body: { email, password },
@@ -72,7 +72,7 @@ export const useUserStore = defineStore('userStore', () => {
     if (!authStore.token) return
 
     try {
-      await $apiFetch(`/api/v1/user/${id}`, {
+      await $apiFetch(`/v1/user/${id}`, {
         headers: { Authorization: `Bearer ${authStore.token}` },
         method: 'DELETE',
       })

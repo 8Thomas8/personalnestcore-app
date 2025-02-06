@@ -19,7 +19,7 @@ export const useDrugNameStore = defineStore('drugNameStore', () => {
     if (!authStore.token) return
 
     try {
-      const res = await $apiFetch('/api/v1/drug-name', {
+      const res = await $apiFetch('/v1/drug-name', {
         headers: { Authorization: `Bearer ${authStore.token}` },
         method: 'GET',
         params: { drugBrandId },
@@ -37,7 +37,7 @@ export const useDrugNameStore = defineStore('drugNameStore', () => {
     if (!authStore.token) return
 
     try {
-      const res = await $apiFetch(`/api/v1/drug-name/${id}`, {
+      const res = await $apiFetch(`/v1/drug-name/${id}`, {
         headers: { Authorization: `Bearer ${authStore.token}` },
         method: 'GET',
       })
@@ -54,7 +54,7 @@ export const useDrugNameStore = defineStore('drugNameStore', () => {
     if (!authStore.token) return
 
     try {
-      await $apiFetch('/api/v1/drug-name', {
+      await $apiFetch('/v1/drug-name', {
         headers: { Authorization: `Bearer ${authStore.token}` },
         method: 'POST',
         body: { name, drugBrandId },
@@ -70,7 +70,7 @@ export const useDrugNameStore = defineStore('drugNameStore', () => {
     if (!authStore.token) return
 
     try {
-      await $apiFetch(`/api/v1/drug-name/${id}`, {
+      await $apiFetch(`/v1/drug-name/${id}`, {
         headers: { Authorization: `Bearer ${authStore.token}` },
         method: 'DELETE',
       })

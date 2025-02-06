@@ -2,6 +2,8 @@ import { useAuthStore } from '~/store/auth'
 import { PublicRoutes, ServiceRoutes } from '~/types/routes'
 
 export default defineNuxtRouteMiddleware((to) => {
+  if (to.path.startsWith('/api')) return
+
   const authStore = useAuthStore()
 
   if (authStore.isAuthenticated && to.path === PublicRoutes.Home) {

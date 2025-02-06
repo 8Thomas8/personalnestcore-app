@@ -34,7 +34,7 @@ export const useUserDrugStore = defineStore('userDrugStore', () => {
     if (!authStore.token) return
 
     try {
-      const res = await $apiFetch('/api/v1/user-drug', {
+      const res = await $apiFetch('/v1/user-drug', {
         headers: { Authorization: `Bearer ${authStore.token}` },
         params: { currentPage, itemPerPage, terms, expiredOnly, expireSoon },
         method: 'GET',
@@ -71,7 +71,7 @@ export const useUserDrugStore = defineStore('userDrugStore', () => {
     if (!authStore.token) return
 
     try {
-      await $apiFetch('/api/v1/user-drug', {
+      await $apiFetch('/v1/user-drug', {
         headers: { Authorization: `Bearer ${authStore.token}` },
         method: 'POST',
         body: {
@@ -118,7 +118,7 @@ export const useUserDrugStore = defineStore('userDrugStore', () => {
     const { drugBrandId, drugNameId, form, dose, note, unit, expirationDateTime, quantity } = data
 
     try {
-      await $apiFetch(`/api/v1/user-drug/${id}`, {
+      await $apiFetch(`/v1/user-drug/${id}`, {
         headers: { Authorization: `Bearer ${authStore.token}` },
         method: 'PUT',
         body: {
@@ -144,7 +144,7 @@ export const useUserDrugStore = defineStore('userDrugStore', () => {
     if (!authStore.token) return
 
     try {
-      await $apiFetch(`/api/v1/user-drug/${id}/quantity`, {
+      await $apiFetch(`/v1/user-drug/${id}/quantity`, {
         headers: { Authorization: `Bearer ${authStore.token}` },
         method: 'PATCH',
         body: { quantity },
@@ -160,7 +160,7 @@ export const useUserDrugStore = defineStore('userDrugStore', () => {
     if (!authStore.token) return
 
     try {
-      await $apiFetch(`/api/v1/user-drug/${id}`, {
+      await $apiFetch(`/v1/user-drug/${id}`, {
         headers: { Authorization: `Bearer ${authStore.token}` },
         method: 'DELETE',
       })
