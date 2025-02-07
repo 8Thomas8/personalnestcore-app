@@ -35,7 +35,7 @@ export const useAuthStore = defineStore('authStore', () => {
 
   const login = async (email: string, password: string) => {
     try {
-      const res = await $apiFetch('/api/v1/auth/login', {
+      const res = await $apiFetch('/v1/auth/login', {
         method: 'POST',
         body: { email, password },
       })
@@ -51,7 +51,7 @@ export const useAuthStore = defineStore('authStore', () => {
 
   const register = async (email: string, password: string) => {
     try {
-      await $apiFetch('/api/v1/auth/register', {
+      await $apiFetch('/v1/auth/register', {
         method: 'POST',
         body: { email, password },
       })
@@ -61,7 +61,7 @@ export const useAuthStore = defineStore('authStore', () => {
   }
 
   const logout = async () => {
-    await $apiFetch('/api/v1/auth/logout', {
+    await $apiFetch('/v1/auth/logout', {
       method: 'POST',
     })
 
@@ -76,7 +76,7 @@ export const useAuthStore = defineStore('authStore', () => {
     if (!token.value) return
 
     try {
-      const res = await $apiFetch('/api/v1/me', {
+      const res = await $apiFetch('/v1/me', {
         headers: { Authorization: `Bearer ${token.value}` },
         method: 'GET',
       })
@@ -90,7 +90,7 @@ export const useAuthStore = defineStore('authStore', () => {
 
   const adminCanRegister = async () => {
     try {
-      const res = await $apiFetch('/api/v1/admin-can-register')
+      const res = await $apiFetch('/v1/admin-can-register')
       return res === 'true'
     } catch {
       setToastMessage(ToastMessageType.TypeError, 'Impossible de vérifier si un administrateur peut être créé.')

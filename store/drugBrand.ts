@@ -19,7 +19,7 @@ export const useDrugBrandStore = defineStore('drugBrandStore', () => {
     if (!authStore.token) return
 
     try {
-      const res = await $apiFetch('/api/v1/drug-brand', {
+      const res = await $apiFetch('/v1/drug-brand', {
         headers: { Authorization: `Bearer ${authStore.token}` },
         method: 'GET',
       })
@@ -39,7 +39,7 @@ export const useDrugBrandStore = defineStore('drugBrandStore', () => {
       drugBrands.value.push(
         plainToInstance(
           DrugBrandDto,
-          await $apiFetch('/api/v1/drug-brand', {
+          await $apiFetch('/v1/drug-brand', {
             headers: { Authorization: `Bearer ${authStore.token}` },
             method: 'POST',
             body: { name },
@@ -57,7 +57,7 @@ export const useDrugBrandStore = defineStore('drugBrandStore', () => {
     if (!authStore.token) return
 
     try {
-      await $apiFetch(`/api/v1/drug-brand/${id}`, {
+      await $apiFetch(`/v1/drug-brand/${id}`, {
         headers: { Authorization: `Bearer ${authStore.token}` },
         method: 'DELETE',
       })
