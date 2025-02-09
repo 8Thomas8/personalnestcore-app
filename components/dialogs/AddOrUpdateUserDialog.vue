@@ -16,7 +16,7 @@ const props = defineProps<{
   userToUpdate: UserDto | null
 }>()
 
-const { required, email, password } = useFormValidation()
+const { required, username, password } = useFormValidation()
 const userStore = useUserStore()
 const { setToastMessage } = useToastMessage()
 
@@ -31,17 +31,17 @@ const displayEmptyError = ref(false)
 const isDialogOpened: ComputedRef<boolean> = computed(() => addOrUpdateMemberDialog.value?.modelValue ?? false)
 
 const userForm = ref<{
-  email: string | null
+  username: string | null
   password: string | null
 }>({
-  email: null,
+  username: null,
   password: null,
 })
 
 const onSubmit = async () => {
   if (!props.updateMode && !formIsValid.value) return
 
-  if (!userForm.value.password && !userForm.value.email) {
+  if (!userForm.value.password && !userForm.value.username) {
     return (displayEmptyError.value = true)
   }
 
@@ -64,7 +64,7 @@ const onSubmit = async () => {
 
 const resetForm = () => {
   userForm.value = {
-    email: null,
+    username: null,
     password: null,
   }
   addUserForm.value?.resetValidation()
@@ -72,9 +72,9 @@ const resetForm = () => {
 
 watch(isDialogOpened, async (isOpened: boolean) => {
   if (isOpened && props.updateMode && props.userToUpdate) {
-    const { email, password } = props.userToUpdate
+    const { username, password } = props.userToUpdate
 
-    userForm.value.email = email
+    userForm.value.username = username
     userForm.value.password = password ?? null
   }
 
@@ -116,9 +116,9 @@ const closeDialog = () => {
           <v-row>
             <v-col cols="12" sm="6">
               <v-text-field
-                v-model="userForm.email"
-                :label="`Email ${updateMode ? '' : '*'}`"
-                :rules="[updateMode ? () => true : required, email]" />
+                v-model="userForm.username"
+                :label="`Pseudo ${updateMode ? '' : '*'}`"
+                :rules="[updateMode ? () => true : required, username]" />
             </v-col>
             <v-col cols="12" sm="6">
               <v-text-field

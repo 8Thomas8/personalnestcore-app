@@ -14,7 +14,7 @@ const userStore = useUserStore()
           <v-card-text>
             <v-row no-gutters>
               <v-col cols="12">
-                <v-text-field readonly label="Email" active :value="userStore.user?.email" />
+                <v-text-field readonly label="Pseudo" active :value="userStore.user?.username" />
               </v-col>
             </v-row>
           </v-card-text>

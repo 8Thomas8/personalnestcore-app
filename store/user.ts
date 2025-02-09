@@ -30,7 +30,7 @@ export const useUserStore = defineStore('userStore', () => {
     }
   }
 
-  const update = async ({ id, email, password }: { id: string; email: string; password: string }) => {
+  const update = async ({ id, username, password }: { id: string; username: string; password: string }) => {
     authStore.getToken()
 
     if (!authStore.token) return
@@ -39,7 +39,7 @@ export const useUserStore = defineStore('userStore', () => {
       await $apiFetch(`/v1/user/${id}`, {
         headers: { Authorization: `Bearer ${authStore.token}` },
         method: 'PATCH',
-        body: { email, password },
+        body: { username, password },
       })
 
       setToastMessage(ToastMessageType.TypeSuccess, 'Utilisateur modifié avec succès')
@@ -48,7 +48,7 @@ export const useUserStore = defineStore('userStore', () => {
     }
   }
 
-  const create = async ({ email, password }: { email: string; password: string }) => {
+  const create = async ({ username, password }: { username: string; password: string }) => {
     authStore.getToken()
 
     if (!authStore.token) return
@@ -57,7 +57,7 @@ export const useUserStore = defineStore('userStore', () => {
       await $apiFetch('/v1/user', {
         headers: { Authorization: `Bearer ${authStore.token}` },
         method: 'POST',
-        body: { email, password },
+        body: { username, password },
       })
 
       setToastMessage(ToastMessageType.TypeSuccess, 'Utilisateur créé avec succès')
