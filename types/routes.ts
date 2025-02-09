@@ -9,5 +9,5 @@ export enum AccountRoutes {
 }
 
 export enum ServiceRoutes {
-  Drugs = '/drugs',
+  Pharmacy = '/pharmacie',
 }

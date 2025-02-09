@@ -43,7 +43,7 @@ export const useAuthStore = defineStore('authStore', () => {
       setToken(res.token)
       user.value = res.user
       toggleAuthDialog(false)
-      await router.replace(ServiceRoutes.Drugs)
+      await router.replace(ServiceRoutes.Pharmacy)
     } catch {
       setToastMessage(ToastMessageType.TypeError, 'Vérifiez vos identifiants')
     }

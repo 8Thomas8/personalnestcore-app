@@ -2,12 +2,14 @@ import { useAuthStore } from '~/store/auth'
 import { PublicRoutes, ServiceRoutes } from '~/types/routes'
 
 export default defineNuxtRouteMiddleware((to) => {
-  if (to.path.startsWith('/api')) return
+  const config = useRuntimeConfig()
+
+  if (to.path.startsWith(config.public.apiBase)) return
 
   const authStore = useAuthStore()
 
   if (authStore.isAuthenticated && to.path === PublicRoutes.Home) {
-    return navigateTo(ServiceRoutes.Drugs)
+    return navigateTo(ServiceRoutes.Pharmacy)
   }
 
   if (!authStore.isAuthenticated && !Object.values(PublicRoutes).includes(to.path as PublicRoutes)) {
