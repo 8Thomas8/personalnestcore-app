@@ -1,3 +1,5 @@
+import { passwordReg, usernameReg } from '~/types/constants'
+
 export const useFormValidation = () => {
   const required = (value: string | number) => {
     if (!value && value !== 0) {
@@ -13,17 +15,15 @@ export const useFormValidation = () => {
     return true
   }
 
-  const email = (value: string) => {
-    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-    if (!emailPattern.test(value)) {
-      return 'Adresse email invalide.'
+  const username = (value: string) => {
+    if (!usernameReg.test(value)) {
+      return "Le nom d'utilisateur doit contenir entre 3 et 32 caractères, lettres, chiffres et '_'."
     }
     return true
   }
 
   const password = (value: string) => {
-    const emailPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
-    if (!emailPattern.test(value)) {
+    if (!passwordReg.test(value)) {
       return 'Le mot de passe doit contenir au moins 8 caractères dont 1 lettre majuscule, 1 lettre minuscule, 1 chiffre et 1 caractère spécial.'
     }
     return true
@@ -70,12 +70,12 @@ export const useFormValidation = () => {
   return {
     required,
     requiredIf,
-    email,
     password,
     passwordConfirmation,
     isFloat,
     isDateisFormatFr,
     isNumber,
     min,
+    username,
   }
 }

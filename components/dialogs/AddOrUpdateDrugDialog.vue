@@ -9,11 +9,6 @@ import { capitalize } from 'vue'
 import { formatDateFr } from '~/utils/date'
 import type { VAutocomplete, VDialog, VTextField } from 'vuetify/components'
 
-const addOrUpdateDrugDialogIsOpened = defineModel('addOrUpdateDrugDialogIsOpened', {
-  type: Boolean,
-  default: false,
-})
-
 const emits = defineEmits(['update:addOrUpdateDrugDialogIsOpened'])
 const props = defineProps<{
   currentPage: number
@@ -31,6 +26,11 @@ const drugNameStore = useDrugNameStore()
 const userDrugStore = useUserDrugStore()
 const { setToastMessage } = useToastMessage()
 
+const addOrUpdateDrugDialogIsOpened = defineModel('addOrUpdateDrugDialogIsOpened', {
+  type: Boolean,
+  default: false,
+})
+
 const addOrUpdateDrugDialog = ref<VDialog>()
 const drugNameField = ref<VTextField>()
 
@@ -42,8 +42,6 @@ const formIsValid = ref(false)
 const addDrugForm = ref<HTMLFormElement | null>(null)
 const searchDrugBrandInput = ref<string | undefined>(undefined)
 const searchDrugNameInput = ref<string | undefined>(undefined)
-
-const isDialogOpened: ComputedRef<boolean> = computed(() => addOrUpdateDrugDialog.value?.modelValue ?? false)
 
 const itemForm = ref<{
   drugBrandId: number | null
@@ -65,56 +63,7 @@ const itemForm = ref<{
   quantity: null,
 })
 
-const onSubmit = async () => {
-  if (!formIsValid.value) return
-
-  if (props.updateMode) {
-    if (await userDrugStore.update(props.itemToUpdate!.id, itemForm.value)) {
-      await userDrugStore.fetchAll(
-        props.currentPage,
-        props.itemPerPage,
-        props.searchTerms,
-        props.expiredOnly,
-        props.expiringSoon
-      )
-      setToastMessage(ToastMessageType.TypeSuccess, 'Médicament modifié avec succès')
-      closeDialog()
-    }
-  } else {
-    if (await userDrugStore.create(itemForm.value)) {
-      await userDrugStore.fetchAll(
-        props.currentPage,
-        props.itemPerPage,
-        props.searchTerms,
-        props.expiredOnly,
-        props.expiringSoon
-      )
-      resetForm()
-
-      setToastMessage(ToastMessageType.TypeSuccess, 'Médicament ajouté avec succès')
-    }
-  }
-  userDrugIsLoading.value = false
-}
-
-const resetForm = () => {
-  itemForm.value = {
-    drugBrandId: null,
-    drugNameId: null,
-    form: null,
-    dose: null,
-    note: null,
-    unit: null,
-    expirationDateTime: undefined,
-    quantity: null,
-  }
-  addDrugForm.value?.resetValidation()
-}
-
-const drugFormItems = Object.entries(DrugForm).map(([, value]) => ({
-  label: DrugFormTranslations[value],
-  value,
-}))
+const isDialogOpened: ComputedRef<boolean> = computed(() => addOrUpdateDrugDialog.value?.modelValue ?? false)
 
 watch(
   () => itemForm.value.drugBrandId,
@@ -158,6 +107,59 @@ watch(
 onBeforeUnmount(() => {
   resetForm()
 })
+
+const onSubmit = async () => {
+  if (!formIsValid.value) return
+
+  if (props.updateMode) {
+    if (await userDrugStore.update(props.itemToUpdate!.id, itemForm.value)) {
+      await userDrugStore.fetchAll(
+        props.currentPage,
+        props.itemPerPage,
+        props.searchTerms,
+        props.expiredOnly,
+        props.expiringSoon
+      )
+      setToastMessage(ToastMessageType.TypeSuccess, 'Médicament modifié avec succès')
+      closeDialog()
+    }
+  } else {
+    if (await userDrugStore.create(itemForm.value)) {
+      await userDrugStore.fetchAll(
+        props.currentPage,
+        props.itemPerPage,
+        props.searchTerms,
+        props.expiredOnly,
+        props.expiringSoon
+      )
+      resetForm()
+
+      setToastMessage(ToastMessageType.TypeSuccess, 'Médicament ajouté avec succès')
+    }
+  }
+  userDrugIsLoading.value = false
+}
+
+const resetForm = () => {
+  itemForm.value = {
+    drugBrandId: undefined,
+    drugNameId: null,
+    form: null,
+    dose: null,
+    note: null,
+    unit: null,
+    expirationDateTime: undefined,
+    quantity: null,
+  }
+  addDrugForm.value?.resetValidation()
+  searchDrugBrandInput.value = undefined
+  searchDrugNameInput.value = undefined
+}
+
+const drugFormItems = Object.entries(DrugForm).map(([, value]) => ({
+  label: DrugFormTranslations[value],
+  value,
+}))
 
 const closeDialog = () => {
   emits('update:addOrUpdateDrugDialogIsOpened', false)

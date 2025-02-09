@@ -16,7 +16,7 @@ const userToDelete = ref<UserDto | null>(null)
 const confirmationDialogIsOpened = ref(false)
 
 const headers = [
-  { title: 'Email', key: 'email', sortable: true, align: 'center' },
+  { title: 'Pseudo', key: 'username', sortable: true, align: 'center' },
   { title: 'Création', key: 'createdAt', sortable: true, align: 'center' },
   { title: 'Mise à jour', key: 'updatedAt', sortable: true, align: 'center' },
   { title: 'Actions', key: 'actions', sortable: false, align: 'end' },

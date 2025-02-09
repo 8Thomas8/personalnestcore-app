@@ -6,7 +6,7 @@ export default class UserDto {
   id!: string
 
   @Expose()
-  email!: string
+  username!: string
 
   @Expose()
   role!: string

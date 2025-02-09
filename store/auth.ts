@@ -33,11 +33,11 @@ export const useAuthStore = defineStore('authStore', () => {
     token.value = null
   }
 
-  const login = async (email: string, password: string) => {
+  const login = async (username: string, password: string) => {
     try {
       const res = await $apiFetch('/v1/auth/login', {
         method: 'POST',
-        body: { email, password },
+        body: { username, password },
       })
 
       setToken(res.token)
@@ -49,11 +49,11 @@ export const useAuthStore = defineStore('authStore', () => {
     }
   }
 
-  const register = async (email: string, password: string) => {
+  const register = async (username: string, password: string) => {
     try {
       await $apiFetch('/v1/auth/register', {
         method: 'POST',
-        body: { email, password },
+        body: { username, password },
       })
     } catch {
       setToastMessage(ToastMessageType.TypeError, 'Vérifiez vos identifiants')

@@ -9,14 +9,14 @@ enum STEP {
 }
 
 const { authDialogIsOpened, toggleAuthDialog } = useAuth()
-const { required, email, password, passwordConfirmation } = useFormValidation()
+const { required, username, password, passwordConfirmation } = useFormValidation()
 const authStore = useAuthStore()
 const isLoading = ref(false)
 const step = ref(STEP.LOGIN)
 const adminCanRegister = ref(false)
 
 const form = ref({
-  email: '',
+  username: '',
   password: '',
   passwordConfirmation: '',
 })
@@ -32,19 +32,19 @@ watch(authDialogIsOpened, (isOpened: boolean) => {
 const onSubmit = async () => {
   if (!formIsValid.value) return
 
-  const { email, password } = form.value
+  const { username, password } = form.value
   isLoading.value = true
   if (step.value === STEP.LOGIN) {
-    await authStore.login(email, password)
+    await authStore.login(username, password)
   } else {
-    await authStore.register(email, password)
-    await authStore.login(email, password)
+    await authStore.register(username, password)
+    await authStore.login(username, password)
   }
   isLoading.value = false
 }
 
 const resetForm = () => {
-  form.value.email = ''
+  form.value.username = ''
   form.value.password = ''
   form.value.passwordConfirmation = ''
 }
@@ -68,7 +68,11 @@ onBeforeMount(async () => {
         <v-card-text>
           <v-row>
             <v-col cols="12">
-              <v-text-field v-model.trim="form.email" placeholder="Email *" type="email" :rules="[required, email]" />
+              <v-text-field
+                v-model.trim="form.username"
+                placeholder="Pseudo *"
+                type="text"
+                :rules="[required, username]" />
             </v-col>
             <v-col cols="12">
               <v-text-field
