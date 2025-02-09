@@ -184,7 +184,7 @@ const onRemoveQuantity = (item: UserDrugDto) => {
 
 <template>
   <div>
-    <h1 class="pb-4">Gestion du stock de médicaments</h1>
+    <h1 class="pb-4 d-flex"><v-icon icon="mdi-medical-cotton-swab" class="mr-2" /> Gestion du stock de médicaments</h1>
     <v-card class="pa-4">
       <v-row>
         <v-spacer />

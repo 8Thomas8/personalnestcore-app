@@ -9,7 +9,7 @@ watch(
   () => authStore.isAuthenticated,
   async (isAuthenticated) => {
     if (isAuthenticated) {
-      await router.replace(ServiceRoutes.Drugs)
+      await router.replace(ServiceRoutes.Pharmacy)
     }
   }
 )

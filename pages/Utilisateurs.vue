@@ -90,7 +90,7 @@ const onClickUpdate = (user: UserDto) => {
                   :items="userStore.users"
                   :items-length="userStore.users?.length ?? 0"
                   no-data-text="Aucun utilisateur">
-                  <template #[`item.action`]="{ item }">
+                  <template #[`item.actions`]="{ item }">
                     <v-btn variant="text" color="warning" @click="onClickUpdate(item)">
                       <v-icon>mdi-pencil</v-icon>
                     </v-btn>
