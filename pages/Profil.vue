@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useUserStore } from '~/store/user'
+import { useAuthStore } from '~/store/auth'
 
-const userStore = useUserStore()
+const authStore = useAuthStore()
 </script>
 
 <template>
@@ -14,7 +14,7 @@ const userStore = useUserStore()
           <v-card-text>
             <v-row no-gutters>
               <v-col cols="12">
-                <v-text-field readonly label="Pseudo" active :value="userStore.user?.username" />
+                <v-text-field readonly label="Pseudo" active :value="authStore.user?.username" />
               </v-col>
             </v-row>
           </v-card-text>
