@@ -2,7 +2,7 @@
 import { useFormValidation } from '~/composables/formValidation'
 import { useDrugBrandStore } from '~/store/drugBrand'
 import { useDrugNameStore } from '~/store/drugName'
-import { DrugForm, DrugFormTranslations, DrugUnit, ToastMessageType } from '~/types/constants'
+import { DrugForm, DrugFormTranslations, DrugUnit, DrugUnitTranslations, ToastMessageType } from '~/types/constants'
 import { useUserDrugStore } from '~/store/userDrug'
 import type UserDrugDto from '~/dto/UserDrugDto'
 import { capitalize } from 'vue'
@@ -271,13 +271,16 @@ const replaceNonNumberCharacters = (value: string) => {
                 @input="itemForm.dose = replaceNonFloatCharacters(itemForm.dose!)" />
             </v-col>
             <v-col cols="6" lg="3">
+              {{ itemForm.unit }}
               <v-select
                 v-model="itemForm.unit"
-                :items="Object.values(DrugUnit)"
+                :items="Object.values(DrugUnitTranslations)"
                 :rules="[required]"
                 label="Unité *"
                 item-title="label"
-                item-value="value" />
+                :item-value="
+                  (item) => Object.keys(DrugUnitTranslations).find((key) => DrugUnitTranslations[key] === item)
+                " />
             </v-col>
             <v-col cols="12" sm="6">
               <v-text-field

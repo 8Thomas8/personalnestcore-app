@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { DrugFormTranslations, ItemPerPage } from '~/types/constants'
+import { DrugFormTranslations, DrugUnitTranslations, ItemPerPage } from '~/types/constants'
 import AddOrUpdateDrugDialog from '~/components/dialogs/AddOrUpdateDrugDialog.vue'
 import { useUserDrugStore } from '~/store/userDrug'
 import type UserDrugDto from '~/dto/UserDrugDto'
@@ -34,13 +34,13 @@ const headers = [
   { title: 'Marque', key: 'drugBrand.name', sortable: true },
   {
     title: 'Dose',
-    value: (item: UserDrugDto) => `${item.dose || ''} ${item.unit || ''}`,
+    value: (item: UserDrugDto) => `${item.dose || ''} ${DrugUnitTranslations[item.unit]}`,
     key: 'dose',
     sortable: false,
   },
   {
     title: 'Forme',
-    value: (item: UserDrugDto) => DrugFormTranslations[item.form || ''],
+    value: (item: UserDrugDto) => DrugFormTranslations[item.form],
     key: 'form',
     align: 'center',
   },

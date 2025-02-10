@@ -34,6 +34,24 @@ export enum DrugUnit {
   Unit = 'unit',
 }
 
+export const DrugUnitTranslations = {
+  [DrugUnit.Mg]: 'mg',
+  [DrugUnit.G]: 'g',
+  [DrugUnit.Kg]: 'kg',
+  [DrugUnit.Ml]: 'ml',
+  [DrugUnit.L]: 'l',
+  [DrugUnit.Mcg]: 'µg',
+  [DrugUnit.Oz]: 'oz',
+  [DrugUnit.Lb]: 'lb',
+  [DrugUnit.FlOz]: 'fl oz',
+  [DrugUnit.Pt]: 'pt',
+  [DrugUnit.Qt]: 'qt',
+  [DrugUnit.Gal]: 'gal',
+  [DrugUnit.Tbsp]: 'tbsp',
+  [DrugUnit.Tsp]: 'tsp',
+  [DrugUnit.Unit]: 'unité',
+}
+
 export enum DrugForm {
   Tablets = 'tablets',
   Capsules = 'capsules',
