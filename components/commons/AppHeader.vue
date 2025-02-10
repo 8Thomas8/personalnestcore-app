@@ -27,7 +27,7 @@ watch(
   <v-app-bar>
     <v-app-bar-nav-icon v-if="navDrawerIsActive" @click="drawerIsOpened = !drawerIsOpened" />
 
-    <v-app-bar-title @click="router.push(PublicRoutes.Home)"> PersonalNestCore</v-app-bar-title>
+    <v-app-bar-title @click="router.push(PublicRoutes.Home)"> personalnestcore</v-app-bar-title>
 
     <div class="mx-4">
       <v-btn v-if="authStore.isAuthenticated" variant="tonal" color="primary">

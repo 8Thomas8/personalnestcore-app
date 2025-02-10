@@ -2,7 +2,7 @@
   <v-footer class="bg-grey-lighten-3">
     <v-row justify="center" no-gutters>
       <v-col class="text-center mt-1" cols="12">
-        {{ new Date().getFullYear() }} — <strong>PersonalNestCore</strong>
+        {{ new Date().getFullYear() }} — <strong>personalnestcore</strong>
       </v-col>
     </v-row>
   </v-footer>
