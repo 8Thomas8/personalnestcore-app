@@ -3,11 +3,11 @@ const drawerIsOpened = ref(null)
 </script>
 
 <template>
-  <div class="bg-grey-lighten-5">
+  <div class="h-100 d-flex flex-column bg-grey-lighten-5">
     <CommonsNavDrawer v-model="drawerIsOpened" />
     <CommonsAppHeader v-model="drawerIsOpened" nav-drawer-is-active />
 
-    <v-main>
+    <v-main class="flex-grow-1">
       <div class="pa-6">
         <slot />
       </div>

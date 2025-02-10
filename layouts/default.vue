@@ -20,10 +20,10 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <div>
+  <div class="h-100 d-flex flex-column">
     <CommonsAppHeader />
 
-    <v-main>
+    <v-main class="flex-grow-1">
       <slot />
     </v-main>
 
