@@ -22,5 +22,7 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <h1>Connexion en cours ...</h1>
+  <v-container>
+    <h1>Connexion en cours ...</h1>
+  </v-container>
 </template>
