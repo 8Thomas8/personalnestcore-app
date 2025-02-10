@@ -3,6 +3,7 @@ import { useUserStore } from '~/store/user'
 import AddOrUpdateUserDialog from '~/components/dialogs/AddOrUpdateUserDialog.vue'
 import type UserDto from '~/dto/UserDto'
 import ConfirmationDialog from '~/components/dialogs/ConfirmationDialog.vue'
+import { ServiceRoutes } from '~/types/routes'
 
 const userStore = useUserStore()
 
@@ -73,6 +74,10 @@ const onClickUpdate = (user: UserDto) => {
   <v-container>
     <v-row>
       <v-col>
+        <v-btn :to="{ path: ServiceRoutes.Pharmacy }" class="my-4" variant="text" prepend-icon="mdi-keyboard-return">
+          Retour aux services
+        </v-btn>
+        
         <v-card>
           <v-card-title>Utilisateurs</v-card-title>
 

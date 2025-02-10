@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useAuthStore } from '~/store/auth'
+import { ServiceRoutes } from '~/types/routes'
 
 const authStore = useAuthStore()
 </script>
@@ -8,6 +9,10 @@ const authStore = useAuthStore()
   <v-container>
     <v-row>
       <v-col>
+        <v-btn :to="{ path: ServiceRoutes.Pharmacy }" class="my-4" variant="text" prepend-icon="mdi-keyboard-return">
+          Retour aux services
+        </v-btn>
+
         <v-card>
           <v-card-title>Mon Profil</v-card-title>
 
