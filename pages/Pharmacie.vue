@@ -183,7 +183,7 @@ const onRemoveQuantity = (item: UserDrugDto) => {
 </script>
 
 <template>
-  <div>
+  <v-container>
     <h1 class="pb-4 d-flex"><v-icon icon="mdi-medical-cotton-swab" class="mr-2" /> Gestion du stock de médicaments</h1>
     <v-card class="pa-4">
       <v-row>
@@ -263,5 +263,5 @@ const onRemoveQuantity = (item: UserDrugDto) => {
       text="Voulez-vous supprimer ce médicament ?"
       @confirm="onDeleteConfirmation"
       @cancel="onCancelDelete" />
-  </div>
+  </v-container>
 </template>
