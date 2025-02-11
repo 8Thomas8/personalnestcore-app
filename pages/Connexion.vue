@@ -22,7 +22,7 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <v-container>
+  <v-container max-width="1144">
     <h1>Connexion en cours ...</h1>
   </v-container>
 </template>

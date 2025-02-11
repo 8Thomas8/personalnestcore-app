@@ -6,7 +6,7 @@ const authStore = useAuthStore()
 </script>
 
 <template>
-  <v-container>
+  <v-container max-width="1144">
     <v-row>
       <v-col>
         <v-btn :to="{ path: ServiceRoutes.Pharmacy }" class="my-4" variant="text" prepend-icon="mdi-keyboard-return">

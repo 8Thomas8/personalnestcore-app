@@ -71,7 +71,7 @@ const onClickUpdate = (user: UserDto) => {
 </script>
 
 <template>
-  <v-container>
+  <v-container max-width="1144">
     <v-row>
       <v-col>
         <v-btn :to="{ path: ServiceRoutes.Pharmacy }" class="my-4" variant="text" prepend-icon="mdi-keyboard-return">
@@ -101,10 +101,15 @@ const onClickUpdate = (user: UserDto) => {
                   ]"
                   no-data-text="Aucun utilisateur">
                   <template #[`item.actions`]="{ item }">
-                    <v-btn variant="text" color="warning" @click="onClickUpdate(item)">
+                    <v-btn
+                      variant="elevated"
+                      color="warning"
+                      @click="onClickUpdate(item)"
+                      min-width="46px"
+                      class="mr-2 px-0">
                       <v-icon>mdi-pencil</v-icon>
                     </v-btn>
-                    <v-btn variant="text" class="ml-2" color="error" @click="onClickDelete(item)">
+                    <v-btn variant="elevated" color="error" @click="onClickDelete(item)" min-width="46px" class="px-0">
                       <v-icon>mdi-delete</v-icon>
                     </v-btn>
                   </template>
@@ -129,3 +134,11 @@ const onClickUpdate = (user: UserDto) => {
       @cancel="onCancelDelete" />
   </v-container>
 </template>
+
+<style lang="scss" scoped>
+:deep(.v-data-table__tr) {
+  &:hover {
+    background: rgba(0, 0, 0, 0.04);
+  }
+}
+</style>

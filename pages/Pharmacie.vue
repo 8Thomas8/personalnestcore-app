@@ -29,7 +29,6 @@ const itemToUpdate = ref<UserDrugDto | null>(null)
 const quantityChange = ref(0)
 
 const headers = [
-  { title: 'Quantité', key: 'quantity', sortable: false, align: 'center' },
   { title: 'Nom', key: 'drugName.name', sortable: true },
   { title: 'Marque', key: 'drugBrand.name', sortable: true },
   {
@@ -38,6 +37,8 @@ const headers = [
     key: 'dose',
     sortable: false,
   },
+  { title: 'Quantité', key: 'quantity', sortable: false, align: 'center' },
+
   {
     title: 'Forme',
     value: (item: UserDrugDto) => DrugFormTranslations[item.form],
@@ -51,7 +52,7 @@ const headers = [
     align: 'center',
   },
   { title: 'Note', key: 'note', sortable: false, align: 'center' },
-  { title: 'Actions', key: 'actions', sortable: false },
+  { title: 'Actions', key: 'actions', sortable: false, align: 'end' },
 ]
 useAsyncData(async () => {
   isLoading.value = true
@@ -183,7 +184,7 @@ const onRemoveQuantity = (item: UserDrugDto) => {
 </script>
 
 <template>
-  <v-container>
+  <v-container max-width="1144">
     <h1 class="pb-4 d-flex"><v-icon icon="mdi-medical-cotton-swab" class="mr-2" /> Gestion du stock de médicaments</h1>
     <v-card class="pa-4">
       <v-row>
@@ -217,17 +218,17 @@ const onRemoveQuantity = (item: UserDrugDto) => {
             }">
             <template #[`item.quantity`]="{ item }">
               <div>
-                <v-btn icon size="24" variant="text" color="success" @click="onAddQuantity(item)">
+                <v-btn icon size="24" variant="tonal" color="success" @click="onAddQuantity(item)">
                   <v-icon>mdi-plus</v-icon>
                 </v-btn>
                 {{ item.quantity }}
-                <v-btn icon size="24" variant="text" color="error" @click="onRemoveQuantity(item)">
+                <v-btn icon size="24" variant="tonal" color="error" @click="onRemoveQuantity(item)">
                   <v-icon>mdi-minus</v-icon>
                 </v-btn>
               </div>
             </template>
             <template #[`item.expirationDateTime`]="{ item }">
-              <v-chip tile :color="item.isExpired ? 'error' : item.isExpireSoon ? 'warning' : 'green-lighten-1'"
+              <v-chip :color="item.isExpired ? 'error' : item.isExpireSoon ? 'warning' : 'green-lighten-1'"
                 >{{ item.expirationDateTime }}
               </v-chip>
             </template>
@@ -240,10 +241,10 @@ const onRemoveQuantity = (item: UserDrugDto) => {
               </v-tooltip>
             </template>
             <template #[`item.actions`]="{ item }">
-              <v-btn variant="text" color="warning" @click="onClickUpdate(item)">
+              <v-btn variant="elevated" color="warning" @click="onClickUpdate(item)" min-width="46px" class="px-0 mr-2">
                 <v-icon>mdi-pencil</v-icon>
               </v-btn>
-              <v-btn variant="text" class="ml-2" color="error" @click="onClickDelete(item)">
+              <v-btn variant="elevated" color="error" @click="onClickDelete(item)" min-width="46px" class="px-0">
                 <v-icon>mdi-delete</v-icon>
               </v-btn>
             </template>
@@ -270,3 +271,11 @@ const onRemoveQuantity = (item: UserDrugDto) => {
       @cancel="onCancelDelete" />
   </v-container>
 </template>
+
+<style lang="scss" scoped>
+:deep(.v-data-table__tr) {
+  &:hover {
+    background: rgba(0, 0, 0, 0.04);
+  }
+}
+</style>
