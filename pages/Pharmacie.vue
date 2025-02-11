@@ -184,7 +184,7 @@ const onRemoveQuantity = (item: UserDrugDto) => {
 </script>
 
 <template>
-  <v-container>
+  <v-container max-width="1144">
     <h1 class="pb-4 d-flex"><v-icon icon="mdi-medical-cotton-swab" class="mr-2" /> Gestion du stock de médicaments</h1>
     <v-card class="pa-4">
       <v-row>
@@ -223,7 +223,7 @@ const onRemoveQuantity = (item: UserDrugDto) => {
               </div>
             </template>
             <template #[`item.expirationDateTime`]="{ item }">
-              <v-chip tile :color="item.isExpired ? 'error' : item.isExpireSoon ? 'warning' : 'green-lighten-1'"
+              <v-chip :color="item.isExpired ? 'error' : item.isExpireSoon ? 'warning' : 'green-lighten-1'"
                 >{{ item.expirationDateTime }}
               </v-chip>
             </template>
@@ -236,10 +236,10 @@ const onRemoveQuantity = (item: UserDrugDto) => {
               </v-tooltip>
             </template>
             <template #[`item.actions`]="{ item }">
-              <v-btn variant="text" color="warning" @click="onClickUpdate(item)" min-width="32px" class="px-0 mr-2">
+              <v-btn variant="elevated" color="warning" @click="onClickUpdate(item)" min-width="46px" class="px-0 mr-2">
                 <v-icon>mdi-pencil</v-icon>
               </v-btn>
-              <v-btn variant="text" color="error" @click="onClickDelete(item)" min-width="32px" class="px-0">
+              <v-btn variant="elevated" color="error" @click="onClickDelete(item)" min-width="46px" class="px-0">
                 <v-icon>mdi-delete</v-icon>
               </v-btn>
             </template>
