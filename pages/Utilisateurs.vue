@@ -77,7 +77,7 @@ const onClickUpdate = (user: UserDto) => {
         <v-btn :to="{ path: ServiceRoutes.Pharmacy }" class="my-4" variant="text" prepend-icon="mdi-keyboard-return">
           Retour aux services
         </v-btn>
-        
+
         <v-card>
           <v-card-title>Utilisateurs</v-card-title>
 
@@ -96,10 +96,15 @@ const onClickUpdate = (user: UserDto) => {
                   :items-length="userStore.users?.length ?? 0"
                   no-data-text="Aucun utilisateur">
                   <template #[`item.actions`]="{ item }">
-                    <v-btn variant="text" color="warning" @click="onClickUpdate(item)">
+                    <v-btn
+                      variant="text"
+                      color="warning"
+                      @click="onClickUpdate(item)"
+                      min-width="32px"
+                      class="mr-2 px-0">
                       <v-icon>mdi-pencil</v-icon>
                     </v-btn>
-                    <v-btn variant="text" class="ml-2" color="error" @click="onClickDelete(item)">
+                    <v-btn variant="text" color="error" @click="onClickDelete(item)" min-width="32px" class="px-0">
                       <v-icon>mdi-delete</v-icon>
                     </v-btn>
                   </template>

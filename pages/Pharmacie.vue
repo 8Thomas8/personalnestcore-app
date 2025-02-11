@@ -51,7 +51,7 @@ const headers = [
     align: 'center',
   },
   { title: 'Note', key: 'note', sortable: false, align: 'center' },
-  { title: 'Actions', key: 'actions', sortable: false },
+  { title: 'Actions', key: 'actions', sortable: false, align: 'end' },
 ]
 useAsyncData(async () => {
   isLoading.value = true
@@ -235,10 +235,10 @@ const onRemoveQuantity = (item: UserDrugDto) => {
               </v-tooltip>
             </template>
             <template #[`item.actions`]="{ item }">
-              <v-btn variant="text" color="warning" @click="onClickUpdate(item)">
+              <v-btn variant="text" color="warning" @click="onClickUpdate(item)" min-width="32px" class="px-0 mr-2">
                 <v-icon>mdi-pencil</v-icon>
               </v-btn>
-              <v-btn variant="text" class="ml-2" color="error" @click="onClickDelete(item)">
+              <v-btn variant="text" color="error" @click="onClickDelete(item)" min-width="32px" class="px-0">
                 <v-icon>mdi-delete</v-icon>
               </v-btn>
             </template>
