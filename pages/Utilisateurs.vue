@@ -129,3 +129,11 @@ const onClickUpdate = (user: UserDto) => {
       @cancel="onCancelDelete" />
   </v-container>
 </template>
+
+<style lang="scss" scoped>
+:deep(.v-data-table__tr) {
+  &:hover {
+    background: rgba(0, 0, 0, 0.04);
+  }
+}
+</style>

@@ -29,7 +29,6 @@ const itemToUpdate = ref<UserDrugDto | null>(null)
 const quantityChange = ref(0)
 
 const headers = [
-  { title: 'Quantité', key: 'quantity', sortable: false, align: 'center' },
   { title: 'Nom', key: 'drugName.name', sortable: true },
   { title: 'Marque', key: 'drugBrand.name', sortable: true },
   {
@@ -38,6 +37,8 @@ const headers = [
     key: 'dose',
     sortable: false,
   },
+  { title: 'Quantité', key: 'quantity', sortable: false, align: 'center' },
+
   {
     title: 'Forme',
     value: (item: UserDrugDto) => DrugFormTranslations[item.form],
@@ -212,11 +213,11 @@ const onRemoveQuantity = (item: UserDrugDto) => {
             }">
             <template #[`item.quantity`]="{ item }">
               <div>
-                <v-btn icon size="24" variant="text" color="success" @click="onAddQuantity(item)">
+                <v-btn icon size="24" variant="tonal" color="success" @click="onAddQuantity(item)">
                   <v-icon>mdi-plus</v-icon>
                 </v-btn>
                 {{ item.quantity }}
-                <v-btn icon size="24" variant="text" color="error" @click="onRemoveQuantity(item)">
+                <v-btn icon size="24" variant="tonal" color="error" @click="onRemoveQuantity(item)">
                   <v-icon>mdi-minus</v-icon>
                 </v-btn>
               </div>
@@ -265,3 +266,11 @@ const onRemoveQuantity = (item: UserDrugDto) => {
       @cancel="onCancelDelete" />
   </v-container>
 </template>
+
+<style lang="scss" scoped>
+:deep(.v-data-table__tr) {
+  &:hover {
+    background: rgba(0, 0, 0, 0.04);
+  }
+}
+</style>
