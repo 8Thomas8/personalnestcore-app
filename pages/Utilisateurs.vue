@@ -77,7 +77,7 @@ const onClickUpdate = (user: UserDto) => {
         <v-btn :to="{ path: ServiceRoutes.Pharmacy }" class="my-4" variant="text" prepend-icon="mdi-keyboard-return">
           Retour aux services
         </v-btn>
-        
+
         <v-card>
           <v-card-title>Utilisateurs</v-card-title>
 
@@ -94,6 +94,11 @@ const onClickUpdate = (user: UserDto) => {
                   loading-text="Récupération des utilisateurs en cours..."
                   :items="userStore.users"
                   :items-length="userStore.users?.length ?? 0"
+                  :items-per-page-options="[
+                    { value: 5, title: '5' },
+                    { value: 10, title: '10' },
+                    { value: 20, title: '20' },
+                  ]"
                   no-data-text="Aucun utilisateur">
                   <template #[`item.actions`]="{ item }">
                     <v-btn variant="text" color="warning" @click="onClickUpdate(item)">

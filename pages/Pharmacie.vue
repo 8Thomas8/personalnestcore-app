@@ -200,6 +200,11 @@ const onRemoveQuantity = (item: UserDrugDto) => {
           <v-data-table-server
             v-model:items-per-page="itemPerPage"
             v-model:page="currentPage"
+            :items-per-page-options="[
+              { value: 5, title: '5' },
+              { value: 10, title: '10' },
+              { value: 20, title: '20' },
+            ]"
             loading-text="Récupération des données en cours..."
             no-data-text="Aucune donnée trouvée"
             :items-length="userDrugStore.userDrugsMeta.total"
