@@ -24,13 +24,13 @@ export default class UserDrugDto {
   form!: DrugForm
 
   @Expose()
-  dose!: number
+  dose?: number
 
   @Expose()
   note!: string | null
 
   @Expose()
-  unit!: DrugUnit
+  unit?: DrugUnit
 
   @Expose()
   quantity!: number

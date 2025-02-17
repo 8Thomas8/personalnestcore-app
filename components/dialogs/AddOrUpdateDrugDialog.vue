@@ -20,7 +20,7 @@ const props = defineProps<{
   itemToUpdate: UserDrugDto | null
 }>()
 
-const { required, isFloat, isDateisFormatFr, isNumber, min } = useFormValidation()
+const { required, requiredIf, shouldBeEmptyIf, isFloat, isDateisFormatFr, isNumber, min } = useFormValidation()
 const drugBrandStore = useDrugBrandStore()
 const drugNameStore = useDrugNameStore()
 const userDrugStore = useUserDrugStore()
@@ -264,19 +264,19 @@ const replaceNonNumberCharacters = (value: string) => {
             <v-col cols="6" lg="4">
               <v-text-field
                 v-model="itemForm.dose"
-                :rules="[required, isFloat]"
-                label="Dose *"
+                :rules="[isFloat]"
+                label="Dose"
                 hint="Exemple: 1.5 ou 2"
                 persistent-hint
                 @input="itemForm.dose = replaceNonFloatCharacters(itemForm.dose!)" />
             </v-col>
             <v-col cols="6" lg="3">
-              {{ itemForm.unit }}
               <v-select
+                clearable
                 v-model="itemForm.unit"
+                :rules="[requiredIf(itemForm.unit, itemForm.dose), shouldBeEmptyIf(itemForm.unit, !itemForm.dose)]"
                 :items="Object.values(DrugUnitTranslations)"
-                :rules="[required]"
-                label="Unité *"
+                label="Unité"
                 item-title="label"
                 :item-value="
                   (item) => Object.keys(DrugUnitTranslations).find((key) => DrugUnitTranslations[key] === item)
