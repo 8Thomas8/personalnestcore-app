@@ -8,9 +8,16 @@ export const useFormValidation = () => {
     return true
   }
 
-  const requiredIf = (value: string | number | null | undefined, condition: boolean) => {
+  const requiredIf = (value: string | number, condition: boolean) => {
     if (condition && !value && value !== 0) {
       return 'Champs requis.'
+    }
+    return true
+  }
+
+  const shouldBeEmptyIf = (value: string | null | undefined, condition: boolean) => {
+    if (condition) {
+      return !value || value === '' ? true : 'Ce champ doit être vide.'
     }
     return true
   }
@@ -37,11 +44,12 @@ export const useFormValidation = () => {
   }
 
   const isFloat = (value: string) => {
-    const floatPattern = /^\d+(\.\d{1,2})?$/
-    if (!floatPattern.test(value)) {
-      return 'Veuillez entrer un nombre valide.'
+    if (value == null || value === '') {
+      return true
     }
-    return true
+
+    const floatPattern = /^\d+(\.\d{1,2})?$/
+    return floatPattern.test(value) ? true : 'Veuillez entrer un nombre valide.'
   }
 
   const isDateisFormatFr = (value: string) => {
@@ -70,6 +78,7 @@ export const useFormValidation = () => {
   return {
     required,
     requiredIf,
+    shouldBeEmptyIf,
     password,
     passwordConfirmation,
     isFloat,

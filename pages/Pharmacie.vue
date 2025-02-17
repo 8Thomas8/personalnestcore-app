@@ -33,7 +33,7 @@ const headers = [
   { title: 'Marque', key: 'drugBrand.name', sortable: true },
   {
     title: 'Dose',
-    value: (item: UserDrugDto) => `${item.dose || ''} ${DrugUnitTranslations[item.unit]}`,
+    value: (item: UserDrugDto) => `${item.dose || ''} ${DrugUnitTranslations[item.unit] || ''}`,
     key: 'dose',
     sortable: false,
   },
