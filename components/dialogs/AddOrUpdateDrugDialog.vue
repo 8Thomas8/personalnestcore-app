@@ -274,7 +274,7 @@ const replaceNonNumberCharacters = (value: string) => {
               <v-select
                 clearable
                 v-model="itemForm.unit"
-                :rules="[requiredIf(itemForm.unit, itemForm.dose), shouldBeEmptyIf(itemForm.unit, !itemForm.dose)]"
+                :rules="[(v) => requiredIf(v, itemForm.dose), (v) => shouldBeEmptyIf(v, !itemForm.dose)]"
                 :items="Object.values(DrugUnitTranslations)"
                 label="Unité"
                 item-title="label"
