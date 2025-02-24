@@ -32,14 +32,13 @@ const addOrUpdateDrugDialogIsOpened = defineModel('addOrUpdateDrugDialogIsOpened
 })
 
 const addOrUpdateDrugDialog = ref<VDialog>()
-const drugNameField = ref<VTextField>()
-
+const drugNameField = useTemplateRef<VTextField>('drugNameField')
 const drugBrandIsLoading = ref(false)
 const drugNameIsLoading = ref(false)
 const userDrugIsLoading = ref(false)
 const itemToUpdateIsFilled = ref(false)
 const formIsValid = ref(false)
-const addDrugForm = ref<HTMLFormElement | null>(null)
+const drugForm = useTemplateRef<HTMLFormElement | null>('drugForm')
 const searchDrugBrandInput = ref<string | undefined>(undefined)
 const searchDrugNameInput = ref<string | undefined>(undefined)
 
@@ -81,7 +80,7 @@ watch(isDialogOpened, async (isOpened: boolean) => {
 
     itemForm.value.drugBrandId = drugBrandId
     itemForm.value.form = form
-    itemForm.value.dose = dose.toString()
+    itemForm.value.dose = dose?.toString()
     itemForm.value.note = note
     itemForm.value.unit = unit
     itemForm.value.expirationDateTime = formatDateFr(expirationDateTime)
@@ -103,6 +102,10 @@ watch(
     }
   }
 )
+
+watch([() => itemForm.value.unit, () => itemForm.value.dose], () => {
+  drugForm.value?.validate()
+})
 
 onBeforeUnmount(() => {
   resetForm()
@@ -151,7 +154,7 @@ const resetForm = () => {
     expirationDateTime: undefined,
     quantity: null,
   }
-  addDrugForm.value?.resetValidation()
+  drugForm.value?.resetValidation()
   searchDrugBrandInput.value = undefined
   searchDrugNameInput.value = undefined
 }
@@ -207,7 +210,7 @@ const replaceNonNumberCharacters = (value: string) => {
         {{ props.updateMode ? 'Modifier un médicament' : 'Ajouter un médicament' }}
         <v-icon size="24" @click="closeDialog">mdi-close</v-icon>
       </v-card-title>
-      <v-form ref="addDrugForm" v-model="formIsValid" @submit.prevent="onSubmit">
+      <v-form ref="drugForm" v-model="formIsValid" @submit.prevent="onSubmit">
         <v-card-text>
           <v-row>
             <v-col cols="12" sm="6">

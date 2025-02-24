@@ -216,6 +216,24 @@ const onRemoveQuantity = (item: UserDrugDto) => {
             :custom-key-sort="{
               expirationDateTime: expirationDateTimeSort,
             }">
+            <template #[`item.drugName.name`]="{ item }">
+              <v-tooltip location="top" :text="item.drugName.name">
+                <template v-slot:activator="{ props }">
+                  <p v-bind="props" class="text-truncate truncate-width">
+                    {{ item.drugName.name }}
+                  </p>
+                </template>
+              </v-tooltip>
+            </template>
+            <template #[`item.drugBrand.name`]="{ item }">
+              <v-tooltip location="top" :text="item.drugBrand.name">
+                <template v-slot:activator="{ props }">
+                  <p v-bind="props" class="text-truncate truncate-width">
+                    {{ item.drugBrand.name }}
+                  </p>
+                </template>
+              </v-tooltip>
+            </template>
             <template #[`item.quantity`]="{ item }">
               <div>
                 <v-btn icon size="24" variant="tonal" color="success" @click="onAddQuantity(item)">
@@ -276,6 +294,9 @@ const onRemoveQuantity = (item: UserDrugDto) => {
 :deep(.v-data-table__tr) {
   &:hover {
     background: rgba(0, 0, 0, 0.04);
+  }
+  .truncate-width {
+    width: 150px;
   }
 }
 </style>
