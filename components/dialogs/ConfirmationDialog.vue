@@ -15,7 +15,7 @@ const emits = defineEmits(['confirm', 'cancel'])
       </v-card-text>
       <v-card-actions>
         <v-btn color="grey" @click="emits('cancel')">Annuler</v-btn>
-        <v-btn color="primary" @click="emits('confirm')">Confirmer</v-btn>
+        <v-btn variant="elevated" color="primary" @click="emits('confirm')">Confirmer</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>

@@ -27,7 +27,9 @@ watch(
   <v-app-bar>
     <v-app-bar-nav-icon v-if="navDrawerIsActive" @click="drawerIsOpened = !drawerIsOpened" />
 
-    <v-app-bar-title @click="router.push(PublicRoutes.Home)"> personalnestcore</v-app-bar-title>
+    <v-app-bar-title @click="router.push(PublicRoutes.Home)" class="d-flex align-center">
+      <img alt="PersonalNestCore" src="/images/logos/pnc.svg" />
+    </v-app-bar-title>
 
     <div class="mx-4">
       <v-btn v-if="authStore.isAuthenticated" variant="tonal" color="primary">
@@ -48,3 +50,10 @@ watch(
     </div>
   </v-app-bar>
 </template>
+
+<style lang="scss">
+.v-toolbar-title__placeholder {
+  display: flex;
+  align-content: center;
+}
+</style>

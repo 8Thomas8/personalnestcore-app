@@ -5,6 +5,10 @@ import type UserDto from '~/dto/UserDto'
 import ConfirmationDialog from '~/components/dialogs/ConfirmationDialog.vue'
 import { ServiceRoutes } from '~/types/routes'
 
+useHead({
+  title: 'Utilisateurs',
+})
+
 const userStore = useUserStore()
 
 const addOrUpdateUserDialogIsOpened = defineModel({ default: false, type: Boolean })

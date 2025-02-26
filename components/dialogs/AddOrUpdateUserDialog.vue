@@ -122,8 +122,8 @@ const closeDialog = () => {
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn @click="closeDialog">Annuler</v-btn>
-          <v-btn type="submit" :loading="isLoading">
+          <v-btn color="grey" @click="closeDialog">Annuler</v-btn>
+          <v-btn variant="elevated" type="submit" :loading="isLoading">
             {{ updateMode ? 'Mettre à jour' : 'Ajouter' }}
           </v-btn>
         </v-card-actions>

@@ -92,7 +92,7 @@ onBeforeMount(async () => {
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn type="submit" :loading="isLoading">
+          <v-btn variant="elevated" type="submit" :loading="isLoading">
             {{ adminCanRegister && step === STEP.SIGNIN ? ' Création' : 'Connexion' }}
           </v-btn>
         </v-card-actions>

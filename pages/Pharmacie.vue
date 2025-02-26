@@ -8,6 +8,9 @@ import ConfirmationDialog from '~/components/dialogs/ConfirmationDialog.vue'
 import { stringToDate } from '~/utils/date'
 
 definePageMeta({ layout: 'app' })
+useHead({
+  title: 'Pharmacie',
+})
 
 const userDrugStore = useUserDrugStore()
 const { smAndDown } = useDisplay()

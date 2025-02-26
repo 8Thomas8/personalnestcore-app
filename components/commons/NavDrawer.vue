@@ -7,7 +7,7 @@ const drawerIsOpened = defineModel<boolean | null>({ default: false })
 <template>
   <v-navigation-drawer v-model="drawerIsOpened">
     <v-list class="d-flex align-center">
-      <v-list-item title="Services" />
+      <v-list-item title="Mes Services" />
       <v-spacer />
       <v-icon size="24" class="pr-4" @click="drawerIsOpened = !drawerIsOpened">mdi-close</v-icon>
     </v-list>

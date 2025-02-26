@@ -309,8 +309,8 @@ const replaceNonNumberCharacters = (value: string) => {
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn @click="closeDialog">Annuler</v-btn>
-          <v-btn type="submit" :loading="userDrugIsLoading">
+          <v-btn color="grey" @click="closeDialog">Annuler</v-btn>
+          <v-btn variant="elevated" type="submit" :loading="userDrugIsLoading">
             {{ updateMode ? 'Mettre à jour' : 'Ajouter' }}
           </v-btn>
         </v-card-actions>
