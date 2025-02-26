@@ -193,9 +193,22 @@ const onRemoveQuantity = (item: UserDrugDto) => {
           <v-btn prepend-icon="mdi-plus" @click="onAddDrug()">Ajouter</v-btn>
         </v-col>
         <v-col cols="12" class="d-flex">
-          <v-text-field v-model="searchTerms" label="Recherche *" max-width="80%" clearable />
-          <v-checkbox v-model="expiredOnly" label="Expiré uniquement" @change="handleCheckboxChange('expiredOnly')" />
-          <v-checkbox v-model="expiringSoon" label="Expire bientôt" @change="handleCheckboxChange('expiringSoon')" />
+          <v-spacer />
+          <v-checkbox
+            hide-details
+            color="primary"
+            v-model="expiredOnly"
+            label="Expiré"
+            @change="handleCheckboxChange('expiredOnly')" />
+          <v-checkbox
+            hide-details
+            color="primary"
+            v-model="expiringSoon"
+            label="Va expirer"
+            @change="handleCheckboxChange('expiringSoon')" />
+        </v-col>
+        <v-col cols="12" class="d-flex">
+          <v-text-field hide-details v-model="searchTerms" label="Recherche *" clearable />
         </v-col>
         <v-col cols="12">
           <v-data-table-server
@@ -217,32 +230,38 @@ const onRemoveQuantity = (item: UserDrugDto) => {
               expirationDateTime: expirationDateTimeSort,
             }">
             <template #[`item.drugName.name`]="{ item }">
-              <v-tooltip location="top" :text="item.drugName.name">
-                <template v-slot:activator="{ props }">
-                  <p v-bind="props" class="text-truncate truncate-width">
-                    {{ item.drugName.name }}
-                  </p>
-                </template>
-              </v-tooltip>
+              <div class="d-flex justify-end">
+                <v-tooltip location="top" :text="item.drugName.name">
+                  <template v-slot:activator="{ props }">
+                    <p v-bind="props" class="text-truncate truncate-width font-weight-bold">
+                      {{ item.drugName.name }}
+                    </p>
+                  </template>
+                </v-tooltip>
+              </div>
             </template>
             <template #[`item.drugBrand.name`]="{ item }">
-              <v-tooltip location="top" :text="item.drugBrand.name">
-                <template v-slot:activator="{ props }">
-                  <p v-bind="props" class="text-truncate truncate-width">
-                    {{ item.drugBrand.name }}
-                  </p>
-                </template>
-              </v-tooltip>
+              <div class="d-flex justify-end">
+                <v-tooltip location="top" :text="item.drugBrand.name">
+                  <template v-slot:activator="{ props }">
+                    <p v-bind="props" class="text-truncate truncate-width">
+                      {{ item.drugBrand.name }}
+                    </p>
+                  </template>
+                </v-tooltip>
+              </div>
             </template>
             <template #[`item.quantity`]="{ item }">
-              <div>
-                <v-btn icon size="24" variant="tonal" color="success" @click="onAddQuantity(item)">
-                  <v-icon>mdi-plus</v-icon>
-                </v-btn>
-                {{ item.quantity }}
-                <v-btn icon size="24" variant="tonal" color="error" @click="onRemoveQuantity(item)">
-                  <v-icon>mdi-minus</v-icon>
-                </v-btn>
+              <div class="d-flex justify-end align-center ga-2 py-1 py-xs-0">
+                <div class="d-flex flex-column justify-end ga-1 align-center">
+                  <v-btn border size="24" variant="elevated" color="success" @click="onAddQuantity(item)">
+                    <v-icon>mdi-plus</v-icon>
+                  </v-btn>
+                  <v-btn size="24" variant="elevated" color="error" @click="onRemoveQuantity(item)">
+                    <v-icon>mdi-minus</v-icon>
+                  </v-btn>
+                </div>
+                <span class="text-body-1">{{ item.quantity }}</span>
               </div>
             </template>
             <template #[`item.expirationDateTime`]="{ item }">
@@ -253,18 +272,20 @@ const onRemoveQuantity = (item: UserDrugDto) => {
             <template #[`item.note`]="{ item }">
               <v-tooltip v-if="item.note" :text="item.note">
                 <template #activator="{ props }">
-                  <v-icon v-bind="props">mdi-information</v-icon>
+                  <v-icon v-bind="props" color="primary">mdi-information</v-icon>
                 </template>
                 <span>{{ item.note }}</span>
               </v-tooltip>
             </template>
             <template #[`item.actions`]="{ item }">
-              <v-btn variant="elevated" color="warning" @click="onClickUpdate(item)" min-width="46px" class="px-0 mr-2">
-                <v-icon>mdi-pencil</v-icon>
-              </v-btn>
-              <v-btn variant="elevated" color="error" @click="onClickDelete(item)" min-width="46px" class="px-0">
-                <v-icon>mdi-delete</v-icon>
-              </v-btn>
+              <div class="d-flex flex-wrap ga-2 py-2 py-xs-0 justify-end">
+                <v-btn variant="elevated" color="warning" @click="onClickUpdate(item)" min-width="46px" class="px-0">
+                  <v-icon>mdi-pencil</v-icon>
+                </v-btn>
+                <v-btn variant="elevated" color="error" @click="onClickDelete(item)" min-width="46px" class="px-0">
+                  <v-icon>mdi-delete</v-icon>
+                </v-btn>
+              </div>
             </template>
           </v-data-table-server>
         </v-col>

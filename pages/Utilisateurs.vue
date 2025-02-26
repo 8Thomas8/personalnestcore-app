@@ -7,11 +7,10 @@ import { ServiceRoutes } from '~/types/routes'
 
 const userStore = useUserStore()
 
-const addOrUpdateMemberDialogIsOpened = defineModel({ default: false, type: Boolean })
+const addOrUpdateUserDialogIsOpened = defineModel({ default: false, type: Boolean })
 
 const isLoading = ref(false)
 const updateMode = ref(false)
-const memberToUpdate = ref(null)
 const userToUpdate = ref<UserDto | null>(null)
 const userToDelete = ref<UserDto | null>(null)
 const confirmationDialogIsOpened = ref(false)
@@ -37,10 +36,10 @@ const fetchUsersData = async () => {
   isLoading.value = false
 }
 
-const onAddMember = () => {
-  memberToUpdate.value = null
+const onAddUser = () => {
+  userToUpdate.value = null
   updateMode.value = false
-  addOrUpdateMemberDialogIsOpened.value = true
+  addOrUpdateUserDialogIsOpened.value = true
 }
 
 const onClickDelete = (user: UserDto) => {
@@ -66,7 +65,7 @@ const onCancelDelete = () => {
 const onClickUpdate = (user: UserDto) => {
   updateMode.value = true
   userToUpdate.value = user
-  addOrUpdateMemberDialogIsOpened.value = true
+  addOrUpdateUserDialogIsOpened.value = true
 }
 </script>
 
@@ -85,7 +84,7 @@ const onClickUpdate = (user: UserDto) => {
             <v-row>
               <v-spacer />
               <v-col cols="auto">
-                <v-btn prepend-icon="mdi-plus" @click="onAddMember()">Ajouter</v-btn>
+                <v-btn prepend-icon="mdi-plus" @click="onAddUser()">Ajouter</v-btn>
               </v-col>
               <v-col cols="12">
                 <v-data-table-server
@@ -101,17 +100,24 @@ const onClickUpdate = (user: UserDto) => {
                   ]"
                   no-data-text="Aucun utilisateur">
                   <template #[`item.actions`]="{ item }">
-                    <v-btn
-                      variant="elevated"
-                      color="warning"
-                      @click="onClickUpdate(item)"
-                      min-width="46px"
-                      class="mr-2 px-0">
-                      <v-icon>mdi-pencil</v-icon>
-                    </v-btn>
-                    <v-btn variant="elevated" color="error" @click="onClickDelete(item)" min-width="46px" class="px-0">
-                      <v-icon>mdi-delete</v-icon>
-                    </v-btn>
+                    <div class="d-flex flex-wrap ga-2 py-2 py-xs-0 justify-end">
+                      <v-btn
+                        variant="elevated"
+                        color="warning"
+                        @click="onClickUpdate(item)"
+                        min-width="46px"
+                        class="px-0">
+                        <v-icon>mdi-pencil</v-icon>
+                      </v-btn>
+                      <v-btn
+                        variant="elevated"
+                        color="error"
+                        @click="onClickDelete(item)"
+                        min-width="46px"
+                        class="px-0">
+                        <v-icon>mdi-delete</v-icon>
+                      </v-btn>
+                    </div>
                   </template>
                 </v-data-table-server>
               </v-col>
@@ -122,10 +128,10 @@ const onClickUpdate = (user: UserDto) => {
     </v-row>
 
     <AddOrUpdateUserDialog
-      v-model="addOrUpdateMemberDialogIsOpened"
+      v-model="addOrUpdateUserDialogIsOpened"
       :update-mode="updateMode"
       :user-to-update="userToUpdate"
-      @update:add-or-update-member-dialog-is-opened="addOrUpdateMemberDialogIsOpened = false" />
+      @update:add-or-update-user-dialog-is-opened="addOrUpdateUserDialogIsOpened = false" />
 
     <ConfirmationDialog
       v-model="confirmationDialogIsOpened"
