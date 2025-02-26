@@ -3,7 +3,6 @@ import { useAuthStore } from '~/store/auth'
 import { ServiceRoutes } from '~/types/routes'
 
 const authStore = useAuthStore()
-const { toggleAuthDialog } = useAuth()
 const router = useRouter()
 
 watch(

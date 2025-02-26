@@ -2,7 +2,6 @@
 import { useAuth } from '~/composables/useAuth'
 import { useAuthStore } from '~/store/auth'
 import { AccountRoutes, PublicRoutes } from '~/types/routes'
-import pncLogo from '~/assets/images/logos/pnc.svg'
 
 defineProps<{ navDrawerIsActive?: boolean }>()
 
@@ -29,7 +28,7 @@ watch(
     <v-app-bar-nav-icon v-if="navDrawerIsActive" @click="drawerIsOpened = !drawerIsOpened" />
 
     <v-app-bar-title @click="router.push(PublicRoutes.Home)" class="d-flex align-center">
-      <img alt="PersonalNestCore" :src="pncLogo" />
+      <img alt="PersonalNestCore" src="/images/logos/pnc.svg" />
     </v-app-bar-title>
 
     <div class="mx-4">
