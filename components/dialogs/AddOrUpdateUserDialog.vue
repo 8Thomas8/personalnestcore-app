@@ -1,16 +1,15 @@
 <script setup lang="ts">
 import { useFormValidation } from '~/composables/formValidation'
-import { ToastMessageType } from '~/types/constants'
 import type { VDialog, VTextField } from 'vuetify/components'
 import type UserDto from '~/dto/UserDto'
 import { useUserStore } from '~/store/user'
 
-const addOrUpdateMemberDialogIsOpened = defineModel('addOrUpdateMemberDialogIsOpened', {
+const addOrUpdateUserDialogIsOpened = defineModel('addOrUpdateUserDialogIsOpened', {
   type: Boolean,
   default: false,
 })
 
-const emits = defineEmits(['update:addOrUpdateMemberDialogIsOpened'])
+const emits = defineEmits(['update:addOrUpdateUserDialogIsOpened'])
 const props = defineProps<{
   updateMode: boolean
   userToUpdate: UserDto | null
@@ -18,9 +17,8 @@ const props = defineProps<{
 
 const { required, username, password } = useFormValidation()
 const userStore = useUserStore()
-const { setToastMessage } = useToastMessage()
 
-const addOrUpdateMemberDialog = ref<VDialog>()
+const addOrUpdateUserDialog = ref<VDialog>()
 
 const isLoading = ref(false)
 const userToUpdateIsFilled = ref(false)
@@ -28,7 +26,7 @@ const formIsValid = ref(false)
 const addUserForm = ref<HTMLFormElement | null>(null)
 const displayEmptyError = ref(false)
 
-const isDialogOpened: ComputedRef<boolean> = computed(() => addOrUpdateMemberDialog.value?.modelValue ?? false)
+const isDialogOpened: ComputedRef<boolean> = computed(() => addOrUpdateUserDialog.value?.modelValue ?? false)
 
 const userForm = ref<{
   username: string | null
@@ -49,16 +47,11 @@ const onSubmit = async () => {
 
   if (props.updateMode) {
     await userStore.update({ ...userForm.value, ...{ id: props.userToUpdate!.id } })
-    await userStore.fetchAll()
-    setToastMessage(ToastMessageType.TypeSuccess, 'Utilisateur modifié avec succès')
-    closeDialog()
   } else {
     await userStore.create(userForm.value)
-    await userStore.fetchAll()
-
-    setToastMessage(ToastMessageType.TypeSuccess, 'Médicament ajouté avec succès')
-    closeDialog()
   }
+  await userStore.fetchAll()
+  closeDialog()
   isLoading.value = false
 }
 
@@ -72,10 +65,8 @@ const resetForm = () => {
 
 watch(isDialogOpened, async (isOpened: boolean) => {
   if (isOpened && props.updateMode && props.userToUpdate) {
-    const { username, password } = props.userToUpdate
-
+    const { username } = props.userToUpdate
     userForm.value.username = username
-    userForm.value.password = password ?? null
   }
 
   if (!isOpened && props.updateMode) {
@@ -99,13 +90,13 @@ onBeforeUnmount(() => {
 })
 
 const closeDialog = () => {
-  emits('update:addOrUpdateMemberDialogIsOpened', false)
+  emits('update:addOrUpdateUserDialogIsOpened', false)
   resetForm()
 }
 </script>
 
 <template>
-  <v-dialog ref="addOrUpdateUserDialog" :value="addOrUpdateMemberDialogIsOpened" max-width="600px">
+  <v-dialog ref="addOrUpdateUserDialog" :value="addOrUpdateUserDialogIsOpened" max-width="600px">
     <v-card>
       <v-card-title class="d-flex justify-space-between">
         {{ props.updateMode ? 'Modifier un utilisateur' : 'Ajouter un utilisateur' }}
