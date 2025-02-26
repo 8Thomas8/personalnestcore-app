@@ -1,5 +1,8 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+onMounted(() => {
+  console.log('Hello from index.vue')
+})
+</script>
 
 <template>
-  <h1>Index page</h1>
 </template>

@@ -2,6 +2,10 @@
 import { useAuthStore } from '~/store/auth'
 import { ServiceRoutes } from '~/types/routes'
 
+useHead({
+  title: 'Mon Profil',
+})
+
 const authStore = useAuthStore()
 </script>
 
