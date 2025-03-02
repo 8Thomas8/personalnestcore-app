@@ -3,7 +3,6 @@ import { DrugFormTranslations, DrugUnitTranslations, ItemPerPage } from '~/types
 import AddOrUpdateDrugDialog from '~/components/dialogs/AddOrUpdateDrugDialog.vue'
 import { useUserDrugStore } from '~/store/userDrug'
 import type UserDrugDto from '~/dto/UserDrugDto'
-import { useDisplay } from 'vuetify'
 import ConfirmationDialog from '~/components/dialogs/ConfirmationDialog.vue'
 import { stringToDate } from '~/utils/date'
 
@@ -13,7 +12,6 @@ useHead({
 })
 
 const userDrugStore = useUserDrugStore()
-const { smAndDown } = useDisplay()
 
 const addOrUpdateDrugDialogIsOpened = defineModel({ default: false, type: Boolean })
 
