@@ -188,15 +188,14 @@ const onRemoveQuantity = (item: UserDrugDto) => {
 
 <template>
   <v-container max-width="1144">
-    <h1 class="pb-4 d-flex"><v-icon icon="mdi-medical-cotton-swab" class="mr-2" /> Gestion du stock de médicaments</h1>
+    <h1 class="pb-4 d-flex">
+      <v-icon icon="mdi-medical-cotton-swab" class="mr-2" />
+      <span class="d-none d-sm-block">Gestion du stock de médicaments</span>
+      <span class="d-sm-none">Médicaments</span>
+    </h1>
     <v-card class="pa-4">
       <v-row>
-        <v-spacer />
-        <v-col cols="auto">
-          <v-btn prepend-icon="mdi-plus" @click="onAddDrug()">Ajouter</v-btn>
-        </v-col>
-        <v-col cols="12" class="d-flex">
-          <v-spacer />
+        <v-col cols="auto" class="d-flex">
           <v-checkbox
             hide-details
             color="primary"
@@ -210,7 +209,11 @@ const onRemoveQuantity = (item: UserDrugDto) => {
             label="Va expirer"
             @change="handleCheckboxChange('expiringSoon')" />
         </v-col>
-        <v-col cols="12" class="d-flex">
+        <v-spacer />
+        <v-col cols="auto" class="d-flex align-center">
+          <v-btn prepend-icon="mdi-plus" @click="onAddDrug()">Ajouter</v-btn>
+        </v-col>
+        <v-col cols="12">
           <v-text-field hide-details v-model="searchTerms" label="Recherche *" clearable />
         </v-col>
         <v-col cols="12">
@@ -226,7 +229,7 @@ const onRemoveQuantity = (item: UserDrugDto) => {
             no-data-text="Aucune donnée trouvée"
             :items-length="userDrugStore.userDrugsMeta.total"
             :loading="isLoading"
-            :mobile="smAndDown"
+            :mobile="false"
             :headers="headers"
             :items="userDrugStore.userDrugs"
             :custom-key-sort="{
@@ -234,7 +237,7 @@ const onRemoveQuantity = (item: UserDrugDto) => {
             }">
             <template #[`item.drugName.name`]="{ item }">
               <div class="d-flex justify-end">
-                <v-tooltip location="top" :text="item.drugName.name">
+                <v-tooltip open-on-click location="top" :text="item.drugName.name">
                   <template v-slot:activator="{ props }">
                     <p v-bind="props" class="text-truncate truncate-width font-weight-bold">
                       {{ item.drugName.name }}
@@ -245,7 +248,7 @@ const onRemoveQuantity = (item: UserDrugDto) => {
             </template>
             <template #[`item.drugBrand.name`]="{ item }">
               <div class="d-flex justify-end">
-                <v-tooltip location="top" :text="item.drugBrand.name">
+                <v-tooltip open-on-click location="top" :text="item.drugBrand.name">
                   <template v-slot:activator="{ props }">
                     <p v-bind="props" class="text-truncate truncate-width">
                       {{ item.drugBrand.name }}
@@ -273,7 +276,7 @@ const onRemoveQuantity = (item: UserDrugDto) => {
               </v-chip>
             </template>
             <template #[`item.note`]="{ item }">
-              <v-tooltip v-if="item.note" :text="item.note">
+              <v-tooltip open-on-click v-if="item.note" :text="item.note">
                 <template #activator="{ props }">
                   <v-icon v-bind="props" color="primary">mdi-information</v-icon>
                 </template>

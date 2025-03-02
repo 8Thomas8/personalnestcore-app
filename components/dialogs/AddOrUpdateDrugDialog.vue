@@ -8,6 +8,7 @@ import type UserDrugDto from '~/dto/UserDrugDto'
 import { capitalize } from 'vue'
 import { formatDateFr } from '~/utils/date'
 import type { VAutocomplete, VDialog, VTextField } from 'vuetify/components'
+import { useDisplay } from 'vuetify'
 
 const emits = defineEmits(['update:addOrUpdateDrugDialogIsOpened'])
 const props = defineProps<{
@@ -25,6 +26,7 @@ const drugBrandStore = useDrugBrandStore()
 const drugNameStore = useDrugNameStore()
 const userDrugStore = useUserDrugStore()
 const { setToastMessage } = useToastMessage()
+const { xs } = useDisplay()
 
 const addOrUpdateDrugDialogIsOpened = defineModel('addOrUpdateDrugDialogIsOpened', {
   type: Boolean,
@@ -204,7 +206,7 @@ const replaceNonNumberCharacters = (value: string) => {
 </script>
 
 <template>
-  <v-dialog ref="addOrUpdateDrugDialog" :value="addOrUpdateDrugDialogIsOpened" max-width="600px">
+  <v-dialog :fullscreen="xs" ref="addOrUpdateDrugDialog" :value="addOrUpdateDrugDialogIsOpened" max-width="600px">
     <v-card>
       <v-card-title class="d-flex justify-space-between">
         {{ props.updateMode ? 'Modifier un médicament' : 'Ajouter un médicament' }}

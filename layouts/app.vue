@@ -8,9 +8,7 @@ const drawerIsOpened = ref(null)
     <CommonsAppHeader v-model="drawerIsOpened" nav-drawer-is-active />
 
     <v-main class="flex-grow-1">
-      <div class="pa-6">
         <slot />
-      </div>
     </v-main>
 
     <CommonsAppFooter />
