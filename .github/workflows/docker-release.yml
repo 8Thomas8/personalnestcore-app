@@ -15,9 +15,6 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
 
-      - name: Fix public directory permissions
-        run: chmod -R 777 public
-
       # Create version JSON file
       - name: Create version.json
         run: |
