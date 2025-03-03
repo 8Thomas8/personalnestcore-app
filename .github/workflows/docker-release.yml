@@ -18,7 +18,7 @@ jobs:
       # Create version JSON file
       - name: Create version.json
         run: |
-          echo '{ "version": "${{ github.ref_name }}" }' > public/version.json
+          echo '{ "version": "${{ github.ref_name }}" }' > public/json/version.json
 
       # Configure Docker Hub Login
       - name: Log in to Docker Hub
