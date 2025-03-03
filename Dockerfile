@@ -20,6 +20,5 @@ FROM base
 WORKDIR /app
 COPY --from=production-deps /app/node_modules /app/node_modules
 COPY --from=build /app/.output /app/.output
-COPY public/version.json /app/public/version.json
 EXPOSE 3000
 CMD ["node", ".output/server/index.mjs"]
