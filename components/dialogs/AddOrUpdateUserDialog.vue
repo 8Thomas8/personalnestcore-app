@@ -3,6 +3,7 @@ import { useFormValidation } from '~/composables/formValidation'
 import type { VDialog, VTextField } from 'vuetify/components'
 import type UserDto from '~/dto/UserDto'
 import { useUserStore } from '~/store/user'
+import { useDisplay } from 'vuetify'
 
 const addOrUpdateUserDialogIsOpened = defineModel('addOrUpdateUserDialogIsOpened', {
   type: Boolean,
@@ -17,6 +18,7 @@ const props = defineProps<{
 
 const { required, username, password } = useFormValidation()
 const userStore = useUserStore()
+const { xs } = useDisplay()
 
 const addOrUpdateUserDialog = ref<VDialog>()
 
@@ -96,7 +98,7 @@ const closeDialog = () => {
 </script>
 
 <template>
-  <v-dialog ref="addOrUpdateUserDialog" :value="addOrUpdateUserDialogIsOpened" max-width="600px">
+  <v-dialog :fullscreen="xs" ref="addOrUpdateUserDialog" :value="addOrUpdateUserDialogIsOpened" max-width="600px">
     <v-card>
       <v-card-title class="d-flex justify-space-between">
         {{ props.updateMode ? 'Modifier un utilisateur' : 'Ajouter un utilisateur' }}

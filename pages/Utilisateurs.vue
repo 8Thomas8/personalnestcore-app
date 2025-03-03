@@ -87,7 +87,7 @@ const onClickUpdate = (user: UserDto) => {
           <v-card-text>
             <v-row>
               <v-spacer />
-              <v-col cols="auto">
+              <v-col cols="auto" class="d-flex align-center">
                 <v-btn prepend-icon="mdi-plus" @click="onAddUser()">Ajouter</v-btn>
               </v-col>
               <v-col cols="12">
