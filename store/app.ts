@@ -1,5 +1,6 @@
 import { useToastMessage } from '~/composables/useToastMessage'
 import { ToastMessageType } from '~/types/constants'
+import { filterInvalidVersions } from '~/utils/version'
 
 export const useAppStore = defineStore('appStore', () => {
   const { setToastMessage } = useToastMessage()
@@ -33,7 +34,7 @@ export const useAppStore = defineStore('appStore', () => {
         `https://api.github.com/repos/${config.public.github.projectOwner}/${config.public.github.projectRepo}/releases`
       )
       const data = await response.json()
-      repoAppVersions.value = data.map((release: { tag_name: string }) => release.tag_name)
+      repoAppVersions.value = filterInvalidVersions(data.map((release: { tag_name: string }) => release.tag_name))
     } catch {
       setToastMessage(
         ToastMessageType.TypeError,

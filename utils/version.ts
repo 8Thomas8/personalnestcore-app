@@ -1,7 +1,9 @@
+const regexVersion = /^(\d+)\.(\d+)\.(\d+)(?:-([a-z]+)(?:\.(\d+))?)?$/
+
 export const compareSemVer = (v1: string, v2: string): number => {
   // Extrait version + prérelease (ex: 1.0.0-alpha.2)
   const semver = (v: string) => {
-    const match = v.match(/^(\d+)\.(\d+)\.(\d+)(?:-([a-z]+)(?:\.(\d+))?)?$/)
+    const match = v.match(regexVersion)
     if (!match) throw new Error(`Le format de la version est invalide: ${v}`)
 
     const [, major, minor, patch, preName, preNum] = match
@@ -38,4 +40,14 @@ export const compareSemVer = (v1: string, v2: string): number => {
 
 export const filterStableVersions = (versions: string[]): string[] => {
   return versions.filter((v) => !v.match(/-\w+/)) // Supprime les versions contenant un préfixe après un "-"
+}
+
+export const filterInvalidVersions = (versions: string[]): string[] => {
+  return versions.filter((v) => {
+    try {
+      return !!v.match(regexVersion)
+    } catch {
+      return false
+    }
+  })
 }
