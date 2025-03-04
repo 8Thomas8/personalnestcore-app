@@ -1,5 +1,13 @@
 <script setup lang="ts">
+import { useAppStore } from '~/store/app'
+
+const appStore = useAppStore()
+
 const drawerIsOpened = ref(null)
+
+onMounted(async () => {
+  await appStore.fetchRepoAppVersion()
+})
 </script>
 
 <template>
@@ -8,7 +16,7 @@ const drawerIsOpened = ref(null)
     <CommonsAppHeader v-model="drawerIsOpened" nav-drawer-is-active />
 
     <v-main class="flex-grow-1">
-        <slot />
+      <slot />
     </v-main>
 
     <CommonsAppFooter />
