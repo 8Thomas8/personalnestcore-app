@@ -34,6 +34,13 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       apiBase: '',
+      github: {
+        projectOwner: '',
+        projectRepo: '',
+      },
+      notify: {
+        devVersion: '',
+      },
     },
   },
 })

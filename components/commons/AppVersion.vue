@@ -1,19 +1,18 @@
 <script setup lang="ts">
-const { setToastMessage } = useToastMessage()
+import { useAppStore } from '~/store/app'
 
-const appVersion = ref<string>()
+const appStore = useAppStore()
 
 onMounted(async () => {
-  try {
-    const response = await fetch('/json/version.json')
-    const data = await response.json()
-    appVersion.value = data.version
-  } catch {
-    setToastMessage({ message: "Impossible de récupérer la version de l'application", type: 'error' })
-  }
+  await appStore.fetchAppVersion()
 })
 </script>
 
 <template>
-  <span> | App: {{ !appVersion || !appVersion.length ? '?' : appVersion }}</span>
+  <span>
+    | App:
+    <span class="font-weight-bold"
+      >{{ !appStore.appVersion || !appStore.appVersion.length ? '?' : appStore.appVersion }}
+    </span>
+  </span>
 </template>
