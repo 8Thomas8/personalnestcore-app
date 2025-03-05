@@ -36,7 +36,8 @@ export default defineNuxtConfig({
       apiBase: '',
       github: {
         projectOwner: '',
-        projectRepo: '',
+        projectAppRepo: '',
+        projectApiRepo: '',
       },
       notify: {
         devVersion: '',
