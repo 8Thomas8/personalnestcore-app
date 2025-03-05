@@ -10,14 +10,37 @@ const config = useRuntimeConfig()
 watch(
   [() => appStore.appVersion, () => appStore.repoAppVersions],
   ([toAppVersion, toRepoAppVersions]: [string, string[]]) => {
-    const availableVersions = config.public.notify.devVersion
+    const availableAppVersions = config.public.notify.devVersion
       ? toRepoAppVersions
       : filterStableVersions(toRepoAppVersions)
 
-    if (toAppVersion && availableVersions.length) {
+    if (toAppVersion && availableAppVersions.length) {
       try {
-        if (toAppVersion !== availableVersions.sort((a, b) => compareSemVer(a, b))[availableVersions.length - 1]) {
+        if (
+          toAppVersion !== availableAppVersions.sort((a, b) => compareSemVer(a, b))[availableAppVersions.length - 1]
+        ) {
           setToastMessage(ToastMessageType.TypeInfo, "Une nouvelle version de l'application est disponible.")
+        }
+      } catch (error) {
+        setToastMessage(ToastMessageType.TypeError, error.message)
+      }
+    }
+  }
+)
+
+watch(
+  [() => appStore.apiVersion, () => appStore.repoApiVersions],
+  ([toApiVersion, toRepoApiVersions]: [string, string[]]) => {
+    const availableApiVersions = config.public.notify.devVersion
+      ? toRepoApiVersions
+      : filterStableVersions(toRepoApiVersions)
+
+    if (toApiVersion && availableApiVersions.length) {
+      try {
+        if (
+          toApiVersion !== availableApiVersions.sort((a, b) => compareSemVer(a, b))[availableApiVersions.length - 1]
+        ) {
+          setToastMessage(ToastMessageType.TypeInfo, "Une nouvelle version de l'api est disponible.")
         }
       } catch (error) {
         setToastMessage(ToastMessageType.TypeError, error.message)

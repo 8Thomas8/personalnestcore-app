@@ -4,16 +4,16 @@ import { useAppStore } from '~/store/app'
 const appStore = useAppStore()
 
 onMounted(async () => {
-  await appStore.fetchAppVersion()
-  await appStore.fetchRepoAppVersion()
+  await appStore.fetchApiVersion()
+  await appStore.fetchRepoApiVersion()
 })
 </script>
 
 <template>
   <span>
-    App:
+    Api:
     <span class="font-weight-bold"
-      >{{ !appStore.appVersion || !appStore.appVersion.length ? '?' : appStore.appVersion }}
+      >{{ !appStore.apiVersion || !appStore.apiVersion.length ? '?' : appStore.apiVersion }}
     </span>
   </span>
 </template>
