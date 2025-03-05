@@ -13,9 +13,6 @@ watch(
     const availableAppVersions = config.public.notify.devVersion
       ? toRepoAppVersions
       : filterStableVersions(toRepoAppVersions)
-    const availableApiVersions = config.public.notify.devVersion
-      ? toRepoApiVersions
-      : filterStableVersions(toRepoApiVersions)
 
     if (toAppVersion && availableAppVersions.length) {
       try {
@@ -28,6 +25,15 @@ watch(
         setToastMessage(ToastMessageType.TypeError, error.message)
       }
     }
+  }
+)
+
+watch(
+  [() => appStore.apiVersion, () => appStore.repoApiVersions],
+  ([toApiVersion, toRepoApiVersions]: [string, string[]]) => {
+    const availableApiVersions = config.public.notify.devVersion
+      ? toRepoApiVersions
+      : filterStableVersions(toRepoApiVersions)
 
     if (toApiVersion && availableApiVersions.length) {
       try {
