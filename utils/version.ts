@@ -1,7 +1,6 @@
 const regexVersion = /^(\d+)\.(\d+)\.(\d+)(?:-([a-z]+)(?:\.(\d+))?)?$/
 
 export const compareSemVer = (v1: string, v2: string): number => {
-  // Extrait version + prérelease (ex: 1.0.0-alpha.2)
   const semver = (v: string) => {
     const match = v.match(regexVersion)
     if (!match) throw new Error(`Le format de la version est invalide: ${v}`)
@@ -12,8 +11,8 @@ export const compareSemVer = (v1: string, v2: string): number => {
       major: parseInt(major),
       minor: parseInt(minor),
       patch: parseInt(patch),
-      preName: preName || null, // "alpha", "beta", "rc"
-      preNum: preNum ? parseInt(preNum) : 0, // Numéro de la préversion
+      preName: preName || null,
+      preNum: preNum ? parseInt(preNum) : 0,
     }
   }
 
@@ -25,8 +24,7 @@ export const compareSemVer = (v1: string, v2: string): number => {
   if (v.minor !== lv.minor) return v.minor - lv.minor
   if (v.patch !== lv.patch) return v.patch - lv.patch
 
-  // Gestion des préversions
-  if (!v.preName && lv.preName) return 1 // Stable > alpha/beta
+  if (!v.preName && lv.preName) return 1
   if (v.preName && !lv.preName) return -1
 
   const order = { alpha: 1, beta: 2, rc: 3 }
@@ -35,11 +33,11 @@ export const compareSemVer = (v1: string, v2: string): number => {
 
   if (rank1 !== rank2) return rank1 - rank2
 
-  return v.preNum - lv.preNum // Comparer alpha.1 < alpha.2
+  return v.preNum - lv.preNum
 }
 
 export const filterStableVersions = (versions: string[]): string[] => {
-  return versions.filter((v) => !v.match(/-\w+/)) // Supprime les versions contenant un préfixe après un "-"
+  return versions.filter((v) => !v.match(/-\w+/))
 }
 
 export const filterInvalidVersions = (versions: string[]): string[] => {
