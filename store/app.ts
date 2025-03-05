@@ -18,11 +18,11 @@ export const useAppStore = defineStore('appStore', () => {
     try {
       const response = await fetch('/json/version.json')
       const data = await response.json()
-      appVersion.value = data.version.length ? data.version : null
 
-      if (!data.version || !data.appVersion.length) {
+      if (!data.version?.length) {
         throw new Error()
       }
+      appVersion.value = data.version
     } catch {
       setToastMessage(ToastMessageType.TypeError, "Impossible de récupérer la version de l'application")
     }

@@ -1,13 +1,5 @@
 <script setup lang="ts">
-import { useAppStore } from '~/store/app'
-
-const appStore = useAppStore()
-
 const drawerIsOpened = ref(null)
-
-onMounted(async () => {
-  await appStore.fetchRepoAppVersion()
-})
 </script>
 
 <template>

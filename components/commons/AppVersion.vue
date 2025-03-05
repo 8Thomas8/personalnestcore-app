@@ -5,6 +5,7 @@ const appStore = useAppStore()
 
 onMounted(async () => {
   await appStore.fetchAppVersion()
+  await appStore.fetchRepoAppVersion()
 })
 </script>
 
