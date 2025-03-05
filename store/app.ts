@@ -15,7 +15,7 @@ export const useAppStore = defineStore('appStore', () => {
 
   // Getters
   const stableRepoAppVersions = computed(() => filterStableVersions(repoAppVersions.value))
-  const stableRepoApiVersions = computed(() => filterStableVersions(repoAppVersions.value))
+  const stableRepoApiVersions = computed(() => filterStableVersions(repoApiVersions.value))
 
   // Actions
   const fetchAppVersion = async () => {
