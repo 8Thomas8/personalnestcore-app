@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
   })
 
   for (const [key, value] of Object.entries(response.headers)) {
-    setResponseHeader(event, key, value as string)
+    setResponseHeader(event, key, String(value))
   }
 
   return response._data
