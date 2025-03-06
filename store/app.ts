@@ -20,7 +20,7 @@ export const useAppStore = defineStore('appStore', () => {
   // Actions
   const fetchAppVersion = async () => {
     try {
-      const response = await fetch('/json/version.json')
+      const response = await fetch(`/json/version.json?nocache=${Date.now()}`)
       const data = await response.json()
 
       if (!data.version?.length) {
