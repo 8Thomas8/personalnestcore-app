@@ -8,5 +8,9 @@ export default defineEventHandler(async (event) => {
     body: event.node.req.method !== 'GET' ? await readRawBody(event) : undefined,
   })
 
+  for (const [key, value] of Object.entries(response.headers)) {
+    setResponseHeader(event, key, String(value))
+  }
+
   return response._data
 })
