@@ -21,6 +21,12 @@ export default class UserDrugDto {
   drugName?: DrugNameDto
 
   @Expose()
+  drugContainerId!: number
+
+  @Expose()
+  drugContainer?: DrugNameDto
+
+  @Expose()
   form!: DrugForm
 
   @Expose()
