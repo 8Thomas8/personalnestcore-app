@@ -9,6 +9,7 @@ import { capitalize } from 'vue'
 import { formatDateFr } from '~/utils/date'
 import type { VAutocomplete, VDialog, VTextField } from 'vuetify/components'
 import { useDisplay } from 'vuetify'
+import { useDrugContainerStore } from '~/store/drugContainer'
 
 const emits = defineEmits(['update:addOrUpdateDrugDialogIsOpened'])
 const props = defineProps<{
@@ -24,6 +25,7 @@ const props = defineProps<{
 const { required, requiredIf, shouldBeEmptyIf, isFloat, isDateisFormatFr, isNumber, min } = useFormValidation()
 const drugBrandStore = useDrugBrandStore()
 const drugNameStore = useDrugNameStore()
+const drugContainerStore = useDrugContainerStore()
 const userDrugStore = useUserDrugStore()
 const { setToastMessage } = useToastMessage()
 const { xs } = useDisplay()
@@ -37,16 +39,19 @@ const addOrUpdateDrugDialog = ref<VDialog>()
 const drugNameField = useTemplateRef<VTextField>('drugNameField')
 const drugBrandIsLoading = ref(false)
 const drugNameIsLoading = ref(false)
+const drugContainerIsLoading = ref(false)
 const userDrugIsLoading = ref(false)
 const itemToUpdateIsFilled = ref(false)
 const formIsValid = ref(false)
 const drugForm = useTemplateRef<HTMLFormElement | null>('drugForm')
 const searchDrugBrandInput = ref<string | undefined>(undefined)
 const searchDrugNameInput = ref<string | undefined>(undefined)
+const searchDrugContainerInput = ref<string | undefined>(undefined)
 
 const itemForm = ref<{
   drugBrandId: number | null
   drugNameId: number | null
+  drugContainerId: number | null
   form: DrugForm | null
   dose: string | null
   note: string | null
@@ -56,6 +61,7 @@ const itemForm = ref<{
 }>({
   drugBrandId: null,
   drugNameId: null,
+  drugContainerId: null,
   form: null,
   dose: null,
   note: null,
@@ -76,11 +82,13 @@ watch(
 
 watch(isDialogOpened, async (isOpened: boolean) => {
   if (isOpened && props.updateMode && props.itemToUpdate) {
-    const { drugBrandId, form, dose, note, unit, expirationDateTime, quantity } = props.itemToUpdate
+    const { drugBrandId, drugContainerId, form, dose, note, unit, expirationDateTime, quantity } = props.itemToUpdate
     await drugBrandStore.fetchAll()
+    await drugContainerStore.fetchAll()
     await drugNameStore.fetchAll(drugBrandId)
 
     itemForm.value.drugBrandId = drugBrandId
+    itemForm.value.drugContainerId = drugContainerId
     itemForm.value.form = form
     itemForm.value.dose = dose?.toString()
     itemForm.value.note = note
@@ -115,6 +123,7 @@ onBeforeUnmount(() => {
 
 const onSubmit = async () => {
   if (!formIsValid.value) return
+  userDrugIsLoading.value = true
 
   if (props.updateMode) {
     if (await userDrugStore.update(props.itemToUpdate!.id, itemForm.value)) {
@@ -149,6 +158,7 @@ const resetForm = () => {
   itemForm.value = {
     drugBrandId: undefined,
     drugNameId: null,
+    drugContainerId: null,
     form: null,
     dose: null,
     note: null,
@@ -159,6 +169,7 @@ const resetForm = () => {
   drugForm.value?.resetValidation()
   searchDrugBrandInput.value = undefined
   searchDrugNameInput.value = undefined
+  searchDrugContainerInput.value = undefined
 }
 
 const drugFormItems = Object.entries(DrugForm).map(([, value]) => ({
@@ -183,6 +194,12 @@ const onFocusNameField = async () => {
   drugNameIsLoading.value = false
 }
 
+const onFocusContainerField = async () => {
+  drugContainerIsLoading.value = true
+  await drugContainerStore.fetchAll()
+  drugContainerIsLoading.value = false
+}
+
 const createDrugBrand = async (name: string) => {
   drugBrandIsLoading.value = true
   await drugBrandStore.create(capitalize(name))
@@ -194,6 +211,12 @@ const createDrugName = async (name: string) => {
   await drugNameStore.create(capitalize(name), itemForm.value.drugBrandId!)
   await drugNameStore.fetchAll(itemForm.value.drugBrandId!)
   drugNameIsLoading.value = false
+}
+
+const createDrugContainer = async (name: string) => {
+  drugContainerIsLoading.value = true
+  await drugContainerStore.create(capitalize(name))
+  drugContainerIsLoading.value = false
 }
 
 const replaceNonFloatCharacters = (value: string) => {
@@ -215,6 +238,26 @@ const replaceNonNumberCharacters = (value: string) => {
       <v-form ref="drugForm" v-model="formIsValid" @submit.prevent="onSubmit">
         <v-card-text>
           <v-row>
+            <v-col cols="12">
+              <v-autocomplete
+                v-model="itemForm.drugContainerId"
+                v-model:search="searchDrugContainerInput"
+                clearable
+                :hide-no-data="!searchDrugContainerInput"
+                :loading="drugContainerIsLoading"
+                label="Conteneur *"
+                :rules="[required]"
+                :items="drugContainerStore.drugContainers"
+                item-title="name"
+                item-value="id"
+                @focus="onFocusContainerField">
+                <template #no-data>
+                  <v-list-item prepend-icon="mdi-plus" @click="createDrugContainer(searchDrugContainerInput!)">
+                    Créer le conteneur : {{ searchDrugContainerInput }}
+                  </v-list-item>
+                </template>
+              </v-autocomplete>
+            </v-col>
             <v-col cols="12" sm="6">
               <v-autocomplete
                 v-model="itemForm.drugBrandId"

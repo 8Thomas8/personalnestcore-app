@@ -50,6 +50,7 @@ export const useUserDrugStore = defineStore('userDrugStore', () => {
   const create = async ({
     drugBrandId,
     drugNameId,
+    drugContainerId,
     form,
     dose,
     note,
@@ -59,6 +60,7 @@ export const useUserDrugStore = defineStore('userDrugStore', () => {
   }: {
     drugBrandId: number | null
     drugNameId: number | null
+    drugContainerId: number | null
     form: DrugForm | null
     dose: string | null
     note: string | null
@@ -77,6 +79,7 @@ export const useUserDrugStore = defineStore('userDrugStore', () => {
         body: {
           drugBrandId,
           drugNameId,
+          drugContainerId,
           form,
           dose,
           note,
@@ -103,6 +106,7 @@ export const useUserDrugStore = defineStore('userDrugStore', () => {
     data: {
       drugBrandId: number | null
       drugNameId: number | null
+      drugContainerId: number | null
       form: DrugForm | null
       dose: string | null
       note: string | null
@@ -115,7 +119,7 @@ export const useUserDrugStore = defineStore('userDrugStore', () => {
 
     if (!authStore.token) return
 
-    const { drugBrandId, drugNameId, form, dose, note, unit, expirationDateTime, quantity } = data
+    const { drugBrandId, drugNameId, drugContainerId, form, dose, note, unit, expirationDateTime, quantity } = data
 
     try {
       await $apiFetch(`/v1/user-drug/${id}`, {
@@ -124,6 +128,7 @@ export const useUserDrugStore = defineStore('userDrugStore', () => {
         body: {
           drugBrandId,
           drugNameId,
+          drugContainerId,
           form,
           dose,
           note,

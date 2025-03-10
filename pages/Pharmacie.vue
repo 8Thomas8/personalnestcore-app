@@ -52,6 +52,12 @@ const headers = [
     sortable: true,
     align: 'center',
   },
+  {
+    title: 'Conteneur',
+    key: 'drugContainer.name',
+    sortable: true,
+    align: 'center',
+  },
   { title: 'Note', key: 'note', sortable: false, align: 'center' },
   { title: 'Actions', key: 'actions', sortable: false, align: 'end' },
 ]
@@ -269,9 +275,12 @@ const onRemoveQuantity = (item: UserDrugDto) => {
               </div>
             </template>
             <template #[`item.expirationDateTime`]="{ item }">
-              <v-chip :color="item.isExpired ? 'error' : item.isExpireSoon ? 'warning' : 'green-lighten-1'"
-                >{{ item.expirationDateTime }}
+              <v-chip :color="item.isExpired ? 'error' : item.isExpireSoon ? 'warning' : 'green-lighten-1'">
+                {{ item.expirationDateTime }}
               </v-chip>
+            </template>
+            <template #[`item.drugContainer.name`]="{ item }">
+              <v-chip>{{ item.drugContainer.name ?? 'N/A' }}</v-chip>
             </template>
             <template #[`item.note`]="{ item }">
               <v-tooltip open-on-click v-if="item.note" :text="item.note">
