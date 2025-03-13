@@ -31,26 +31,24 @@ const quantityChange = ref(0)
 
 const headers = [
   { title: 'Nom', key: 'drugName.name', sortable: true },
-  { title: 'Marque', key: 'drugBrand.name', sortable: true },
-  {
-    title: 'Dose',
-    value: (item: UserDrugDto) => `${item.dose || ''} ${DrugUnitTranslations[item.unit] || ''}`,
-    key: 'dose',
-    sortable: false,
-  },
-  { title: 'Quantité', key: 'quantity', sortable: false, align: 'center' },
-
-  {
-    title: 'Forme',
-    value: (item: UserDrugDto) => DrugFormTranslations[item.form],
-    key: 'form',
-    align: 'center',
-  },
   {
     title: "Date d'expiration",
     key: 'expirationDateTime',
     sortable: true,
     align: 'center',
+  },
+  { title: 'Note', key: 'note', sortable: false, align: 'center' },
+
+  { title: 'Marque', key: 'drugBrand.name', sortable: true },
+  {
+    title: 'Dose',
+    key: 'dose',
+    sortable: false,
+  },
+  {
+    title: 'Forme',
+    value: (item: UserDrugDto) => DrugFormTranslations[item.form],
+    key: 'form',
   },
   {
     title: 'Conteneur',
@@ -58,7 +56,6 @@ const headers = [
     sortable: true,
     align: 'center',
   },
-  { title: 'Note', key: 'note', sortable: false, align: 'center' },
   { title: 'Actions', key: 'actions', sortable: false, align: 'end' },
 ]
 useAsyncData(async () => {
@@ -192,12 +189,11 @@ const onRemoveQuantity = (item: UserDrugDto) => {
 
 <template>
   <v-container max-width="1144">
-    <h1 class="pb-4 d-flex">
-      <v-icon icon="mdi-medical-cotton-swab" class="mr-2" />
-      <span class="d-none d-sm-block">Gestion du stock de médicaments</span>
-      <span class="d-sm-none">Médicaments</span>
-    </h1>
     <v-card class="pa-4">
+      <v-card-title class="d-flex align-center">
+        <v-icon icon="mdi-medical-cotton-swab" class="mr-2" /> Pharmacie
+      </v-card-title>
+
       <v-row>
         <v-col cols="auto" class="d-flex">
           <v-checkbox
@@ -240,8 +236,22 @@ const onRemoveQuantity = (item: UserDrugDto) => {
               expirationDateTime: expirationDateTimeSort,
             }">
             <template #[`item.drugName.name`]="{ item }">
-              <div class="d-flex justify-end">
-                <v-tooltip open-on-click location="top" :text="item.drugName.name">
+              <div class="d-flex align-center ga-2">
+                <div class="d-flex justify-end align-center ga-2 py-1 py-xs-0">
+                  <div class="d-flex flex-column justify-end ga-1 align-center">
+                    <v-btn border size="24" variant="elevated" color="success" @click="onAddQuantity(item)">
+                      <v-icon>mdi-plus</v-icon>
+                    </v-btn>
+                    <v-btn size="24" variant="elevated" color="error" @click="onRemoveQuantity(item)">
+                      <v-icon>mdi-minus</v-icon>
+                    </v-btn>
+                  </div>
+                  <span class="text-body-1">{{ item.quantity }}</span>
+                </div>
+
+                <span>|</span>
+
+                <v-tooltip open-on-hover open-on-click open-on-focus location="top" :text="item.drugName.name">
                   <template v-slot:activator="{ props }">
                     <p v-bind="props" class="text-truncate truncate-width font-weight-bold">
                       {{ item.drugName.name }}
@@ -252,7 +262,7 @@ const onRemoveQuantity = (item: UserDrugDto) => {
             </template>
             <template #[`item.drugBrand.name`]="{ item }">
               <div class="d-flex justify-end">
-                <v-tooltip open-on-click location="top" :text="item.drugBrand.name">
+                <v-tooltip open-on-hover open-on-click open-on-focus location="top" :text="item.drugBrand.name">
                   <template v-slot:activator="{ props }">
                     <p v-bind="props" class="text-truncate truncate-width">
                       {{ item.drugBrand.name }}
@@ -261,21 +271,15 @@ const onRemoveQuantity = (item: UserDrugDto) => {
                 </v-tooltip>
               </div>
             </template>
-            <template #[`item.quantity`]="{ item }">
-              <div class="d-flex justify-end align-center ga-2 py-1 py-xs-0">
-                <div class="d-flex flex-column justify-end ga-1 align-center">
-                  <v-btn border size="24" variant="elevated" color="success" @click="onAddQuantity(item)">
-                    <v-icon>mdi-plus</v-icon>
-                  </v-btn>
-                  <v-btn size="24" variant="elevated" color="error" @click="onRemoveQuantity(item)">
-                    <v-icon>mdi-minus</v-icon>
-                  </v-btn>
-                </div>
-                <span class="text-body-1">{{ item.quantity }}</span>
-              </div>
+            <template #[`item.dose`]="{ item }">
+              <p class="text-center">
+                {{ `${item.dose || ''} ${DrugUnitTranslations[item.unit] || ''}` }}
+              </p>
             </template>
             <template #[`item.expirationDateTime`]="{ item }">
-              <v-chip :color="item.isExpired ? 'error' : item.isExpireSoon ? 'warning' : 'green-lighten-1'">
+              <v-chip
+                prepend-icon="mdi-calendar"
+                :color="item.isExpired ? 'error' : item.isExpireSoon ? 'warning' : 'green-lighten-1'">
                 {{ item.expirationDateTime }}
               </v-chip>
             </template>
@@ -283,7 +287,7 @@ const onRemoveQuantity = (item: UserDrugDto) => {
               <v-chip>{{ item.drugContainer.name ?? 'N/A' }}</v-chip>
             </template>
             <template #[`item.note`]="{ item }">
-              <v-tooltip open-on-click v-if="item.note" :text="item.note">
+              <v-tooltip open-on-hover open-on-click open-on-focus v-if="item.note" :text="item.note">
                 <template #activator="{ props }">
                   <v-icon v-bind="props" color="primary">mdi-information</v-icon>
                 </template>
@@ -326,6 +330,9 @@ const onRemoveQuantity = (item: UserDrugDto) => {
 
 <style lang="scss" scoped>
 :deep(.v-data-table__tr) {
+  &:nth-child(even) {
+    background: rgba(0, 0, 0, 0.02);
+  }
   &:hover {
     background: rgba(0, 0, 0, 0.04);
   }

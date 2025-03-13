@@ -17,11 +17,12 @@ const authStore = useAuthStore()
           Retour aux services
         </v-btn>
 
-        <v-card>
-          <v-card-title>Mon Profil</v-card-title>
-
+        <v-card class="pa-4">
+          <v-card-title class="d-flex align-center">
+            <v-icon icon="mdi-account" class="mr-2" /> Mon compte
+          </v-card-title>
           <v-card-text>
-            <v-row no-gutters>
+            <v-row>
               <v-col cols="12">
                 <v-text-field readonly label="Pseudo" active :value="authStore.user?.username" />
               </v-col>

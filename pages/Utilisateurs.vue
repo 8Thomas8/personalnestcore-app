@@ -81,9 +81,10 @@ const onClickUpdate = (user: UserDto) => {
           Retour aux services
         </v-btn>
 
-        <v-card>
-          <v-card-title>Utilisateurs</v-card-title>
-
+        <v-card class="pa-4">
+          <v-card-title class="d-flex align-center">
+            <v-icon icon="mdi-account-group" class="mr-2" /> Utilisateurs
+          </v-card-title>
           <v-card-text>
             <v-row>
               <v-spacer />
@@ -147,6 +148,9 @@ const onClickUpdate = (user: UserDto) => {
 
 <style lang="scss" scoped>
 :deep(.v-data-table__tr) {
+  &:nth-child(even) {
+    background: rgba(0, 0, 0, 0.02);
+  }
   &:hover {
     background: rgba(0, 0, 0, 0.04);
   }
