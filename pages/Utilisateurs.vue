@@ -150,7 +150,8 @@ const onClickUpdate = (user: UserDto) => {
 
 <style lang="scss" scoped>
 @use 'sass:map';
-@import 'vuetify/settings';
+@use 'vuetify/settings' as *;
+
 :deep(.v-data-table__tr) {
   &:nth-child(odd) {
     background: rgba(0, 0, 0, 0.02);

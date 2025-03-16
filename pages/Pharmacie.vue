@@ -375,7 +375,7 @@ const onRemoveQuantity = (item: UserDrugDto) => {
 
 <style lang="scss" scoped>
 @use 'sass:map';
-@import 'vuetify/settings';
+@use 'vuetify/settings' as *;
 
 :deep(.v-data-table__tr) {
   &:nth-child(odd) {
