@@ -5,15 +5,17 @@ import { useUserDrugStore } from '~/store/userDrug'
 import type UserDrugDto from '~/dto/UserDrugDto'
 import ConfirmationDialog from '~/components/dialogs/ConfirmationDialog.vue'
 import { stringToDate } from '~/utils/date'
+import { useDisplay } from 'vuetify'
 
 definePageMeta({ layout: 'app' })
 useHead({
   title: 'Pharmacie',
 })
 
-const userDrugStore = useUserDrugStore()
-
 const addOrUpdateDrugDialogIsOpened = defineModel({ default: false, type: Boolean })
+
+const userDrugStore = useUserDrugStore()
+const { smAndUp } = useDisplay()
 
 const DebounceDelay = 300
 
@@ -37,9 +39,9 @@ const headers = [
     sortable: true,
     align: 'center',
   },
-  { title: 'Note', key: 'note', sortable: false, align: 'center' },
+  { title: 'Note', key: 'note', sortable: false, align: 'center d-none d-sm-table-cell' },
 
-  { title: 'Marque', key: 'drugBrand.name', sortable: true },
+  { title: 'Marque', key: 'drugBrand.name', sortable: true, align: 'center d-none d-sm-table-cell' },
   {
     title: 'Dose',
     key: 'dose',
@@ -49,6 +51,7 @@ const headers = [
     title: 'Forme',
     value: (item: UserDrugDto) => DrugFormTranslations[item.form],
     key: 'form',
+    align: 'center d-none d-sm-table-cell',
   },
   {
     title: 'Conteneur',
@@ -71,18 +74,6 @@ useAsyncData(async () => {
   isLoading.value = false
 })
 
-const updateAddOrUpdateDrugDialogIsOpened = (value: boolean) => {
-  addOrUpdateDrugDialogIsOpened.value = value
-}
-
-const handleCheckboxChange = (checkbox: 'expiredOnly' | 'expiringSoon') => {
-  if (checkbox === 'expiredOnly') {
-    if (expiredOnly.value) expiringSoon.value = false
-  } else {
-    if (expiringSoon.value) expiredOnly.value = false
-  }
-}
-
 watchDebounced(
   [currentPage, itemPerPage, searchTerms, expiredOnly, expiringSoon],
   async () => {
@@ -98,6 +89,18 @@ watchDebounced(
   },
   { debounce: DebounceDelay }
 )
+
+const updateAddOrUpdateDrugDialogIsOpened = (value: boolean) => {
+  addOrUpdateDrugDialogIsOpened.value = value
+}
+
+const handleCheckboxChange = (checkbox: 'expiredOnly' | 'expiringSoon') => {
+  if (checkbox === 'expiredOnly') {
+    if (expiredOnly.value) expiringSoon.value = false
+  } else {
+    if (expiringSoon.value) expiredOnly.value = false
+  }
+}
 
 const expirationDateTimeSort = (a: string, b: string) => {
   const dateA = stringToDate(a)
@@ -189,29 +192,35 @@ const onRemoveQuantity = (item: UserDrugDto) => {
 
 <template>
   <v-container max-width="1144">
-    <v-card class="pa-4">
+    <v-card class="pa-2 pa-sm-4">
       <v-card-title class="d-flex align-center">
         <v-icon icon="mdi-medical-cotton-swab" class="mr-2" /> Pharmacie
       </v-card-title>
 
       <v-row>
         <v-col cols="auto" class="d-flex">
-          <v-checkbox
-            hide-details
-            color="primary"
-            v-model="expiredOnly"
-            label="Expiré"
-            @change="handleCheckboxChange('expiredOnly')" />
-          <v-checkbox
-            hide-details
-            color="primary"
-            v-model="expiringSoon"
-            label="Va expirer"
-            @change="handleCheckboxChange('expiringSoon')" />
+          <div class="d-flex align-center">
+            <v-icon icon="mdi-calendar-remove" color="error" />
+            <v-checkbox
+              hide-details
+              color="primary"
+              v-model="expiredOnly"
+              @change="handleCheckboxChange('expiredOnly')" />
+          </div>
+          <div class="d-flex align-center">
+            <v-icon icon="mdi-calendar-clock" color="warning" />
+            <v-checkbox
+              hide-details
+              color="primary"
+              v-model="expiringSoon"
+              @change="handleCheckboxChange('expiringSoon')" />
+          </div>
         </v-col>
         <v-spacer />
         <v-col cols="auto" class="d-flex align-center">
-          <v-btn prepend-icon="mdi-plus" @click="onAddDrug()">Ajouter</v-btn>
+          <v-btn @click="onAddDrug()">
+            <v-icon icon="mdi-plus" /> <span class="ml-1 d-none d-sm-inline">Ajouter</span>
+          </v-btn>
         </v-col>
         <v-col cols="12">
           <v-text-field hide-details v-model="searchTerms" label="Recherche *" clearable />
@@ -231,25 +240,24 @@ const onRemoveQuantity = (item: UserDrugDto) => {
             :loading="isLoading"
             :mobile="false"
             :headers="headers"
+            :hide-default-header="!smAndUp"
             :items="userDrugStore.userDrugs"
             :custom-key-sort="{
               expirationDateTime: expirationDateTimeSort,
             }">
             <template #[`item.drugName.name`]="{ item }">
               <div class="d-flex align-center ga-2">
-                <div class="d-flex justify-end align-center ga-2 py-1 py-xs-0">
-                  <div class="d-flex flex-column justify-end ga-1 align-center">
-                    <v-btn border size="24" variant="elevated" color="success" @click="onAddQuantity(item)">
+                <div class="d-flex justify-end align-center ga-1 py-1 py-xs-0">
+                  <div class="d-none d-sm-flex flex-column justify-end ga-1 align-center">
+                    <v-btn border size="24" variant="elevated" color="green" @click="onAddQuantity(item)">
                       <v-icon>mdi-plus</v-icon>
                     </v-btn>
-                    <v-btn size="24" variant="elevated" color="error" @click="onRemoveQuantity(item)">
+                    <v-btn size="24" variant="elevated" color="red" @click="onRemoveQuantity(item)">
                       <v-icon>mdi-minus</v-icon>
                     </v-btn>
                   </div>
-                  <span class="text-body-1">{{ item.quantity }}</span>
+                  <pre class="bg-white border rounded text-body-2 text-sm-body-1 pa-1">{{ item.quantity }}</pre>
                 </div>
-
-                <span>|</span>
 
                 <v-tooltip open-on-hover open-on-click open-on-focus location="top" :text="item.drugName.name">
                   <template v-slot:activator="{ props }">
@@ -272,19 +280,48 @@ const onRemoveQuantity = (item: UserDrugDto) => {
               </div>
             </template>
             <template #[`item.dose`]="{ item }">
-              <p class="text-center">
+              <p class="text-center dose-with">
                 {{ `${item.dose || ''} ${DrugUnitTranslations[item.unit] || ''}` }}
               </p>
             </template>
             <template #[`item.expirationDateTime`]="{ item }">
-              <v-chip
-                prepend-icon="mdi-calendar"
-                :color="item.isExpired ? 'error' : item.isExpireSoon ? 'warning' : 'green-lighten-1'">
-                {{ item.expirationDateTime }}
-              </v-chip>
+              <v-tooltip
+                open-on-hover
+                open-on-click
+                open-on-focus
+                location="top"
+                :text="item.expirationDateTime"
+                :disabled="smAndUp">
+                <template v-slot:activator="{ props }">
+                  <v-chip
+                    v-bind="props"
+                    :color="item.isExpired ? 'error' : item.isExpireSoon ? 'warning' : 'green-lighten-1'">
+                    <v-icon
+                      :icon="
+                        item.isExpired
+                          ? 'mdi-calendar-remove'
+                          : item.isExpireSoon
+                            ? 'mdi-calendar-clock'
+                            : 'mdi-calendar'
+                      " />
+                    <span class="d-none d-sm-inline ml-2">{{ item.expirationDateTime }}</span>
+                  </v-chip>
+                </template>
+              </v-tooltip>
             </template>
             <template #[`item.drugContainer.name`]="{ item }">
-              <v-chip>{{ item.drugContainer.name ?? 'N/A' }}</v-chip>
+              <v-tooltip
+                open-on-hover
+                open-on-click
+                open-on-focus
+                location="top"
+                :text="item.drugContainer.name ?? 'N/A'">
+                <template v-slot:activator="{ props }">
+                  <v-chip v-bind="props">
+                    <span class="text-truncate truncate-width">{{ item.drugContainer.name ?? 'N/A' }}</span>
+                  </v-chip>
+                </template>
+              </v-tooltip>
             </template>
             <template #[`item.note`]="{ item }">
               <v-tooltip open-on-hover open-on-click open-on-focus v-if="item.note" :text="item.note">
@@ -295,11 +332,21 @@ const onRemoveQuantity = (item: UserDrugDto) => {
               </v-tooltip>
             </template>
             <template #[`item.actions`]="{ item }">
-              <div class="d-flex flex-wrap ga-2 py-2 py-xs-0 justify-end">
-                <v-btn variant="elevated" color="warning" @click="onClickUpdate(item)" min-width="46px" class="px-0">
-                  <v-icon>mdi-pencil</v-icon>
+              <div class="d-flex ga-2 py-2 py-xs-0 justify-end">
+                <v-btn
+                  variant="elevated"
+                  color="info"
+                  @click="onClickUpdate(item)"
+                  :min-width="smAndUp ? '46px' : '32px'"
+                  class="px-0">
+                  <v-icon>mdi-eye</v-icon>
                 </v-btn>
-                <v-btn variant="elevated" color="error" @click="onClickDelete(item)" min-width="46px" class="px-0">
+                <v-btn
+                  variant="elevated"
+                  color="red"
+                  @click="onClickDelete(item)"
+                  :min-width="smAndUp ? '46px' : '32px'"
+                  class="px-0">
                   <v-icon>mdi-delete</v-icon>
                 </v-btn>
               </div>
@@ -329,8 +376,11 @@ const onRemoveQuantity = (item: UserDrugDto) => {
 </template>
 
 <style lang="scss" scoped>
+@use 'sass:map';
+@import 'vuetify/settings';
+
 :deep(.v-data-table__tr) {
-  &:nth-child(even) {
+  &:nth-child(odd) {
     background: rgba(0, 0, 0, 0.02);
   }
   &:hover {
@@ -338,6 +388,23 @@ const onRemoveQuantity = (item: UserDrugDto) => {
   }
   .truncate-width {
     width: 150px;
+  }
+  .dose-with {
+    width: max-content;
+  }
+}
+
+@media #{map.get($display-breakpoints, 'sm-and-down')} {
+  :deep(.v-data-table__tr) {
+    font-size: 12px;
+
+    .truncate-width {
+      width: 70px;
+    }
+  }
+
+  :deep(.v-data-table__td) {
+    padding: 0 8px !important;
   }
 }
 </style>

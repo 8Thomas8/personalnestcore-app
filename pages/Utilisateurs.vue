@@ -4,12 +4,14 @@ import AddOrUpdateUserDialog from '~/components/dialogs/AddOrUpdateUserDialog.vu
 import type UserDto from '~/dto/UserDto'
 import ConfirmationDialog from '~/components/dialogs/ConfirmationDialog.vue'
 import { ServiceRoutes } from '~/types/routes'
+import { useDisplay } from 'vuetify'
 
 useHead({
   title: 'Utilisateurs',
 })
 
 const userStore = useUserStore()
+const { smAndUp } = useDisplay()
 
 const addOrUpdateUserDialogIsOpened = defineModel({ default: false, type: Boolean })
 
@@ -20,9 +22,9 @@ const userToDelete = ref<UserDto | null>(null)
 const confirmationDialogIsOpened = ref(false)
 
 const headers = [
-  { title: 'Pseudo', key: 'username', sortable: true, align: 'center' },
-  { title: 'Création', key: 'createdAt', sortable: true, align: 'center' },
-  { title: 'Mise à jour', key: 'updatedAt', sortable: true, align: 'center' },
+  { title: 'Pseudo', key: 'username', sortable: true, align: 'start' },
+  { title: 'Création', key: 'createdAt', sortable: true, align: 'center d-none d-sm-table-cell' },
+  { title: 'Mise à jour', key: 'updatedAt', sortable: true, align: 'center d-none d-sm-table-cell' },
   { title: 'Actions', key: 'actions', sortable: false, align: 'end' },
 ]
 
@@ -89,7 +91,9 @@ const onClickUpdate = (user: UserDto) => {
             <v-row>
               <v-spacer />
               <v-col cols="auto" class="d-flex align-center">
-                <v-btn prepend-icon="mdi-plus" @click="onAddUser()">Ajouter</v-btn>
+                <v-btn @click="onAddUser()">
+                  <v-icon icon="mdi-plus" /><span class="d-none d-sm-inline ml-2">Ajouter</span>
+                </v-btn>
               </v-col>
               <v-col cols="12">
                 <v-data-table-server
@@ -108,17 +112,17 @@ const onClickUpdate = (user: UserDto) => {
                     <div class="d-flex flex-wrap ga-2 py-2 py-xs-0 justify-end">
                       <v-btn
                         variant="elevated"
-                        color="warning"
+                        color="info"
                         @click="onClickUpdate(item)"
-                        min-width="46px"
+                        :min-width="smAndUp ? '46px' : '32px'"
                         class="px-0">
-                        <v-icon>mdi-pencil</v-icon>
+                        <v-icon>mdi-eye</v-icon>
                       </v-btn>
                       <v-btn
                         variant="elevated"
-                        color="error"
+                        color="red"
                         @click="onClickDelete(item)"
-                        min-width="46px"
+                        :min-width="smAndUp ? '46px' : '32px'"
                         class="px-0">
                         <v-icon>mdi-delete</v-icon>
                       </v-btn>
@@ -147,12 +151,20 @@ const onClickUpdate = (user: UserDto) => {
 </template>
 
 <style lang="scss" scoped>
+@use 'sass:map';
+@import 'vuetify/settings';
 :deep(.v-data-table__tr) {
-  &:nth-child(even) {
+  &:nth-child(odd) {
     background: rgba(0, 0, 0, 0.02);
   }
   &:hover {
     background: rgba(0, 0, 0, 0.04);
+  }
+}
+
+@media #{map.get($display-breakpoints, 'sm-and-down')} {
+  :deep(.v-data-table__tr) {
+    font-size: 12px;
   }
 }
 </style>
