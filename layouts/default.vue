@@ -21,13 +21,13 @@ onBeforeMount(async () => {
 
 <template>
   <div class="h-100 d-flex flex-column">
-    <CommonsAppHeader />
+    <CommonsHeader />
 
     <v-main class="flex-grow-1">
       <slot />
     </v-main>
 
-    <CommonsAppFooter />
+    <CommonsFooter />
 
     <DialogsAuthDialog />
     <ToastMessage />
