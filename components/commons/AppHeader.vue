@@ -5,10 +5,11 @@ import { AccountRoutes, PublicRoutes } from '~/types/routes'
 
 defineProps<{ navDrawerIsActive?: boolean }>()
 
+const drawerIsOpened = defineModel<boolean | null>({ default: false })
+
 const { toggleAuthDialog } = useAuth()
 const authStore = useAuthStore()
 const router = useRouter()
-const drawerIsOpened = defineModel<boolean | null>({ default: false })
 
 const menu = ref([{ title: 'Mon profil', to: AccountRoutes.Profile }])
 

@@ -6,9 +6,7 @@ import ConfirmationDialog from '~/components/dialogs/ConfirmationDialog.vue'
 import { ServiceRoutes } from '~/types/routes'
 import { useDisplay } from 'vuetify'
 
-useHead({
-  title: 'Utilisateurs',
-})
+useHead({ title: 'Utilisateurs' })
 
 const userStore = useUserStore()
 const { smAndUp } = useDisplay()

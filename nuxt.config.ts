@@ -3,11 +3,9 @@ import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
-
   build: {
     transpile: ['vuetify'],
   },
-
   modules: [
     (_options, nuxt) => {
       nuxt.hooks.hook('vite:extendConfig', (config) => {
@@ -19,7 +17,6 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@vueuse/nuxt',
   ],
-
   vite: {
     vue: {
       template: {
@@ -28,9 +25,7 @@ export default defineNuxtConfig({
     },
     esbuild: { tsconfigRaw: { compilerOptions: { experimentalDecorators: true } } },
   },
-
   compatibilityDate: '2024-09-27',
-
   runtimeConfig: {
     public: {
       apiBase: '',

@@ -27,4 +27,3 @@
   max-height: 100px;
 }
 </style>
-<script setup lang="ts"></script>

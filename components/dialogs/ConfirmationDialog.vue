@@ -1,7 +1,5 @@
 <script setup lang="ts">
-defineProps<{
-  text: string
-}>()
+defineProps<{ text: string }>()
 
 const emits = defineEmits(['confirm', 'cancel'])
 </script>

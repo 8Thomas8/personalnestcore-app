@@ -8,9 +8,7 @@ import { stringToDate } from '~/utils/date'
 import { useDisplay } from 'vuetify'
 
 definePageMeta({ layout: 'app' })
-useHead({
-  title: 'Pharmacie',
-})
+useHead({ title: 'Pharmacie' })
 
 const addOrUpdateDrugDialogIsOpened = defineModel({ default: false, type: Boolean })
 
