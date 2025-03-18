@@ -3,9 +3,7 @@ import { useAuthStore } from '~/store/auth'
 import type { AccountRoutes, ServiceRoutes } from '~/types/routes'
 import { PublicRoutes } from '~/types/routes'
 
-useHead({
-  title: 'Connexion',
-})
+useHead({ title: 'Connexion' })
 
 const authStore = useAuthStore()
 const route = useRoute()

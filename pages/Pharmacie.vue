@@ -8,9 +8,7 @@ import { stringToDate } from '~/utils/date'
 import { useDisplay } from 'vuetify'
 
 definePageMeta({ layout: 'app' })
-useHead({
-  title: 'Pharmacie',
-})
+useHead({ title: 'Pharmacie' })
 
 const addOrUpdateDrugDialogIsOpened = defineModel({ default: false, type: Boolean })
 
@@ -248,7 +246,7 @@ const onRemoveQuantity = (item: UserDrugDto) => {
             <template #[`item.drugName.name`]="{ item }">
               <div class="d-flex align-center ga-2">
                 <div class="d-flex justify-end align-center ga-1 py-1 py-xs-0">
-                  <div class="d-none d-sm-flex flex-column justify-end ga-1 align-center">
+                  <div class="d-none d-sm-flex flex-column justify-end ga-2 align-center">
                     <v-btn border size="24" variant="elevated" color="green" @click="onAddQuantity(item)">
                       <v-icon>mdi-plus</v-icon>
                     </v-btn>
@@ -377,7 +375,7 @@ const onRemoveQuantity = (item: UserDrugDto) => {
 
 <style lang="scss" scoped>
 @use 'sass:map';
-@import 'vuetify/settings';
+@use 'vuetify/settings' as *;
 
 :deep(.v-data-table__tr) {
   &:nth-child(odd) {
@@ -404,7 +402,7 @@ const onRemoveQuantity = (item: UserDrugDto) => {
   }
 
   :deep(.v-data-table__td) {
-    padding: 0 8px !important;
+    padding: 0 4px !important;
   }
 }
 </style>

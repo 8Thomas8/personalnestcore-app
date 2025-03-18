@@ -6,9 +6,7 @@ import ConfirmationDialog from '~/components/dialogs/ConfirmationDialog.vue'
 import { ServiceRoutes } from '~/types/routes'
 import { useDisplay } from 'vuetify'
 
-useHead({
-  title: 'Utilisateurs',
-})
+useHead({ title: 'Utilisateurs' })
 
 const userStore = useUserStore()
 const { smAndUp } = useDisplay()
@@ -152,7 +150,8 @@ const onClickUpdate = (user: UserDto) => {
 
 <style lang="scss" scoped>
 @use 'sass:map';
-@import 'vuetify/settings';
+@use 'vuetify/settings' as *;
+
 :deep(.v-data-table__tr) {
   &:nth-child(odd) {
     background: rgba(0, 0, 0, 0.02);
@@ -165,6 +164,10 @@ const onClickUpdate = (user: UserDto) => {
 @media #{map.get($display-breakpoints, 'sm-and-down')} {
   :deep(.v-data-table__tr) {
     font-size: 12px;
+  }
+
+  :deep(.v-data-table__td) {
+    padding: 0 4px !important;
   }
 }
 </style>
