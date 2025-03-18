@@ -402,7 +402,7 @@ const onRemoveQuantity = (item: UserDrugDto) => {
   }
 
   :deep(.v-data-table__td) {
-    padding: 0 8px !important;
+    padding: 0 4px !important;
   }
 }
 </style>

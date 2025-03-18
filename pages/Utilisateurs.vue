@@ -165,5 +165,9 @@ const onClickUpdate = (user: UserDto) => {
   :deep(.v-data-table__tr) {
     font-size: 12px;
   }
+
+  :deep(.v-data-table__td) {
+    padding: 0 4px !important;
+  }
 }
 </style>
