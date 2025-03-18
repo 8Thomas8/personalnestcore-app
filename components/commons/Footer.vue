@@ -6,7 +6,7 @@
         <v-icon icon="mdi-copyright" size="18" />
         <span class="font-weight-bold">PersonalNestCore</span>
       </v-col>
-      <v-col class="text-center" cols="12"> <CommonsAppVersion /> | <CommonsApiVersion /> </v-col>
+      <v-col class="text-center" cols="12"> <AppVersion /> | <ApiVersion /> </v-col>
       <v-col cols="12" class="text-center">
         <v-btn
           prepend-icon="mdi-bug"

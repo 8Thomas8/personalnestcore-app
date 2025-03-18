@@ -21,15 +21,15 @@ onBeforeMount(async () => {
 
 <template>
   <div class="h-100 d-flex flex-column">
-    <CommonsHeader />
+    <Header />
 
     <v-main class="flex-grow-1">
       <slot />
     </v-main>
 
-    <CommonsFooter />
+    <Footer />
 
-    <DialogsAuthDialog />
+    <AuthDialog />
     <ToastMessage />
   </div>
 </template>

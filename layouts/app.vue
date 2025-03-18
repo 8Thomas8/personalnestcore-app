@@ -4,16 +4,16 @@ const drawerIsOpened = ref(null)
 
 <template>
   <div class="h-100 d-flex flex-column bg-grey-lighten-5">
-    <CommonsNavDrawer v-model="drawerIsOpened" />
-    <CommonsHeader v-model="drawerIsOpened" nav-drawer-is-active />
+    <NavDrawer v-model="drawerIsOpened" />
+    <Header v-model="drawerIsOpened" nav-drawer-is-active />
 
     <v-main class="flex-grow-1">
       <slot />
     </v-main>
 
-    <CommonsFooter />
+    <Footer />
 
-    <DialogsAuthDialog />
+    <AuthDialog />
     <ToastMessage />
   </div>
 </template>
