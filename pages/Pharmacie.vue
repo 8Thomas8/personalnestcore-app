@@ -244,8 +244,8 @@ const onRemoveQuantity = (item: UserDrugDto) => {
               expirationDateTime: expirationDateTimeSort,
             }">
             <template #[`item.drugName.name`]="{ item }">
-              <div class="d-flex align-center ga-2">
-                <div class="d-flex justify-end align-center ga-1 py-1 py-xs-0">
+              <div class="d-flex align-center ga-1">
+                <div class="d-flex justify-end align-center ga-2 py-1 py-xs-0">
                   <div class="d-none d-sm-flex flex-column justify-end ga-2 align-center">
                     <v-btn border size="24" variant="elevated" color="green" @click="onAddQuantity(item)">
                       <v-icon>mdi-plus</v-icon>
