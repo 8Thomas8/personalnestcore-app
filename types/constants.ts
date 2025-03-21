@@ -154,3 +154,7 @@ export const DrugFormTranslations = {
 export enum ApiError {
   API_ERROR_SIMILAR_DATA = 'A similar user drug already exists',
 }
+
+export enum CustomRecordView {
+  Calendar = 'CALENDAR',
+}

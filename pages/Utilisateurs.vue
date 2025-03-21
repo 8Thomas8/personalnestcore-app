@@ -8,10 +8,10 @@ import { useDisplay } from 'vuetify'
 
 useHead({ title: 'Utilisateurs' })
 
+const addOrUpdateUserDialogIsOpened = defineModel({ default: false, type: Boolean })
+
 const userStore = useUserStore()
 const { smAndUp } = useDisplay()
-
-const addOrUpdateUserDialogIsOpened = defineModel({ default: false, type: Boolean })
 
 const isLoading = ref(false)
 const updateMode = ref(false)
@@ -31,12 +31,8 @@ onBeforeMount(async () => {
 })
 
 const fetchUsersData = async () => {
-  try {
-    isLoading.value = true
-    await userStore.fetchAll()
-  } catch (e) {
-    console.error(e)
-  }
+  isLoading.value = true
+  await userStore.fetchAll()
   isLoading.value = false
 }
 
