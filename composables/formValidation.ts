@@ -75,6 +75,13 @@ export const useFormValidation = () => {
     return true
   }
 
+  const max = (value: string | undefined, max: number) => {
+    if (value && Number(value) > max) {
+      return `Veuillez entrer une valeur maximum de ${max}.`
+    }
+    return true
+  }
+
   return {
     required,
     requiredIf,
@@ -85,6 +92,7 @@ export const useFormValidation = () => {
     isDateisFormatFr,
     isNumber,
     min,
+    max,
     username,
   }
 }
