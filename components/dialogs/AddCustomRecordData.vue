@@ -24,7 +24,7 @@ const formIsValid = ref(false)
 const isLoading = ref(false)
 const date = ref<Date>()
 const time = ref<string>()
-const customRecordDataForm = ref<{ content: string; datetime: string }>({ content: null, datetime: null })
+const customRecordDataForm = ref<{ content: string | null; datetime: string | null }>({ content: null, datetime: null })
 
 watch([time, date], () => {
   if (!date || !time.value?.split(':').length) return
@@ -75,7 +75,7 @@ const onSubmit = async () => {
     max-width="600px">
     <v-card>
       <v-card-title class="d-flex justify-space-between">
-        {{ 'Ajouter un donnée' }}
+        Ajouter un donnée
         <v-icon size="24" @click="closeDialog">mdi-close</v-icon>
       </v-card-title>
       <v-form ref="customRecordDataFormElt" v-model="formIsValid" @submit.prevent="onSubmit">
@@ -103,7 +103,7 @@ const onSubmit = async () => {
             <v-col cols="12">
               <v-textarea
                 v-model="customRecordDataForm.content"
-                :rules="[required, max(customRecordDataForm.content, 100)]"
+                :rules="[required, max(customRecordDataForm.content, 500)]"
                 label="Donnée *"
                 maxlength="100" />
             </v-col>

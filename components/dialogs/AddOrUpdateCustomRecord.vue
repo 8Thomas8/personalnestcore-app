@@ -94,12 +94,12 @@ const onSubmit = async () => {
                 :rules="[
                   required,
                   min(customRecordForm.name, 4),
-                  max(customRecordForm.name, 15),
+                  max(customRecordForm.name, 25),
                   isFormat(customRecordForm.name, /^[\p{L}0-9 ]+$/u),
                 ]"
                 label="Nom du suivi *"
                 minLength="4"
-                maxlength="15" />
+                maxlength="25" />
             </v-col>
           </v-row>
         </v-card-text>
