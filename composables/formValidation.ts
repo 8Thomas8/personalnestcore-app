@@ -69,8 +69,29 @@ export const useFormValidation = () => {
   }
 
   const min = (value: string | undefined, min: number) => {
-    if (value && Number(value) < min) {
+    if (value && value.trim().length < min) {
       return `Veuillez entrer une valeur minimum de ${min}.`
+    }
+    return true
+  }
+
+  const max = (value: string | undefined, max: number) => {
+    if (value && value.trim().length > max) {
+      return `Veuillez entrer une valeur maximum de ${max}.`
+    }
+    return true
+  }
+
+  const isFormat = (value: string, format: RegExp, message: string) => {
+    if (!format.test(value)) {
+      return message ?? 'Le format est invalide.'
+    }
+    return true
+  }
+
+  const firstDateIsBeforeSecondDate = (date1: Date, date2: Date) => {
+    if (date1 > date2) {
+      return 'La première date doit être avant la deuxième date.'
     }
     return true
   }
@@ -85,6 +106,9 @@ export const useFormValidation = () => {
     isDateisFormatFr,
     isNumber,
     min,
+    max,
     username,
+    isFormat,
+    firstDateIsBeforeSecondDate,
   }
 }
