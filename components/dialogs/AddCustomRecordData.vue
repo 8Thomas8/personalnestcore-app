@@ -27,7 +27,7 @@ const time = ref<string>()
 const customRecordDataForm = ref<{ content: string | null; datetime: string | null }>({ content: null, datetime: null })
 
 watch([time, date], () => {
-  if (!date || !time.value?.split(':').length) return
+  if (!date.value || !time.value?.split(':').length) return
   const dateObj = new Date(date.value)
   const [hours, minutes] = time.value.split(':')
 
@@ -75,7 +75,7 @@ const onSubmit = async () => {
     max-width="600px">
     <v-card>
       <v-card-title class="d-flex justify-space-between">
-        Ajouter un donnée
+        Ajouter une donnée
         <v-icon size="24" @click="closeDialog">mdi-close</v-icon>
       </v-card-title>
       <v-form ref="customRecordDataFormElt" v-model="formIsValid" @submit.prevent="onSubmit">
@@ -105,7 +105,7 @@ const onSubmit = async () => {
                 v-model="customRecordDataForm.content"
                 :rules="[required, max(customRecordDataForm.content, 500)]"
                 label="Donnée *"
-                maxlength="100" />
+                maxlength="500" />
             </v-col>
           </v-row>
         </v-card-text>
