@@ -2,6 +2,7 @@
 import { useAppStore } from '~/store/app'
 import { compareSemVer, filterStableVersions } from '~/utils/version'
 import { ToastMessageType } from '~/types/constants'
+import 'reflect-metadata'
 
 const appStore = useAppStore()
 const { setToastMessage } = useToastMessage()
