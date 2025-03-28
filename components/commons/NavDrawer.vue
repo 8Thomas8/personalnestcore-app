@@ -60,7 +60,9 @@ const onClose = () => {
         </v-btn>
       </v-list-item>
       <v-list-item
-        v-for="tracking in customRecordStore.customRecords"
+        v-for="tracking in customRecordStore.customRecords.sort((a, b) =>
+          a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+        )"
         prepend-icon="mdi-poll"
         :key="tracking.name"
         :to="`suivi-${tracking.id}-${slugify(tracking.name)}`"
