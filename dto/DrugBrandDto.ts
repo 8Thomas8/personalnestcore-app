@@ -1,4 +1,5 @@
 import { Expose, Transform } from 'class-transformer'
+import 'reflect-metadata'
 
 export default class DrugBrandDto {
   @Expose()

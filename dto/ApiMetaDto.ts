@@ -1,4 +1,5 @@
 import { Expose } from 'class-transformer'
+import 'reflect-metadata'
 
 export default class ApiMetaDto {
   @Expose()

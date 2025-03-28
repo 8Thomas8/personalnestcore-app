@@ -1,5 +1,6 @@
 import { Expose, Transform } from 'class-transformer'
 import { dateToString } from '~/utils/date'
+import 'reflect-metadata'
 
 export default class UserDto {
   @Expose()
