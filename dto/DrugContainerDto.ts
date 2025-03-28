@@ -1,3 +1,4 @@
+import 'reflect-metadata'
 import { Expose, Transform } from 'class-transformer'
 
 export default class DrugContainerDto {

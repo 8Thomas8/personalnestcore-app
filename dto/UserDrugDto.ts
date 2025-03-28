@@ -1,9 +1,9 @@
 import { Expose, Transform } from 'class-transformer'
+import 'reflect-metadata'
 import type DrugNameDto from '~/dto/DrugNameDto'
 import type { DrugForm, DrugUnit } from '~/types/constants'
 import type DrugBrandDto from '~/dto/DrugBrandDto'
 import { dateToString, stringToDate } from '~/utils/date'
-import 'reflect-metadata'
 
 export default class UserDrugDto {
   @Expose()

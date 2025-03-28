@@ -4,7 +4,7 @@ import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 export default defineNuxtConfig({
   devtools: { enabled: true },
   components: [{ path: '~/components', pathPrefix: false }],
-  build: { transpile: ['vuetify', 'reflect-metadata'] },
+  build: { transpile: ['reflect-metadata', 'vuetify'] },
   modules: [
     (_options, nuxt) => {
       nuxt.hooks.hook('vite:extendConfig', (config) => {
