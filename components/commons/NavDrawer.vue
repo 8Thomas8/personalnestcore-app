@@ -2,13 +2,21 @@
 import { servicesMenu } from '~/types/servicesMenu'
 import { useCustomRecordStore } from '~/store/customRecord'
 import { slugify } from '~/utils/text'
+import { useDisplay } from 'vuetify'
 
 const customRecordStore = useCustomRecordStore()
+const { lgAndUp } = useDisplay()
 
 const drawerIsOpened = defineModel<boolean | null>({ default: false })
 const addOrUpdateCustomRecordDialogIsOpened = defineModel('addOrUpdateCustomRecordDialogIsOpened', {
   default: false,
   type: Boolean,
+})
+
+watch(lgAndUp, () => {
+  if (!lgAndUp.value) return
+
+  drawerIsOpened.value = true
 })
 
 useAsyncData(async () => {
@@ -18,6 +26,11 @@ useAsyncData(async () => {
 const updateAddOrUpdateCustomRecordDialogIsOpened = (value: boolean) => {
   addOrUpdateCustomRecordDialogIsOpened.value = value
 }
+
+const onClose = () => {
+  if (lgAndUp.value) return
+  drawerIsOpened.value = !drawerIsOpened.value
+}
 </script>
 
 <template>
@@ -25,7 +38,7 @@ const updateAddOrUpdateCustomRecordDialogIsOpened = (value: boolean) => {
     <v-list class="d-flex align-center">
       <v-list-item title="Mes Services" />
       <v-spacer />
-      <v-icon size="24" class="pr-4" @click="drawerIsOpened = !drawerIsOpened">mdi-close</v-icon>
+      <v-icon v-if="!lgAndUp" size="24" class="pr-4" @click="drawerIsOpened = !drawerIsOpened">mdi-close</v-icon>
     </v-list>
     <v-divider />
     <v-list color="transparent">
@@ -41,22 +54,19 @@ const updateAddOrUpdateCustomRecordDialogIsOpened = (value: boolean) => {
     <v-divider />
     <v-list>
       <v-list-item title="Autres suivis" />
-    </v-list>
-    <v-divider />
-    <div class="pa-4">
-      <v-btn variant="outlined" class="w-100" @click="addOrUpdateCustomRecordDialogIsOpened = true">
-        <v-icon icon="mdi-plus" /> <span class="ml-1 d-none d-sm-inline">Ajouter</span>
-      </v-btn>
-    </div>
-    <v-list color="transparent">
+      <v-list-item>
+        <v-btn variant="outlined" class="w-100" @click="addOrUpdateCustomRecordDialogIsOpened = true">
+          <v-icon icon="mdi-plus" /> <span class="ml-1 d-none d-sm-inline">Ajouter</span>
+        </v-btn>
+      </v-list-item>
       <v-list-item
         v-for="tracking in customRecordStore.customRecords"
-        prepend-icon="mdi-record-circle-outline"
+        prepend-icon="mdi-poll"
         :key="tracking.name"
         :to="`suivi-${tracking.id}-${slugify(tracking.name)}`"
         variant="flat"
         :title="tracking.name"
-        @click="drawerIsOpened = !drawerIsOpened" />
+        @click="onClose()" />
     </v-list>
 
     <AddOrUpdateCustomRecord
