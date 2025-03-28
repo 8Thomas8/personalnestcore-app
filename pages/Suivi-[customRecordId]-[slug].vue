@@ -39,7 +39,7 @@ const currentPage = ref(1)
 const deleteConfirmationMessage = ref<string>('')
 const confirmationDialogIsOpened = ref(false)
 const headers = [
-  { title: 'Date', key: 'datetime', sortable: true, align: 'start' },
+  { title: 'Date', key: 'datetime', sortable: true, align: 'start', customKeySort: 'datetime' },
   { title: 'Donnée', key: 'content', sortable: false, align: 'start' },
   { title: 'Actions', key: 'actions', sortable: false, align: 'end' },
 ]
@@ -128,6 +128,8 @@ const onClickDeleteData = (data: CustomRecordDataDto) => {
   deleteConfirmationMessage.value = 'Voulez-vous supprimer cet enregistrement ?'
   confirmationDialogIsOpened.value = true
 }
+
+const datetimeSort = (a: Date, b: Date) => a.getTime() - b.getTime()
 </script>
 
 <template>
@@ -135,10 +137,14 @@ const onClickDeleteData = (data: CustomRecordDataDto) => {
     <v-card class="pa-2 pa-sm-4">
       <v-card-title class="d-flex align-center">
         <v-icon icon="mdi-poll" class="mr-2" />
-        <div v-if="!isLoading" class="d-flex ga-4">
+        <div v-if="!isLoading" class="d-flex align-center ga-2">
           {{ customRecordStore.customRecord.name }}
-          <v-icon icon="mdi-note-edit" color="warning" @click="addOrUpdateCustomRecordDialogIsOpened = true" />
-          <v-icon icon="mdi-delete" color="red" @click="onDeleteCustomRecord" />
+          <v-icon
+            size="24"
+            icon="mdi-note-edit"
+            color="warning"
+            @click="addOrUpdateCustomRecordDialogIsOpened = true" />
+          <v-icon size="24" icon="mdi-delete" color="red" @click="onDeleteCustomRecord" />
         </div>
         <v-skeleton-loader width="200px" type="text" v-else />
       </v-card-title>
@@ -156,9 +162,11 @@ const onClickDeleteData = (data: CustomRecordDataDto) => {
           <v-locale-provider locale="fr">
             <v-date-input
               v-model="startDate"
+              label="Début"
               location="fr"
               first-day-of-week="1"
               :show-adjacent-months="false"
+              hide-details
               prepend-icon="mdi-calendar"
               :rules="[firstDateIsBeforeSecondDate(startDate, endDate)]"
               placeholder="Début" />
@@ -168,9 +176,11 @@ const onClickDeleteData = (data: CustomRecordDataDto) => {
           <v-locale-provider locale="fr">
             <v-date-input
               v-model="endDate"
+              label="Fin"
               location="fr"
               first-day-of-week="1"
               :show-adjacent-months="false"
+              hide-details
               prepend-icon="mdi-calendar"
               :rules="[firstDateIsBeforeSecondDate(startDate, endDate)]"
               placeholder="Fin" />
@@ -189,14 +199,17 @@ const onClickDeleteData = (data: CustomRecordDataDto) => {
             v-model:items-per-page="itemPerPage"
             v-model:page="currentPage"
             loading-text="Récupération des enregistrements en cours..."
-            :items="customRecordDataStore.customRecordData"
+            :items="customRecordDataStore.customRecordData.sort((a, b) => a.datetime.getTime() - b.datetime.getTime())"
             :items-length="customRecordDataStore.customRecordDataMeta.total"
             :items-per-page-options="[
               { value: 5, title: '5' },
               { value: 10, title: '10' },
               { value: 20, title: '20' },
             ]"
-            no-data-text="Aucun enregistrement">
+            no-data-text="Aucun enregistrement"
+            :custom-key-sort="{
+              datetime: datetimeSort,
+            }">
             <template #[`item.datetime`]="{ item }">
               <v-icon icon="mdi-calendar" /> {{ item.date }} - {{ item.time }}
             </template>

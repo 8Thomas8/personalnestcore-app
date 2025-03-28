@@ -221,9 +221,6 @@ const onRemoveQuantity = (item: UserDrugDto) => {
           </v-btn>
         </v-col>
         <v-col cols="12">
-          <v-text-field hide-details v-model="searchTerms" label="Recherche *" clearable />
-        </v-col>
-        <v-col cols="12">
           <v-data-table-server
             v-model:items-per-page="itemPerPage"
             v-model:page="currentPage"
@@ -239,10 +236,13 @@ const onRemoveQuantity = (item: UserDrugDto) => {
             :mobile="false"
             :headers="headers"
             :hide-default-header="!smAndUp"
-            :items="userDrugStore.userDrugs"
+            :items="userDrugStore.userDrugs.sort((a, b) => a.drugName.name.localeCompare(b.drugName.name))"
             :custom-key-sort="{
               expirationDateTime: expirationDateTimeSort,
             }">
+            <template #top>
+              <v-text-field hide-details v-model="searchTerms" label="Recherche *" clearable />
+            </template>
             <template #[`item.drugName.name`]="{ item }">
               <div class="d-flex align-center ga-1">
                 <div class="d-flex justify-end align-center ga-2 py-1 py-xs-0">
