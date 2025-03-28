@@ -137,14 +137,16 @@ const datetimeSort = (a: Date, b: Date) => a.getTime() - b.getTime()
     <v-card class="pa-2 pa-sm-4">
       <v-card-title class="d-flex align-center">
         <v-icon icon="mdi-poll" class="mr-2" />
-        <div v-if="!isLoading" class="d-flex align-center ga-2">
+        <div v-if="!isLoading" class="d-flex text-wrap justify-space-between align-center ga-2">
           {{ customRecordStore.customRecord.name }}
-          <v-icon
-            size="24"
-            icon="mdi-note-edit"
-            color="warning"
-            @click="addOrUpdateCustomRecordDialogIsOpened = true" />
-          <v-icon size="24" icon="mdi-delete" color="red" @click="onDeleteCustomRecord" />
+          <span class="d-flex ga-2 align-center">
+            <v-icon
+              size="24"
+              icon="mdi-note-edit"
+              color="warning"
+              @click="addOrUpdateCustomRecordDialogIsOpened = true" />
+            <v-icon size="24" icon="mdi-delete" color="red" @click="onDeleteCustomRecord" />
+          </span>
         </div>
         <v-skeleton-loader width="200px" type="text" v-else />
       </v-card-title>
