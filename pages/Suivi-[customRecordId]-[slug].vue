@@ -137,10 +137,14 @@ const datetimeSort = (a: Date, b: Date) => a.getTime() - b.getTime()
     <v-card class="pa-2 pa-sm-4">
       <v-card-title class="d-flex align-center">
         <v-icon icon="mdi-poll" class="mr-2" />
-        <div v-if="!isLoading" class="d-flex ga-4">
+        <div v-if="!isLoading" class="d-flex align-center ga-2">
           {{ customRecordStore.customRecord.name }}
-          <v-icon icon="mdi-note-edit" color="warning" @click="addOrUpdateCustomRecordDialogIsOpened = true" />
-          <v-icon icon="mdi-delete" color="red" @click="onDeleteCustomRecord" />
+          <v-icon
+            size="24"
+            icon="mdi-note-edit"
+            color="warning"
+            @click="addOrUpdateCustomRecordDialogIsOpened = true" />
+          <v-icon size="24" icon="mdi-delete" color="red" @click="onDeleteCustomRecord" />
         </div>
         <v-skeleton-loader width="200px" type="text" v-else />
       </v-card-title>
@@ -162,6 +166,7 @@ const datetimeSort = (a: Date, b: Date) => a.getTime() - b.getTime()
               location="fr"
               first-day-of-week="1"
               :show-adjacent-months="false"
+              hide-details
               prepend-icon="mdi-calendar"
               :rules="[firstDateIsBeforeSecondDate(startDate, endDate)]"
               placeholder="Début" />
@@ -175,6 +180,7 @@ const datetimeSort = (a: Date, b: Date) => a.getTime() - b.getTime()
               location="fr"
               first-day-of-week="1"
               :show-adjacent-months="false"
+              hide-details
               prepend-icon="mdi-calendar"
               :rules="[firstDateIsBeforeSecondDate(startDate, endDate)]"
               placeholder="Fin" />
