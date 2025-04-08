@@ -231,7 +231,7 @@ const replaceNonNumberCharacters = (value: string) => {
 <template>
   <v-dialog :fullscreen="xs" ref="addOrUpdateDrugDialog" :value="addOrUpdateDrugDialogIsOpened" max-width="600px">
     <v-card>
-      <v-card-title class="d-flex justify-space-between">
+      <v-card-title class="bg-primary d-flex justify-space-between">
         {{ props.updateMode ? 'Modifier un médicament' : 'Ajouter un médicament' }}
         <v-icon size="24" @click="closeDialog">mdi-close</v-icon>
       </v-card-title>
