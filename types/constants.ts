@@ -158,3 +158,8 @@ export enum ApiError {
 export enum CustomRecordView {
   Calendar = 'CALENDAR',
 }
+
+export enum COOKIE {
+  'APP_VERSION_CHECKED' = 'app_version_checked',
+  'API_VERSION_CHECKED' = 'api_version_checked',
+}
