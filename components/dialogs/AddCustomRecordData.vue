@@ -44,6 +44,8 @@ onBeforeUnmount(() => {
 const resetForm = () => {
   customRecordDataForm.value.datetime = null
   customRecordDataForm.value.content = null
+  date.value = undefined
+  time.value = undefined
   customRecordDataFormElt.value?.resetValidation()
 }
 
@@ -74,7 +76,7 @@ const onSubmit = async () => {
     :value="addCustomRecordDataDialogIsOpened"
     max-width="600px">
     <v-card>
-      <v-card-title class="d-flex justify-space-between">
+      <v-card-title class="bg-primary d-flex justify-space-between">
         Ajouter une donnée
         <v-icon size="24" @click="closeDialog">mdi-close</v-icon>
       </v-card-title>
@@ -84,6 +86,7 @@ const onSubmit = async () => {
             <v-col cols="12" class="d-flex ga-4">
               <v-locale-provider locale="fr">
                 <v-date-input
+                  color="blue"
                   location="fr"
                   first-day-of-week="1"
                   :show-adjacent-months="false"

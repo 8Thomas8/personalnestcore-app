@@ -27,7 +27,7 @@ const updateAddOrUpdateCustomRecordDialogIsOpened = (value: boolean) => {
   addOrUpdateCustomRecordDialogIsOpened.value = value
 }
 
-const onClose = () => {
+const onClick = () => {
   if (lgAndUp.value) return
   drawerIsOpened.value = !drawerIsOpened.value
 }
@@ -49,7 +49,7 @@ const onClose = () => {
         :to="service.to"
         :prepend-icon="service.icon"
         :title="service.title"
-        @click="drawerIsOpened = !drawerIsOpened" />
+        @click="onClick" />
     </v-list>
     <v-divider />
     <v-list>
@@ -68,7 +68,7 @@ const onClose = () => {
         :to="`suivi-${tracking.id}-${slugify(tracking.name)}`"
         variant="flat"
         :title="tracking.name"
-        @click="onClose()" />
+        @click="onClick" />
     </v-list>
 
     <AddOrUpdateCustomRecord

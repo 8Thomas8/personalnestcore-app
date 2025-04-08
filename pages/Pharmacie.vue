@@ -37,8 +37,6 @@ const headers = [
     sortable: true,
     align: 'center',
   },
-  { title: 'Note', key: 'note', sortable: false, align: 'center d-none d-sm-table-cell' },
-
   { title: 'Marque', key: 'drugBrand.name', sortable: true, align: 'center d-none d-sm-table-cell' },
   {
     title: 'Dose',
@@ -283,13 +281,7 @@ const onRemoveQuantity = (item: UserDrugDto) => {
               </p>
             </template>
             <template #[`item.expirationDateTime`]="{ item }">
-              <v-tooltip
-                open-on-hover
-                open-on-click
-                open-on-focus
-                location="top"
-                :text="item.expirationDateTime"
-                :disabled="smAndUp">
+              <v-tooltip open-on-hover open-on-click open-on-focus location="top" :text="item.expirationDateTime">
                 <template v-slot:activator="{ props }">
                   <v-chip
                     v-bind="props"
@@ -302,7 +294,6 @@ const onRemoveQuantity = (item: UserDrugDto) => {
                             ? 'mdi-calendar-clock'
                             : 'mdi-calendar'
                       " />
-                    <span class="d-none d-sm-inline ml-2">{{ item.expirationDateTime }}</span>
                   </v-chip>
                 </template>
               </v-tooltip>
@@ -321,16 +312,21 @@ const onRemoveQuantity = (item: UserDrugDto) => {
                 </template>
               </v-tooltip>
             </template>
-            <template #[`item.note`]="{ item }">
-              <v-tooltip open-on-hover open-on-click open-on-focus v-if="item.note" :text="item.note">
-                <template #activator="{ props }">
-                  <v-icon v-bind="props" color="primary">mdi-information</v-icon>
-                </template>
-                <span>{{ item.note }}</span>
-              </v-tooltip>
-            </template>
             <template #[`item.actions`]="{ item }">
               <div class="d-flex ga-2 py-2 py-xs-0 justify-end">
+                <v-tooltip left open-on-hover open-on-click open-on-focus :text="item.note">
+                  <template #activator="{ props }">
+                    <v-btn
+                      :disabled="!item.note"
+                      v-bind="props"
+                      variant="elevated"
+                      :color="item.note ? 'primary' : 'grey'"
+                      :min-width="smAndUp ? '46px' : '32px'"
+                      class="px-0">
+                      <v-icon>mdi-information</v-icon>
+                    </v-btn>
+                  </template>
+                </v-tooltip>
                 <v-btn
                   variant="elevated"
                   color="info"
@@ -368,6 +364,7 @@ const onRemoveQuantity = (item: UserDrugDto) => {
     <ConfirmationDialog
       v-model="confirmationDialogIsOpened"
       text="Voulez-vous supprimer ce médicament ?"
+      :is-loading="isLoading"
       @confirm="onDeleteConfirmation"
       @cancel="onCancelDelete" />
   </v-container>
@@ -397,7 +394,7 @@ const onRemoveQuantity = (item: UserDrugDto) => {
     font-size: 12px;
 
     .truncate-width {
-      width: 70px;
+      width: 90px;
     }
   }
 

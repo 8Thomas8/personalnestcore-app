@@ -60,7 +60,7 @@ onBeforeMount(async () => {
 <template>
   <v-dialog v-model="authDialogIsOpened" max-width="600px">
     <v-card>
-      <v-card-title class="d-flex justify-space-between">
+      <v-card-title class="bg-primary d-flex justify-space-between">
         {{ step === STEP.LOGIN ? 'Connexion' : 'Création du compte admin' }}
         <v-btn color="grey" variant="text" @click="toggleAuthDialog(false)"><v-icon>mdi-close</v-icon></v-btn>
       </v-card-title>

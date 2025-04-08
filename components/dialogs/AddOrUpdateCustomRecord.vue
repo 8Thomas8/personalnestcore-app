@@ -81,7 +81,7 @@ const onSubmit = async () => {
     :value="addOrUpdateCustomRecordDialogIsOpened"
     max-width="600px">
     <v-card>
-      <v-card-title class="d-flex justify-space-between">
+      <v-card-title class="bg-primary d-flex justify-space-between">
         {{ isUpdateMode ? 'Modifier le suivi' : 'Ajouter un autre suivi' }}
         <v-icon size="24" @click="closeDialog">mdi-close</v-icon>
       </v-card-title>

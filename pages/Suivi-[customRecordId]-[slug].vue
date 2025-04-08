@@ -250,6 +250,7 @@ const datetimeSort = (a: Date, b: Date) => a.getTime() - b.getTime()
     <ConfirmationDialog
       v-model="confirmationDialogIsOpened"
       :text="deleteConfirmationMessage"
+      :is-loading="isDeleteLoading"
       @confirm="onDeleteConfirmation"
       @cancel="onCancelDelete" />
   </v-container>

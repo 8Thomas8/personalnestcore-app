@@ -139,6 +139,7 @@ const onClickUpdate = (user: UserDto) => {
     <ConfirmationDialog
       v-model="confirmationDialogIsOpened"
       text="Voulez-vous supprimer cet utilisateur ?"
+      :is-loading="isLoading"
       @confirm="onDeleteConfirmation"
       @cancel="onCancelDelete" />
   </v-container>
