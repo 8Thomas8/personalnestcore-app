@@ -77,55 +77,53 @@ const onClickUpdate = (user: UserDto) => {
           Retour aux services
         </v-btn>
 
-        <v-card class="pa-4">
+        <v-card class="pa-2 pa-sm-4">
           <v-card-title class="d-flex align-center">
             <v-icon icon="mdi-account-group" class="mr-2" /> Utilisateurs
           </v-card-title>
-          <v-card-text>
-            <v-row>
-              <v-spacer />
-              <v-col cols="auto" class="d-flex align-center">
-                <v-btn @click="onAddUser()">
-                  <v-icon icon="mdi-plus" /><span class="d-none d-sm-inline ml-2">Ajouter</span>
-                </v-btn>
-              </v-col>
-              <v-col cols="12">
-                <v-data-table-server
-                  :headers="headers"
-                  :loading="isLoading"
-                  loading-text="Récupération des utilisateurs en cours..."
-                  :items="userStore.users"
-                  :items-length="userStore.users?.length ?? 0"
-                  :items-per-page-options="[
-                    { value: 5, title: '5' },
-                    { value: 10, title: '10' },
-                    { value: 20, title: '20' },
-                  ]"
-                  no-data-text="Aucun utilisateur">
-                  <template #[`item.actions`]="{ item }">
-                    <div class="d-flex flex-wrap ga-2 py-2 py-xs-0 justify-end">
-                      <v-btn
-                        variant="elevated"
-                        color="info"
-                        @click="onClickUpdate(item)"
-                        :min-width="smAndUp ? '46px' : '32px'"
-                        class="px-0">
-                        <v-icon>mdi-eye</v-icon>
-                      </v-btn>
-                      <v-btn
-                        variant="elevated"
-                        color="red"
-                        @click="onClickDelete(item)"
-                        :min-width="smAndUp ? '46px' : '32px'"
-                        class="px-0">
-                        <v-icon>mdi-delete</v-icon>
-                      </v-btn>
-                    </div>
-                  </template>
-                </v-data-table-server>
-              </v-col>
-            </v-row>
-          </v-card-text>
+          <v-row>
+            <v-spacer />
+            <v-col cols="auto" class="d-flex align-center">
+              <v-btn @click="onAddUser()">
+                <v-icon icon="mdi-plus" /><span class="d-none d-sm-inline ml-2">Ajouter</span>
+              </v-btn>
+            </v-col>
+            <v-col cols="12">
+              <v-data-table-server
+                :headers="headers"
+                :loading="isLoading"
+                loading-text="Récupération des utilisateurs en cours..."
+                :items="userStore.users"
+                :items-length="userStore.users?.length ?? 0"
+                :items-per-page-options="[
+                  { value: 5, title: '5' },
+                  { value: 10, title: '10' },
+                  { value: 20, title: '20' },
+                ]"
+                no-data-text="Aucun utilisateur">
+                <template #[`item.actions`]="{ item }">
+                  <div class="d-flex flex-wrap ga-2 py-2 py-xs-0 justify-end">
+                    <v-btn
+                      variant="elevated"
+                      color="info"
+                      @click="onClickUpdate(item)"
+                      :min-width="smAndUp ? '46px' : '32px'"
+                      class="px-0">
+                      <v-icon>mdi-eye</v-icon>
+                    </v-btn>
+                    <v-btn
+                      variant="elevated"
+                      color="red"
+                      @click="onClickDelete(item)"
+                      :min-width="smAndUp ? '46px' : '32px'"
+                      class="px-0">
+                      <v-icon>mdi-delete</v-icon>
+                    </v-btn>
+                  </div>
+                </template>
+              </v-data-table-server>
+            </v-col>
+          </v-row>
         </v-card>
       </v-col>
     </v-row>
