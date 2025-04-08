@@ -6,8 +6,9 @@ const appStore = useAppStore()
 const cookie = useCookie(COOKIE.API_VERSION_CHECKED)
 
 onMounted(async () => {
-  if (cookie.value) return
   await appStore.fetchApiVersion()
+
+  if (cookie.value) return
   await appStore.fetchRepoApiVersion()
   cookie.value = true
 })
@@ -16,8 +17,8 @@ onMounted(async () => {
 <template>
   <span>
     Api:
-    <span class="font-weight-bold"
-      >{{ !appStore.apiVersion || !appStore.apiVersion.length ? '?' : appStore.apiVersion }}
+    <span class="font-weight-bold">
+      {{ !appStore.apiVersion || !appStore.apiVersion.length ? '?' : appStore.apiVersion }}
     </span>
   </span>
 </template>
