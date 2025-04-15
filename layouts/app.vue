@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import 'reflect-metadata'
-
 const drawerIsOpened = ref(null)
 </script>
 

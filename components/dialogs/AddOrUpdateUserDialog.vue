@@ -87,9 +87,7 @@ watch(
   { deep: true }
 )
 
-onBeforeUnmount(() => {
-  resetForm()
-})
+onBeforeUnmount(() => resetForm())
 
 const closeDialog = () => {
   emits('update:addOrUpdateUserDialogIsOpened', false)

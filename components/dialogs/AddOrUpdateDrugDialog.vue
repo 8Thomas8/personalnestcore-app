@@ -117,9 +117,7 @@ watch([() => itemForm.value.unit, () => itemForm.value.dose], () => {
   drugForm.value?.validate()
 })
 
-onBeforeUnmount(() => {
-  resetForm()
-})
+onBeforeUnmount(() => resetForm())
 
 const onSubmit = async () => {
   if (!formIsValid.value) return

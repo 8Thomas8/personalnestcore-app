@@ -38,9 +38,7 @@ watch(
   { immediate: true }
 )
 
-onBeforeUnmount(() => {
-  resetForm()
-})
+onBeforeUnmount(() => resetForm())
 
 const resetForm = () => {
   customRecordForm.value.name = null

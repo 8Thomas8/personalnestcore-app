@@ -1,6 +1,6 @@
 import 'reflect-metadata'
 import { Expose, Transform, Type } from 'class-transformer'
-import CustomRecordDto from '~/dto/CustomRecord'
+import CustomRecordDto from '~/dto/CustomRecordDto'
 
 export default class CustomRecordDataDto {
   @Expose()
