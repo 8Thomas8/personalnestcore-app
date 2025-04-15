@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import 'reflect-metadata'
 import { useAppStore } from '~/store/app'
 import { compareSemVer, filterStableVersions } from '~/utils/version'
 import { ToastMessageType } from '~/types/constants'
