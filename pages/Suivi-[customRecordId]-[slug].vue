@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { useCustomRecordStore } from '~/store/customRecord'
 import { CustomRecordView, ItemPerPage } from '~/types/constants'
-import CustomRecordDto from '~/dto/CustomRecord'
-import CustomRecordDataDto from '~/dto/CustomRecordData'
+import CustomRecordDto from '~/dto/CustomRecordDto'
+import CustomRecordDataDto from '~/dto/CustomRecordDataDto'
 import { ServiceRoutes } from '~/types/routes'
 import { useDisplay } from 'vuetify'
 import { useCustomRecordDataStore } from '~/store/customRecordData'

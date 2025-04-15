@@ -2,7 +2,7 @@ import { ApiError, CustomRecordView, ToastMessageType } from '~/types/constants'
 import { useAuthStore } from '~/store/auth'
 import { useToastMessage } from '~/composables/useToastMessage'
 import { plainToInstance } from 'class-transformer'
-import CustomRecordDto from '~/dto/CustomRecord'
+import CustomRecordDto from '~/dto/CustomRecordDto'
 
 export const useCustomRecordStore = defineStore('customRecordStore', () => {
   const { setToastMessage } = useToastMessage()
