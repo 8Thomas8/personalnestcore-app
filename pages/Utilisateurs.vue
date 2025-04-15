@@ -26,9 +26,7 @@ const headers = [
   { title: 'Actions', key: 'actions', sortable: false, align: 'end' },
 ]
 
-onBeforeMount(async () => {
-  await fetchUsersData()
-})
+onBeforeMount(async () => await fetchUsersData())
 
 const fetchUsersData = async () => {
   isLoading.value = true

@@ -37,9 +37,7 @@ watch([time, date], () => {
   customRecordDataForm.value.datetime = dateObj.toISOString()
 })
 
-onBeforeUnmount(() => {
-  resetForm()
-})
+onBeforeUnmount(() => resetForm())
 
 const resetForm = () => {
   customRecordDataForm.value.datetime = null

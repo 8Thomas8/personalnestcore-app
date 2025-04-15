@@ -52,9 +52,7 @@ useAsyncData(async () => {
   isLoading.value = false
 })
 
-onBeforeMount(async () => {
-  await fetchCustomRecordData()
-})
+onBeforeMount(async () => await fetchCustomRecordData())
 
 const setDefaultDates = () => {
   const currentDate = new Date()

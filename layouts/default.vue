@@ -14,9 +14,7 @@ watch(
   }
 )
 
-onBeforeMount(async () => {
-  await authStore.fetchUser()
-})
+onBeforeMount(async () => await authStore.fetchUser())
 </script>
 
 <template>
