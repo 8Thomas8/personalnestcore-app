@@ -10,4 +10,5 @@ export enum AccountRoutes {
 
 export enum ServiceRoutes {
   Pharmacy = '/pharmacie',
+  WaterConsumption = '/consommation-eau',
 }
