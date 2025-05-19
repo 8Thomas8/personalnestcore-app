@@ -17,7 +17,6 @@ const { required, isFloat } = useFormValidation()
 const { xs } = useDisplay()
 const waterConsumptionRecordStore = useWaterConsumptionRecordStore()
 const { setToastMessage } = useToastMessage()
-const router = useRouter()
 
 const addWaterConsumptionRecordDialog = useTemplateRef<VDialog | null>('addOrUpdateWaterConsumptionRecordDialog')
 const recordFormElt = useTemplateRef<HTMLFormElement | null>('recordFormElt')
