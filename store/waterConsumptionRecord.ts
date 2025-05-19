@@ -4,6 +4,7 @@ import { useToastMessage } from '~/composables/useToastMessage'
 import { plainToInstance } from 'class-transformer'
 import ApiMetaDto from '~/dto/ApiMetaDto'
 import WaterConsumptionRecordDto from '~/dto/WaterConsumptionRecordDto'
+import { dateToString } from '~/utils/date'
 
 export const useWaterConsumptionRecordStore = defineStore('waterConsumptionRecordStore', () => {
   const { setToastMessage } = useToastMessage()
@@ -19,6 +20,8 @@ export const useWaterConsumptionRecordStore = defineStore('waterConsumptionRecor
     lastPage: 0,
     firstPage: 0,
   })
+  const waterConsumptionAverageInCurrentYear = ref(0)
+  const waterConsumptionAverageInPeriod = ref(0)
 
   // Actions
   const fetchAll = async ({
@@ -117,11 +120,30 @@ export const useWaterConsumptionRecordStore = defineStore('waterConsumptionRecor
     if (!authStore.token) return
 
     try {
-      return await $apiFetch(`/v1/water-consumption-record/average`, {
+      const { average } = await $apiFetch(`/v1/water-consumption-record/average`, {
         headers: { Authorization: `Bearer ${authStore.token}` },
         params: { startDate, endDate },
         method: 'GET',
       })
+      waterConsumptionAverageInPeriod.value = average
+    } catch {
+      setToastMessage(ToastMessageType.TypeError, 'Impossible de récupérer la moyenne de consommation')
+    }
+  }
+
+  const fetchWaterConsumptionAverageInCurrentYear = async () => {
+    authStore.getToken()
+
+    if (!authStore.token) return
+
+    try {
+      const yearStartDate = dateToString(new Date(new Date().getFullYear(), 0, 1))
+      const { average } = await $apiFetch(`/v1/water-consumption-record/average`, {
+        headers: { Authorization: `Bearer ${authStore.token}` },
+        params: { startDate: yearStartDate, endDate: dateToString(new Date()) },
+        method: 'GET',
+      })
+      waterConsumptionAverageInCurrentYear.value = average
     } catch {
       setToastMessage(ToastMessageType.TypeError, 'Impossible de récupérer la moyenne de consommation')
     }
@@ -130,10 +152,13 @@ export const useWaterConsumptionRecordStore = defineStore('waterConsumptionRecor
   return {
     waterConsumptionRecords,
     waterConsumptionRecordsMeta,
+    waterConsumptionAverageInPeriod,
+    waterConsumptionAverageInCurrentYear,
     fetchAll,
     deleteOne,
     create,
     update,
     fetchWaterConsumptionAverageInRange,
+    fetchWaterConsumptionAverageInCurrentYear,
   }
 })

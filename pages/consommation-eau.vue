@@ -32,12 +32,10 @@ const headers = [
   { title: 'Différence', key: 'diff', sortable: false, align: 'start' },
   { title: 'Actions', key: 'actions', sortable: false, align: 'end' },
 ]
-const consumptionAverageInCurrentYear = ref(0)
-const consumptionAverageInPeriod = ref(0)
 
 watch([startDate, endDate, itemPerPage, currentPage], () => {
   refresh()
-  refreshAverage()
+  refreshAveragePeriod()
 })
 
 const { refresh } = useAsyncData(async () => {
@@ -51,21 +49,15 @@ const { refresh } = useAsyncData(async () => {
   isLoading.value = false
 })
 
-useAsyncData(async () => {
-  const yearStartDate = dateToString(new Date(new Date().getFullYear(), 0, 1))
-  const { average } = await waterConsumptionRecordStore.fetchWaterConsumptionAverageInRange({
-    startDate: yearStartDate,
-    endDate: dateToString(new Date()),
-  })
-  consumptionAverageInCurrentYear.value = average
+const { refresh: refreshAverageYear } = useAsyncData(async () => {
+  await waterConsumptionRecordStore.fetchWaterConsumptionAverageInCurrentYear()
 })
 
-const { refresh: refreshAverage } = useAsyncData(async () => {
-  const { average } = await waterConsumptionRecordStore.fetchWaterConsumptionAverageInRange({
+const { refresh: refreshAveragePeriod } = useAsyncData(async () => {
+  await waterConsumptionRecordStore.fetchWaterConsumptionAverageInRange({
     startDate: dateToString(startDate.value),
     endDate: dateToString(endDate.value),
   })
-  consumptionAverageInPeriod.value = average
 })
 
 const onAddWaterConsumptionRecord = () => {
@@ -87,6 +79,8 @@ const onDeleteConfirmation = async () => {
 
   await waterConsumptionRecordStore.deleteOne(itemToDelete.value.id)
   await refresh()
+  await refreshAveragePeriod()
+  await refreshAverageYear()
 
   confirmationDialogIsOpened.value = false
   itemToDelete.value = null
@@ -129,7 +123,9 @@ const getDiff = (item: WaterConsumptionRecordDto) => {
             color="blue-lighten-5">
             <v-icon size="64" color="blue">mdi-calculator-variant-outline </v-icon>
             <span class="font-weight-bold text-blue">Moyenne mensuelle sur l'année en cours</span>
-            <span class="font-weight-bold text-blue">{{ consumptionAverageInCurrentYear }} m3</span>
+            <span class="font-weight-bold text-blue"
+              >{{ waterConsumptionRecordStore.waterConsumptionAverageInCurrentYear }} m3</span
+            >
           </v-card>
         </v-col>
         <v-col cols="12" sm="6">
@@ -142,7 +138,9 @@ const getDiff = (item: WaterConsumptionRecordDto) => {
             color="green-lighten-5">
             <v-icon size="64" color="green">mdi-calculator-variant-outline </v-icon>
             <span class="font-weight-bold text-green">Moyenne mensuelle sur la période</span>
-            <span class="font-weight-bold text-green">{{ consumptionAverageInPeriod }} m3</span>
+            <span class="font-weight-bold text-green"
+              >{{ waterConsumptionRecordStore.waterConsumptionAverageInPeriod }} m3</span
+            >
           </v-card>
         </v-col>
       </v-row>
