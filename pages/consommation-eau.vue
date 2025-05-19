@@ -35,7 +35,10 @@ const headers = [
 const consumptionAverageInCurrentYear = ref(0)
 const consumptionAverageInPeriod = ref(0)
 
-watch([startDate, endDate, itemPerPage, currentPage], () => refresh() && refreshAverage())
+watch([startDate, endDate, itemPerPage, currentPage], () => {
+  refresh()
+  refreshAverage()
+})
 
 const { refresh } = useAsyncData(async () => {
   isLoading.value = true
