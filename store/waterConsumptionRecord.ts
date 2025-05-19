@@ -43,7 +43,7 @@ export const useWaterConsumptionRecordStore = defineStore('waterConsumptionRecor
         method: 'GET',
       })
       waterConsumptionRecords.value = res.data.map((data: unknown) => plainToInstance(WaterConsumptionRecordDto, data))
-      waterConsumptionRecordMeta.value = plainToInstance(ApiMetaDto, res.meta)
+      waterConsumptionRecordsMeta.value = plainToInstance(ApiMetaDto, res.meta)
     } catch {
       setToastMessage(ToastMessageType.TypeError, 'Impossible de récupérer vos données de consommation')
     }
@@ -73,7 +73,7 @@ export const useWaterConsumptionRecordStore = defineStore('waterConsumptionRecor
     return false
   }
 
-  const update = async (id: number, { index, date, note }: { index: number; date: string; note: string }) => {
+  const update = async (id: number, { index, date, comment }: { index: number; date: string; note: string }) => {
     authStore.getToken()
 
     if (!authStore.token) return
@@ -82,7 +82,7 @@ export const useWaterConsumptionRecordStore = defineStore('waterConsumptionRecor
       await $apiFetch(`/v1/water-consumption-record/${id}`, {
         headers: { Authorization: `Bearer ${authStore.token}` },
         method: 'PUT',
-        body: { index, date, note },
+        body: { index, date, comment },
       })
       return true
     } catch {
