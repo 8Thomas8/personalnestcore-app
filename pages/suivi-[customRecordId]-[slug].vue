@@ -149,6 +149,7 @@ const datetimeSort = (a: Date, b: Date) => a.getTime() - b.getTime()
         <v-skeleton-loader width="200px" type="text" v-else />
       </v-card-title>
 
+      <!-- TO REMOVE -->
       <v-row>
         <template v-if="!isLoading">
           <v-col cols="12">
@@ -166,7 +167,6 @@ const datetimeSort = (a: Date, b: Date) => a.getTime() - b.getTime()
               location="fr"
               first-day-of-week="1"
               :show-adjacent-months="false"
-              hide-details
               prepend-icon="mdi-calendar"
               :rules="[firstDateIsBeforeSecondDate(startDate, endDate)]"
               placeholder="Début" />
@@ -180,7 +180,6 @@ const datetimeSort = (a: Date, b: Date) => a.getTime() - b.getTime()
               location="fr"
               first-day-of-week="1"
               :show-adjacent-months="false"
-              hide-details
               prepend-icon="mdi-calendar"
               :rules="[firstDateIsBeforeSecondDate(startDate, endDate)]"
               placeholder="Fin" />

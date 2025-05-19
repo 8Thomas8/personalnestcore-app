@@ -6,4 +6,9 @@ export const servicesMenu = [
     icon: 'mdi-medical-cotton-swab',
     to: ServiceRoutes.Pharmacy,
   },
+  {
+    title: "Consommation d'eau",
+    icon: 'mdi-water-pump',
+    to: ServiceRoutes.WaterConsumption,
+  },
 ]
