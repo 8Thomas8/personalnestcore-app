@@ -62,6 +62,11 @@ const onSubmit = async () => {
       currentPage: props.currentPage,
       itemPerPage: props.itemPerPage,
     })
+    await waterConsumptionRecordStore.fetchWaterConsumptionAverageInRange({
+      startDate: dateToString(props.startDate),
+      endDate: dateToString(props.endDate),
+    })
+    await waterConsumptionRecordStore.fetchWaterConsumptionAverageInCurrentYear()
     setToastMessage(ToastMessageType.TypeSuccess, 'Donnée ajoutée avec succès')
     closeDialog()
   }
