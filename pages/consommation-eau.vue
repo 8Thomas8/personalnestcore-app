@@ -35,7 +35,7 @@ const headers = [
 const consumptionAverageInCurrentYear = ref(0)
 const consumptionAverageInPeriod = ref(0)
 
-watch([startDate, endDate, itemPerPage, currentPage], () => refresh())
+watch([startDate, endDate, itemPerPage, currentPage], () => refresh() && refreshAverage())
 
 const { refresh } = useAsyncData(async () => {
   isLoading.value = true
@@ -57,7 +57,7 @@ useAsyncData(async () => {
   consumptionAverageInCurrentYear.value = average
 })
 
-useAsyncData(async () => {
+const { refresh: refreshAverage } = useAsyncData(async () => {
   const { average } = await waterConsumptionRecordStore.fetchWaterConsumptionAverageInRange({
     startDate: dateToString(startDate.value),
     endDate: dateToString(endDate.value),
