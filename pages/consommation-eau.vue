@@ -122,7 +122,7 @@ const getDiff = (item: WaterConsumptionRecordDto) => {
             border-success
             color="blue-lighten-5">
             <v-icon size="64" color="blue">mdi-calculator-variant-outline </v-icon>
-            <span class="font-weight-bold text-blue">Moyenne mensuelle sur l'année en cours</span>
+            <span class="font-weight-bold text-blue">Moyenne mensuelle entre le 1er janvier et le dernier relevé</span>
             <span class="font-weight-bold text-blue"
               >{{ waterConsumptionRecordStore.waterConsumptionAverageInCurrentYear }} m3</span
             >
