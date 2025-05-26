@@ -122,7 +122,7 @@ const getDiff = (item: WaterConsumptionRecordDto) => {
             border-success
             color="blue-lighten-5">
             <v-icon size="64" color="blue">mdi-calculator-variant-outline </v-icon>
-            <span class="font-weight-bold text-blue">Moyenne mensuelle entre le 1er janvier et le dernier relevé</span>
+            <span class="font-weight-bold text-blue">Du 1er janvier au dernier relevé :</span>
             <span class="font-weight-bold text-blue"
               >{{ waterConsumptionRecordStore.waterConsumptionAverageInCurrentYear }} m3</span
             >
@@ -137,7 +137,7 @@ const getDiff = (item: WaterConsumptionRecordDto) => {
             border-success
             color="green-lighten-5">
             <v-icon size="64" color="green">mdi-calculator-variant-outline </v-icon>
-            <span class="font-weight-bold text-green">Moyenne mensuelle sur la période</span>
+            <span class="font-weight-bold text-green">Moyenne mensuelle sur la période :</span>
             <span class="font-weight-bold text-green"
               >{{ waterConsumptionRecordStore.waterConsumptionAverageInPeriod }} m3</span
             >
@@ -202,12 +202,12 @@ const getDiff = (item: WaterConsumptionRecordDto) => {
             <template #[`item.date`]="{ item }">
               {{ dateToString(item.date) }}
             </template>
-            <template #[`item.index`]="{ item }">
-              {{ item.index }}
-            </template>
+            <template #[`item.index`]="{ item }"> {{ item.index }} m3 </template>
             <template #[`item.diff`]="{ item }">
-              <span class="font-weight-bold" :class="getDiff(item) < 0 ? 'text-error' : 'text-success'">
-                {{ getDiff(item) }}
+              <span
+                class="font-weight-bold"
+                :class="getDiff(item) > 0 ? 'text-success' : getDiff(item) < 0 ? 'text-error' : 'text-info'">
+                {{ `${getDiff(item) > 0 ? '+' : getDiff(item) < 0 ? '-' : ''} ${getDiff(item)} m3` }}
               </span>
             </template>
             <template #[`item.actions`]="{ item }">
