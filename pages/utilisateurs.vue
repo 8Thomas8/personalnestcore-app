@@ -20,10 +20,10 @@ const userToDelete = ref<UserDto | null>(null)
 const confirmationDialogIsOpened = ref(false)
 
 const headers = [
-  { title: 'Pseudo', key: 'username', sortable: true, align: 'start' },
-  { title: 'Création', key: 'createdAt', sortable: true, align: 'center d-none d-sm-table-cell' },
-  { title: 'Mise à jour', key: 'updatedAt', sortable: true, align: 'center d-none d-sm-table-cell' },
-  { title: 'Actions', key: 'actions', sortable: false, align: 'end' },
+  { title: 'Pseudo', key: 'username', align: 'start' },
+  { title: 'Création', key: 'createdAt', align: 'center d-none d-sm-table-cell' },
+  { title: 'Mise à jour', key: 'updatedAt', align: 'center d-none d-sm-table-cell' },
+  { title: 'Actions', key: 'actions', align: 'end' },
 ]
 
 onBeforeMount(async () => await fetchUsersData())

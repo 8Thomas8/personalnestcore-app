@@ -4,7 +4,6 @@ import AddOrUpdateDrugDialog from '~/components/dialogs/AddOrUpdateDrugDialog.vu
 import { useUserDrugStore } from '~/store/userDrug'
 import type UserDrugDto from '~/dto/UserDrugDto'
 import ConfirmationDialog from '~/components/dialogs/ConfirmationDialog.vue'
-import { stringToDate } from '~/utils/date'
 import { useDisplay } from 'vuetify'
 
 definePageMeta({ layout: 'app' })
@@ -30,18 +29,16 @@ const itemToUpdate = ref<UserDrugDto | null>(null)
 const quantityChange = ref(0)
 
 const headers = [
-  { title: 'Nom', key: 'drugName.name', sortable: true },
+  { title: 'Nom', key: 'drugName.name' },
   {
     title: "Date d'expiration",
     key: 'expirationDateTime',
-    sortable: true,
     align: 'center',
   },
-  { title: 'Marque', key: 'drugBrand.name', sortable: true, align: 'center d-none d-sm-table-cell' },
+  { title: 'Marque', key: 'drugBrand.name', align: 'center d-none d-sm-table-cell' },
   {
     title: 'Dose',
     key: 'dose',
-    sortable: false,
   },
   {
     title: 'Forme',
@@ -52,10 +49,9 @@ const headers = [
   {
     title: 'Conteneur',
     key: 'drugContainer.name',
-    sortable: true,
     align: 'center',
   },
-  { title: 'Actions', key: 'actions', sortable: false, align: 'end' },
+  { title: 'Actions', key: 'actions', align: 'end' },
 ]
 useAsyncData(async () => {
   isLoading.value = true
@@ -96,12 +92,6 @@ const handleCheckboxChange = (checkbox: 'expiredOnly' | 'expiringSoon') => {
   } else {
     if (expiringSoon.value) expiredOnly.value = false
   }
-}
-
-const expirationDateTimeSort = (a: string, b: string) => {
-  const dateA = stringToDate(a)
-  const dateB = stringToDate(b)
-  return dateA.getTime() - dateB.getTime()
 }
 
 const onClickDelete = (item: UserDrugDto) => {
@@ -234,10 +224,7 @@ const onRemoveQuantity = (item: UserDrugDto) => {
             :mobile="false"
             :headers="headers"
             :hide-default-header="!smAndUp"
-            :items="userDrugStore.userDrugs.sort((a, b) => a.drugName.name.localeCompare(b.drugName.name))"
-            :custom-key-sort="{
-              expirationDateTime: expirationDateTimeSort,
-            }">
+            :items="userDrugStore.userDrugs.sort((a, b) => a.drugName.name.localeCompare(b.drugName.name))">
             <template #top>
               <v-text-field hide-details v-model="searchTerms" label="Recherche *" clearable />
             </template>

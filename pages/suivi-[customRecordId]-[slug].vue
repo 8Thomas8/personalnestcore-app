@@ -39,9 +39,9 @@ const currentPage = ref(1)
 const deleteConfirmationMessage = ref<string>('')
 const confirmationDialogIsOpened = ref(false)
 const headers = [
-  { title: 'Date', key: 'datetime', sortable: true, align: 'start', customKeySort: 'datetime' },
-  { title: 'Donnée', key: 'content', sortable: false, align: 'start' },
-  { title: 'Actions', key: 'actions', sortable: false, align: 'end' },
+  { title: 'Date', key: 'datetime', align: 'start', customKeySort: 'datetime' },
+  { title: 'Donnée', key: 'content', align: 'start' },
+  { title: 'Actions', key: 'actions', align: 'end' },
 ]
 
 watch([startDate, endDate], () => fetchCustomRecordData())
@@ -126,8 +126,6 @@ const onClickDeleteData = (data: CustomRecordDataDto) => {
   deleteConfirmationMessage.value = 'Voulez-vous supprimer cet enregistrement ?'
   confirmationDialogIsOpened.value = true
 }
-
-const datetimeSort = (a: Date, b: Date) => a.getTime() - b.getTime()
 </script>
 
 <template>
@@ -205,10 +203,7 @@ const datetimeSort = (a: Date, b: Date) => a.getTime() - b.getTime()
               { value: 10, title: '10' },
               { value: 20, title: '20' },
             ]"
-            no-data-text="Aucun enregistrement"
-            :custom-key-sort="{
-              datetime: datetimeSort,
-            }">
+            no-data-text="Aucun enregistrement">
             <template #[`item.datetime`]="{ item }">
               <v-icon icon="mdi-calendar" /> {{ item.date }} - {{ item.time }}
             </template>
