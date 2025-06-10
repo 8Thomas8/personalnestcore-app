@@ -215,7 +215,7 @@ const onRemoveQuantity = (item: UserDrugDto) => {
             :mobile="false"
             :headers="headers"
             :hide-default-header="!smAndUp"
-            :items="userDrugStore.userDrugs.sort((a, b) => a.drugName.name.localeCompare(b.drugName.name))">
+            :items="[...userDrugStore.userDrugs].sort((a, b) => a.drugName.name.localeCompare(b.drugName.name))">
             <template #top>
               <v-text-field hide-details v-model="searchTerms" label="Recherche *" clearable />
             </template>
