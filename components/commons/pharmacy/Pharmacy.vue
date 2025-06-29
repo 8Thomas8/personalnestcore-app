@@ -4,7 +4,7 @@ import { useUserDrugStore } from '~/store/userDrug'
 import type UserDrugDto from '~/dto/UserDrugDto'
 import { useDisplay } from 'vuetify'
 
-const addOrUpdateDrugDialogIsOpened = defineModel({ default: false, type: Boolean })
+const addOrUpdateDrugDialogIsOpened = ref(false)
 
 const userDrugStore = useUserDrugStore()
 const { smAndUp } = useDisplay()
@@ -76,10 +76,6 @@ watchDebounced(
   },
   { debounce: DebounceDelay }
 )
-
-const updateAddOrUpdateDrugDialogIsOpened = (value: boolean) => {
-  addOrUpdateDrugDialogIsOpened.value = value
-}
 
 const handleCheckboxChange = (checkbox: 'expiredOnly' | 'expiringSoon') => {
   if (checkbox === 'expiredOnly') {
@@ -329,15 +325,14 @@ const onRemoveQuantity = (item: UserDrugDto) => {
     </v-card>
 
     <AddOrUpdateDrugDialog
-      v-model="addOrUpdateDrugDialogIsOpened"
+      v-model:is-opened="addOrUpdateDrugDialogIsOpened"
       :current-page="currentPage"
       :item-per-page="itemPerPage"
       :expired-only="expiredOnly"
       :expiring-soon="expiringSoon"
       :search-terms="searchTerms"
       :update-mode="updateMode"
-      :item-to-update="itemToUpdate"
-      @update:add-or-update-drug-dialog-is-opened="updateAddOrUpdateDrugDialogIsOpened" />
+      :item-to-update="itemToUpdate" />
 
     <ConfirmationDialog
       v-model="confirmationDialogIsOpened"

@@ -1,11 +1,11 @@
 <script setup lang="ts">
-const drawerIsOpened = ref(null)
+const drawerIsOpened = ref(false)
 </script>
 
 <template>
   <div class="h-100 d-flex flex-column bg-grey-lighten-5">
-    <NavDrawer v-model="drawerIsOpened" />
-    <Header v-model="drawerIsOpened" nav-drawer-is-active />
+    <NavDrawer v-model:is-opened="drawerIsOpened" />
+    <Header v-model:is-opened="drawerIsOpened" nav-drawer-is-active />
 
     <v-main class="flex-grow-1">
       <slot />

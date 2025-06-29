@@ -11,7 +11,12 @@ import type { VAutocomplete, VDialog, VTextField } from 'vuetify/components'
 import { useDisplay } from 'vuetify'
 import { useDrugContainerStore } from '~/store/drugContainer'
 
-const emits = defineEmits(['update:addOrUpdateDrugDialogIsOpened'])
+const isOpened = defineModel('isOpened', {
+  type: Boolean,
+  default: false,
+  required: true,
+})
+
 const props = defineProps<{
   currentPage: number
   itemPerPage: number
@@ -22,18 +27,13 @@ const props = defineProps<{
   itemToUpdate: UserDrugDto | null
 }>()
 
-const { required, requiredIf, shouldBeEmptyIf, isFloat, isDateisFormatFr, isNumber, min } = useFormValidation()
+const { required, requiredIf, shouldBeEmptyIf, isFloat, isDateIsFormatFr, isNumber, min } = useFormValidation()
 const drugBrandStore = useDrugBrandStore()
 const drugNameStore = useDrugNameStore()
 const drugContainerStore = useDrugContainerStore()
 const userDrugStore = useUserDrugStore()
 const { setToastMessage } = useToastMessage()
 const { xs } = useDisplay()
-
-const addOrUpdateDrugDialogIsOpened = defineModel('addOrUpdateDrugDialogIsOpened', {
-  type: Boolean,
-  default: false,
-})
 
 const addOrUpdateDrugDialog = ref<VDialog>()
 const drugNameField = useTemplateRef<VTextField>('drugNameField')
@@ -176,7 +176,7 @@ const drugFormItems = Object.entries(DrugForm).map(([, value]) => ({
 }))
 
 const closeDialog = () => {
-  emits('update:addOrUpdateDrugDialogIsOpened', false)
+  isOpened.value = false
   resetForm()
 }
 
@@ -227,7 +227,7 @@ const replaceNonNumberCharacters = (value: string) => {
 </script>
 
 <template>
-  <v-dialog :fullscreen="xs" ref="addOrUpdateDrugDialog" :value="addOrUpdateDrugDialogIsOpened" max-width="600px">
+  <v-dialog :fullscreen="xs" ref="addOrUpdateDrugDialog" v-model="isOpened" max-width="600px">
     <v-card>
       <v-card-title class="bg-primary d-flex justify-space-between">
         {{ props.updateMode ? 'Modifier un médicament' : 'Ajouter un médicament' }}
@@ -331,7 +331,7 @@ const replaceNonNumberCharacters = (value: string) => {
             <v-col cols="12" sm="6">
               <v-text-field
                 v-model="itemForm.expirationDateTime"
-                :rules="[required, isDateisFormatFr]"
+                :rules="[required, isDateIsFormatFr]"
                 label="Date d'expiration *"
                 hint="Exemple: 31/12/2022"
                 persistent-hint

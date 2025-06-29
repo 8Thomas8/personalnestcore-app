@@ -6,11 +6,11 @@ import { ToastMessageType } from '~/types/constants'
 import { useWaterConsumptionRecordStore } from '~/store/waterConsumptionRecord'
 
 const props = defineProps<{ startDate: string; endDate: string; currentPage: number; itemPerPage: number }>()
-const emits = defineEmits(['update:addWaterConsumptionRecordDialogIsOpened'])
 
-const addWaterConsumptionRecordDialogIsOpened = defineModel('addWaterConsumptionRecordDialogIsOpened', {
+const isOpened = defineModel('isOpened', {
   type: Boolean,
   default: false,
+  required: true,
 })
 
 const { required, isFloat } = useFormValidation()
@@ -30,7 +30,7 @@ const recordForm = ref<{ index: number; date: string; comment: string | null }>(
   comment: null,
 })
 
-watch([date], () => {
+watch(date, () => {
   if (!date.value) return
   recordForm.value.date = dateToString(new Date(date.value))
 })
@@ -45,7 +45,7 @@ const resetForm = () => {
 }
 
 const closeDialog = () => {
-  emits('update:addWaterConsumptionRecordDialogIsOpened', false)
+  isOpened.value = false
   resetForm()
 }
 
@@ -75,11 +75,7 @@ const onSubmit = async () => {
 </script>
 
 <template>
-  <v-dialog
-    :fullscreen="xs"
-    ref="addWaterConsumptionRecordDialog"
-    :value="addWaterConsumptionRecordDialogIsOpened"
-    max-width="600px">
+  <v-dialog :fullscreen="xs" ref="addWaterConsumptionRecordDialog" v-model="isOpened" max-width="600px">
     <v-card>
       <v-card-title class="bg-primary d-flex justify-space-between">
         Ajouter une donnée <v-icon size="24" @click="closeDialog">mdi-close</v-icon>

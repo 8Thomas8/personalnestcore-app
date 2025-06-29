@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useCustomRecordStore } from '~/store/customRecord'
-import { CustomRecordView, ItemPerPage } from '~/types/constants'
+import { ItemPerPage } from '~/types/constants'
 import CustomRecordDto from '~/dto/CustomRecordDto'
 import CustomRecordDataDto from '~/dto/CustomRecordDataDto'
 import { ServiceRoutes } from '~/types/routes'
@@ -13,14 +13,8 @@ const customRecordStore = useCustomRecordStore()
 
 useHead({ title: `${customRecordStore.customRecord?.name ?? 'Suivi'}` })
 
-const addOrUpdateCustomRecordDialogIsOpened = defineModel('addOrUpdateCustomRecordDialogIsOpened', {
-  default: false,
-  type: Boolean,
-})
-const addCustomRecordDataDialogIsOpened = defineModel('addCustomRecordDataDialogIsOpened', {
-  default: false,
-  type: Boolean,
-})
+const addOrUpdateCustomRecordDialogIsOpened = ref(false)
+const addCustomRecordDataDialogIsOpened = ref(false)
 
 const route = useRoute()
 const router = useRouter()
@@ -44,15 +38,14 @@ const headers = [
   { title: 'Actions', key: 'actions', align: 'end' },
 ]
 
-watch([startDate, endDate], () => fetchCustomRecordData())
+watch([startDate, endDate], async () => await fetchCustomRecordData())
 
-useAsyncData(async () => {
+onBeforeMount(async () => {
   isLoading.value = true
   await customRecordStore.fetchOne(route.params.customRecordId)
+  await fetchCustomRecordData()
   isLoading.value = false
 })
-
-onBeforeMount(async () => await fetchCustomRecordData())
 
 const setDefaultDates = () => {
   const currentDate = new Date()
@@ -64,10 +57,6 @@ const setDefaultDates = () => {
 }
 
 setDefaultDates()
-
-const updateAddOrUpdateCustomRecordDialogIsOpened = (value: boolean) =>
-  (addOrUpdateCustomRecordDialogIsOpened.value = value)
-const updateAddCustomRecordDataDialogIsOpened = (value: boolean) => (addCustomRecordDataDialogIsOpened.value = value)
 
 const onDeleteCustomRecord = () => {
   itemToDelete.value = { isData: false, item: customRecordStore.customRecord }
@@ -147,15 +136,6 @@ const onClickDeleteData = (data: CustomRecordDataDto) => {
         <v-skeleton-loader width="200px" type="text" v-else />
       </v-card-title>
 
-      <!-- TO REMOVE -->
-      <v-row>
-        <template v-if="!isLoading">
-          <v-col cols="12">
-            <div v-if="customRecordStore.customRecord.view === CustomRecordView.Calendar"></div>
-          </v-col>
-        </template>
-      </v-row>
-
       <v-row>
         <v-col cols="12" sm="6" md="4">
           <v-locale-provider locale="fr">
@@ -231,14 +211,11 @@ const onClickDeleteData = (data: CustomRecordDataDto) => {
       </v-row>
     </v-card>
 
-    <AddOrUpdateCustomRecord
-      v-model="addOrUpdateCustomRecordDialogIsOpened"
-      @update:add-or-update-custom-record-dialog-is-opened="updateAddOrUpdateCustomRecordDialogIsOpened"
-      :is-update-mode="true" />
+    <AddOrUpdateCustomRecord v-model:is-opened="addOrUpdateCustomRecordDialogIsOpened" :is-update-mode="true" />
     <AddCustomRecordData
       :custom-record-id="Number(route.params.customRecordId)"
-      v-model="addCustomRecordDataDialogIsOpened"
-      @update:add-custom-record-data-dialog-is-opened="updateAddCustomRecordDataDialogIsOpened" />
+      v-model:is-opened="addCustomRecordDataDialogIsOpened" />
+
     <ConfirmationDialog
       v-model="confirmationDialogIsOpened"
       :text="deleteConfirmationMessage"

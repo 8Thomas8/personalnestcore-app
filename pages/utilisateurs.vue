@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { useUserStore } from '~/store/user'
-import AddOrUpdateUserDialog from '~/components/dialogs/AddOrUpdateUserDialog.vue'
 import type UserDto from '~/dto/UserDto'
 import ConfirmationDialog from '~/components/dialogs/ConfirmationDialog.vue'
 import { ServiceRoutes } from '~/types/routes'
@@ -8,7 +7,7 @@ import { useDisplay } from 'vuetify'
 
 useHead({ title: 'Utilisateurs' })
 
-const addOrUpdateUserDialogIsOpened = defineModel({ default: false, type: Boolean })
+const addOrUpdateDialogIsOpened = ref(false)
 
 const userStore = useUserStore()
 const { smAndUp } = useDisplay()
@@ -37,7 +36,7 @@ const fetchUsersData = async () => {
 const onAddUser = () => {
   userToUpdate.value = null
   updateMode.value = false
-  addOrUpdateUserDialogIsOpened.value = true
+  addOrUpdateDialogIsOpened.value = true
 }
 
 const onClickDelete = (user: UserDto) => {
@@ -63,7 +62,7 @@ const onCancelDelete = () => {
 const onClickUpdate = (user: UserDto) => {
   updateMode.value = true
   userToUpdate.value = user
-  addOrUpdateUserDialogIsOpened.value = true
+  addOrUpdateDialogIsOpened.value = true
 }
 </script>
 
@@ -127,10 +126,9 @@ const onClickUpdate = (user: UserDto) => {
     </v-row>
 
     <AddOrUpdateUserDialog
-      v-model="addOrUpdateUserDialogIsOpened"
+      v-model:is-opened="addOrUpdateDialogIsOpened"
       :update-mode="updateMode"
-      :user-to-update="userToUpdate"
-      @update:add-or-update-user-dialog-is-opened="addOrUpdateUserDialogIsOpened = false" />
+      :user-to-update="userToUpdate" />
 
     <ConfirmationDialog
       v-model="confirmationDialogIsOpened"

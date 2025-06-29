@@ -52,7 +52,7 @@ export const useFormValidation = () => {
     return floatPattern.test(value) ? true : 'Veuillez entrer un nombre valide.'
   }
 
-  const isDateisFormatFr = (value: string) => {
+  const isDateIsFormatFr = (value: string) => {
     const datePattern = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/
     if (!datePattern.test(value)) {
       return 'Veuillez entrer une date au format JJ/MM/AAAA.'
@@ -103,7 +103,7 @@ export const useFormValidation = () => {
     password,
     passwordConfirmation,
     isFloat,
-    isDateisFormatFr,
+    isDateIsFormatFr: isDateIsFormatFr,
     isNumber,
     min,
     max,

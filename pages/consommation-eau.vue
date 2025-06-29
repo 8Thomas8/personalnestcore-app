@@ -10,7 +10,7 @@ useHead({ title: "Consommation d'eau" })
 
 const { firstDateIsBeforeSecondDate } = useFormValidation()
 
-const addWaterConsumptionRecordDialogIsOpened = defineModel({ default: false, type: Boolean })
+const addDialogIsOpened = ref(false)
 
 const waterConsumptionRecordStore = useWaterConsumptionRecordStore()
 
@@ -63,7 +63,7 @@ const { refresh: refreshAveragePeriod } = useAsyncData(async () => {
 const onAddWaterConsumptionRecord = () => {
   itemToUpdate.value = null
   updateMode.value = false
-  addWaterConsumptionRecordDialogIsOpened.value = true
+  addDialogIsOpened.value = true
 }
 
 const onDelete = (data: WaterConsumptionRecordDto) => {
@@ -91,9 +91,6 @@ const onCancelDelete = () => {
   itemToDelete.value = null
   confirmationDialogIsOpened.value = false
 }
-
-const updateAddWaterConsumptionRecordDataDialogIsOpened = (value: boolean) =>
-  (addWaterConsumptionRecordDialogIsOpened.value = value)
 
 const getDiff = (item: WaterConsumptionRecordDto) => {
   const array = waterConsumptionRecordStore.waterConsumptionRecords.sort((a, b) => b.date.getTime() - a.date.getTime())
@@ -245,8 +242,7 @@ const getDiff = (item: WaterConsumptionRecordDto) => {
       :endDate="endDate"
       :currentPage="currentPage"
       :itemPerPage="itemPerPage"
-      v-model="addWaterConsumptionRecordDialogIsOpened"
-      @update:add-water-consumption-record-dialog-is-opened="updateAddWaterConsumptionRecordDataDialogIsOpened" />
+      v-model:is-opened="addDialogIsOpened" />
 
     <ConfirmationDialog
       v-model="confirmationDialogIsOpened"

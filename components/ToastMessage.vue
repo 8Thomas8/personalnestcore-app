@@ -8,9 +8,8 @@ const { toastMessage, toastType, toastIsOpened, resetToastMessage } = useToastMe
 <template>
   <v-snackbar v-model="toastIsOpened" :close-delay="ToastMessageDelay" :color="toastType">
     {{ toastMessage }}
-
     <template #actions>
-      <v-btn color="white" variant="text" @click="resetToastMessage"> Fermer </v-btn>
+      <v-btn text @click="resetToastMessage">Fermer</v-btn>
     </template>
   </v-snackbar>
 </template>
