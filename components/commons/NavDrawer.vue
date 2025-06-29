@@ -59,9 +59,6 @@ const sortedTrackings = computed(() =>
         @click="closeDrawerOnMobile" />
     </v-list>
 
-    <AddOrUpdateCustomRecord
-      :add-or-update-custom-record-dialog-is-opened="addOrUpdateCustomRecordDialogIsOpened"
-      @update:add-or-update-custom-record-dialog-is-opened="addOrUpdateCustomRecordDialogIsOpened = $event"
-      :is-update-mode="false" />
+    <AddOrUpdateCustomRecord v-model:is-opened="addOrUpdateCustomRecordDialogIsOpened" :is-update-mode="false" />
   </v-navigation-drawer>
 </template>

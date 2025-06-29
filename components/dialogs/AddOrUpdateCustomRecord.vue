@@ -7,11 +7,11 @@ import { useCustomRecordStore } from '~/store/customRecord'
 import { slugify } from '~/utils/text'
 
 const props = defineProps<{ isUpdateMode: boolean }>()
-const emits = defineEmits(['update:addOrUpdateCustomRecordDialogIsOpened'])
 
-const addOrUpdateCustomRecordDialogIsOpened = defineModel('addOrUpdateCustomRecordDialogIsOpened', {
+const isOpened = defineModel('isOpened', {
   type: Boolean,
   default: false,
+  required: true,
 })
 
 const { required, min, max, isFormat } = useFormValidation()
@@ -47,7 +47,7 @@ const resetForm = () => {
 }
 
 const closeDialog = () => {
-  emits('update:addOrUpdateCustomRecordDialogIsOpened', false)
+  isOpened.value = false
   resetForm()
 }
 
@@ -66,18 +66,14 @@ const onSubmit = async () => {
     await customRecordStore.fetchOne(customRecordStore.customRecord.id)
     setToastMessage(ToastMessageType.TypeSuccess, 'Suivi modifié avec succès')
     closeDialog()
-    router.replace(`suivi-${customRecordStore.customRecord.id}-${slugify(customRecordStore.customRecord.name)}`)
+    await router.replace(`suivi-${customRecordStore.customRecord.id}-${slugify(customRecordStore.customRecord.name)}`)
   }
   isLoading.value = false
 }
 </script>
 
 <template>
-  <v-dialog
-    :fullscreen="xs"
-    ref="addOrUpdateCustomRecordDialog"
-    :value="addOrUpdateCustomRecordDialogIsOpened"
-    max-width="600px">
+  <v-dialog :fullscreen="xs" ref="addOrUpdateCustomRecordDialog" v-model="isOpened" max-width="600px">
     <v-card>
       <v-card-title class="bg-primary d-flex justify-space-between">
         {{ isUpdateMode ? 'Modifier le suivi' : 'Ajouter un autre suivi' }}

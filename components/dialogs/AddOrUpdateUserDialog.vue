@@ -5,12 +5,11 @@ import type UserDto from '~/dto/UserDto'
 import { useUserStore } from '~/store/user'
 import { useDisplay } from 'vuetify'
 
-const addOrUpdateUserDialogIsOpened = defineModel('addOrUpdateUserDialogIsOpened', {
+const isOpened = defineModel('isOpened', {
   type: Boolean,
   default: false,
 })
 
-const emits = defineEmits(['update:addOrUpdateUserDialogIsOpened'])
 const props = defineProps<{
   updateMode: boolean
   userToUpdate: UserDto | null
@@ -90,13 +89,13 @@ watch(
 onBeforeUnmount(() => resetForm())
 
 const closeDialog = () => {
-  emits('update:addOrUpdateUserDialogIsOpened', false)
+  isOpened.value = false
   resetForm()
 }
 </script>
 
 <template>
-  <v-dialog :fullscreen="xs" ref="addOrUpdateUserDialog" :value="addOrUpdateUserDialogIsOpened" max-width="600px">
+  <v-dialog :fullscreen="xs" ref="addOrUpdateUserDialog" v-model="isOpened" max-width="600px">
     <v-card>
       <v-card-title class="bg-primary d-flex justify-space-between">
         {{ props.updateMode ? 'Modifier un utilisateur' : 'Ajouter un utilisateur' }}

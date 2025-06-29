@@ -13,14 +13,8 @@ const customRecordStore = useCustomRecordStore()
 
 useHead({ title: `${customRecordStore.customRecord?.name ?? 'Suivi'}` })
 
-const addOrUpdateCustomRecordDialogIsOpened = defineModel('addOrUpdateCustomRecordDialogIsOpened', {
-  default: false,
-  type: Boolean,
-})
-const addCustomRecordDataDialogIsOpened = defineModel('addCustomRecordDataDialogIsOpened', {
-  default: false,
-  type: Boolean,
-})
+const addOrUpdateCustomRecordDialogIsOpened = ref(false)
+const addCustomRecordDataDialogIsOpened = ref(false)
 
 const route = useRoute()
 const router = useRouter()
@@ -221,16 +215,12 @@ const onClickDeleteData = (data: CustomRecordDataDto) => {
       </v-row>
     </v-card>
 
-    <AddOrUpdateCustomRecord
-      v-model="addOrUpdateCustomRecordDialogIsOpened"
-      @update:add-or-update-custom-record-dialog-is-opened="updateAddOrUpdateCustomRecordDialogIsOpened"
-      :is-update-mode="true" />
+    <AddOrUpdateCustomRecord v-model="addOrUpdateCustomRecordDialogIsOpened" :is-update-mode="true" />
     <AddCustomRecordData
       :custom-record-id="Number(route.params.customRecordId)"
-      v-model="addCustomRecordDataDialogIsOpened"
-      @update:add-custom-record-data-dialog-is-opened="updateAddCustomRecordDataDialogIsOpened" />
+      v-model:is-opened="addCustomRecordDataDialogIsOpened" />
     <ConfirmationDialog
-      v-model="confirmationDialogIsOpened"
+      v-model:is-opened="confirmationDialogIsOpened"
       :text="deleteConfirmationMessage"
       :is-loading="isDeleteLoading"
       @confirm="onDeleteConfirmation"

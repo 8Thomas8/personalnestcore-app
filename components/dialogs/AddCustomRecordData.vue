@@ -6,11 +6,11 @@ import { ToastMessageType } from '~/types/constants'
 import { useCustomRecordDataStore } from '~/store/customRecordData'
 
 const props = defineProps<{ customRecordId: number }>()
-const emits = defineEmits(['update:addCustomRecordDataDialogIsOpened'])
 
-const addCustomRecordDataDialogIsOpened = defineModel('addCustomRecordDataDialogIsOpened', {
+const isOpened = defineModel('isOpened', {
   type: Boolean,
   default: false,
+  required: true,
 })
 
 const { required, max } = useFormValidation()
@@ -48,7 +48,7 @@ const resetForm = () => {
 }
 
 const closeDialog = () => {
-  emits('update:addCustomRecordDataDialogIsOpened', false)
+  isOpened.value = false
   resetForm()
 }
 
@@ -68,11 +68,7 @@ const onSubmit = async () => {
 </script>
 
 <template>
-  <v-dialog
-    :fullscreen="xs"
-    ref="addCustomRecordDataDialog"
-    :value="addCustomRecordDataDialogIsOpened"
-    max-width="600px">
+  <v-dialog :fullscreen="xs" ref="addCustomRecordDataDialog" v-model="isOpened" max-width="600px">
     <v-card>
       <v-card-title class="bg-primary d-flex justify-space-between">
         Ajouter une donnée
