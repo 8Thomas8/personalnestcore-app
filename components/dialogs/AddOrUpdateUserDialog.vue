@@ -8,6 +8,7 @@ import { useDisplay } from 'vuetify'
 const isOpened = defineModel('isOpened', {
   type: Boolean,
   default: false,
+  required: true,
 })
 
 const props = defineProps<{
