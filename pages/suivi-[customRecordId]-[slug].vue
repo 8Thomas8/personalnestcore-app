@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useCustomRecordStore } from '~/store/customRecord'
-import { CustomRecordView, ItemPerPage } from '~/types/constants'
+import { ItemPerPage } from '~/types/constants'
 import CustomRecordDto from '~/dto/CustomRecordDto'
 import CustomRecordDataDto from '~/dto/CustomRecordDataDto'
 import { ServiceRoutes } from '~/types/routes'
@@ -44,15 +44,14 @@ const headers = [
   { title: 'Actions', key: 'actions', align: 'end' },
 ]
 
-watch([startDate, endDate], () => fetchCustomRecordData())
+watch([startDate, endDate], async () => await fetchCustomRecordData())
 
-useAsyncData(async () => {
+onBeforeMount(async () => {
   isLoading.value = true
   await customRecordStore.fetchOne(route.params.customRecordId)
+  await fetchCustomRecordData()
   isLoading.value = false
 })
-
-onBeforeMount(async () => await fetchCustomRecordData())
 
 const setDefaultDates = () => {
   const currentDate = new Date()
@@ -146,15 +145,6 @@ const onClickDeleteData = (data: CustomRecordDataDto) => {
         </div>
         <v-skeleton-loader width="200px" type="text" v-else />
       </v-card-title>
-
-      <!-- TO REMOVE -->
-      <v-row>
-        <template v-if="!isLoading">
-          <v-col cols="12">
-            <div v-if="customRecordStore.customRecord.view === CustomRecordView.Calendar"></div>
-          </v-col>
-        </template>
-      </v-row>
 
       <v-row>
         <v-col cols="12" sm="6" md="4">
