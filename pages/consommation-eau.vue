@@ -104,7 +104,6 @@ const getDiff = (item: WaterConsumptionRecordDto) => {
 
 <template>
   <v-container max-width="1144">
-    {{ addDialogIsOpened }}
     <v-card class="pa-2 pa-sm-4">
       <v-card-title class="d-flex align-center">
         <v-icon icon="mdi-water-pump " class="mr-2" /> Consommation d'eau

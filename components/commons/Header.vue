@@ -6,7 +6,7 @@ import { useDisplay } from 'vuetify'
 
 defineProps<{ navDrawerIsActive?: boolean }>()
 
-const drawerIsOpened = defineModel<boolean | null>({ default: false })
+const drawerIsOpened = defineModel('isOpened', { default: false, type: Boolean })
 
 const { toggleAuthDialog } = useAuth()
 const authStore = useAuthStore()
@@ -30,7 +30,7 @@ watch(
   <v-app-bar>
     <v-app-bar-nav-icon v-if="!lgAndUp && navDrawerIsActive" @click="drawerIsOpened = !drawerIsOpened" />
 
-    <v-app-bar-title @click="router.push(PublicRoutes.Home)" class="d-flex align-center">
+    <v-app-bar-title @click="router.push(PublicRoutes.Home)" class="d-flex align-center cursor-pointer">
       <img alt="PersonalNestCore" src="/images/logos/pnc_desktop.svg" class="d-none d-sm-block" />
       <img alt="PersonalNestCore" src="/images/logos/pnc_mobile.svg" class="d-sm-none" />
     </v-app-bar-title>

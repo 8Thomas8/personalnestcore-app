@@ -7,7 +7,7 @@ import { useDisplay } from 'vuetify'
 const customRecordStore = useCustomRecordStore()
 const { lgAndUp } = useDisplay()
 
-const drawerIsOpened = defineModel('', { default: false })
+const drawerIsOpened = defineModel('isOpened', { default: false, type: Boolean, required: true })
 const addOrUpdateCustomRecordDialogIsOpened = ref(false)
 
 watch(lgAndUp, (isLargeScreen) => isLargeScreen && (drawerIsOpened.value = true))

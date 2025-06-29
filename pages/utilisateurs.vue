@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { useUserStore } from '~/store/user'
-import AddOrUpdateUserDialog from '~/components/dialogs/AddOrUpdateUserDialog.vue'
 import type UserDto from '~/dto/UserDto'
 import ConfirmationDialog from '~/components/dialogs/ConfirmationDialog.vue'
 import { ServiceRoutes } from '~/types/routes'

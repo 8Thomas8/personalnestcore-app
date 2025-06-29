@@ -211,12 +211,13 @@ const onClickDeleteData = (data: CustomRecordDataDto) => {
       </v-row>
     </v-card>
 
-    <AddOrUpdateCustomRecord v-model="addOrUpdateCustomRecordDialogIsOpened" :is-update-mode="true" />
+    <AddOrUpdateCustomRecord v-model:is-opened="addOrUpdateCustomRecordDialogIsOpened" :is-update-mode="true" />
     <AddCustomRecordData
       :custom-record-id="Number(route.params.customRecordId)"
       v-model:is-opened="addCustomRecordDataDialogIsOpened" />
+
     <ConfirmationDialog
-      v-model:is-opened="confirmationDialogIsOpened"
+      v-model="confirmationDialogIsOpened"
       :text="deleteConfirmationMessage"
       :is-loading="isDeleteLoading"
       @confirm="onDeleteConfirmation"
