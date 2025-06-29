@@ -7,40 +7,28 @@ import { useDisplay } from 'vuetify'
 const customRecordStore = useCustomRecordStore()
 const { lgAndUp } = useDisplay()
 
-const drawerIsOpened = defineModel<boolean | null>({ default: false })
-const addOrUpdateCustomRecordDialogIsOpened = defineModel('addOrUpdateCustomRecordDialogIsOpened', {
-  default: false,
-  type: Boolean,
-})
+const drawerIsOpened = defineModel('', { default: false })
+const addOrUpdateCustomRecordDialogIsOpened = ref(false)
 
-watch(lgAndUp, () => {
-  if (!lgAndUp.value) return
+watch(lgAndUp, (isLargeScreen) => isLargeScreen && (drawerIsOpened.value = true))
 
-  drawerIsOpened.value = true
-})
+useAsyncData(() => customRecordStore.fetchAll())
 
-useAsyncData(async () => {
-  await customRecordStore.fetchAll()
-})
+const closeDrawerOnMobile = () => !lgAndUp.value && (drawerIsOpened.value = false)
 
-const updateAddOrUpdateCustomRecordDialogIsOpened = (value: boolean) => {
-  addOrUpdateCustomRecordDialogIsOpened.value = value
-}
-
-const onClick = () => {
-  if (lgAndUp.value) return
-  drawerIsOpened.value = !drawerIsOpened.value
-}
+const sortedTrackings = computed(() =>
+  customRecordStore.customRecords.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()))
+)
 </script>
 
 <template>
   <v-navigation-drawer v-model="drawerIsOpened">
     <v-list class="d-flex align-center">
       <v-list-item title="Mes Services" />
-      <v-spacer />
-      <v-icon v-if="!lgAndUp" size="24" class="pr-4" @click="drawerIsOpened = !drawerIsOpened">mdi-close</v-icon>
     </v-list>
+
     <v-divider />
+
     <v-list color="transparent">
       <v-list-item
         v-for="service in servicesMenu"
@@ -49,9 +37,11 @@ const onClick = () => {
         :to="service.to"
         :prepend-icon="service.icon"
         :title="service.title"
-        @click="onClick" />
+        @click="closeDrawerOnMobile" />
     </v-list>
+
     <v-divider />
+
     <v-list>
       <v-list-item title="Autres suivis" />
       <v-list-item>
@@ -60,20 +50,18 @@ const onClick = () => {
         </v-btn>
       </v-list-item>
       <v-list-item
-        v-for="tracking in customRecordStore.customRecords.sort((a, b) =>
-          a.name.toLowerCase().localeCompare(b.name.toLowerCase())
-        )"
+        v-for="tracking in sortedTrackings"
         prepend-icon="mdi-poll"
         :key="tracking.name"
         :to="`suivi-${tracking.id}-${slugify(tracking.name)}`"
         variant="flat"
         :title="tracking.name"
-        @click="onClick" />
+        @click="closeDrawerOnMobile" />
     </v-list>
 
     <AddOrUpdateCustomRecord
-      v-model="addOrUpdateCustomRecordDialogIsOpened"
-      @update:add-or-update-custom-record-dialog-is-opened="updateAddOrUpdateCustomRecordDialogIsOpened"
+      :add-or-update-custom-record-dialog-is-opened="addOrUpdateCustomRecordDialogIsOpened"
+      @update:add-or-update-custom-record-dialog-is-opened="addOrUpdateCustomRecordDialogIsOpened = $event"
       :is-update-mode="false" />
   </v-navigation-drawer>
 </template>
