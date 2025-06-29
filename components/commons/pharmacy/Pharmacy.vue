@@ -77,10 +77,6 @@ watchDebounced(
   { debounce: DebounceDelay }
 )
 
-const updateAddOrUpdateDrugDialogIsOpened = (value: boolean) => {
-  addOrUpdateDrugDialogIsOpened.value = value
-}
-
 const handleCheckboxChange = (checkbox: 'expiredOnly' | 'expiringSoon') => {
   if (checkbox === 'expiredOnly') {
     if (expiredOnly.value) expiringSoon.value = false

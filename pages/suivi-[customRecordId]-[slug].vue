@@ -58,10 +58,6 @@ const setDefaultDates = () => {
 
 setDefaultDates()
 
-const updateAddOrUpdateCustomRecordDialogIsOpened = (value: boolean) =>
-  (addOrUpdateCustomRecordDialogIsOpened.value = value)
-const updateAddCustomRecordDataDialogIsOpened = (value: boolean) => (addCustomRecordDataDialogIsOpened.value = value)
-
 const onDeleteCustomRecord = () => {
   itemToDelete.value = { isData: false, item: customRecordStore.customRecord }
   deleteConfirmationMessage.value = 'Voulez-vous supprimer ce suivi ?'

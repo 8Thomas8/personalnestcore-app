@@ -92,8 +92,6 @@ const onCancelDelete = () => {
   confirmationDialogIsOpened.value = false
 }
 
-const updateAddWaterConsumptionRecordDataDialogIsOpened = (value: boolean) => (addDialogIsOpened.value = value)
-
 const getDiff = (item: WaterConsumptionRecordDto) => {
   const array = waterConsumptionRecordStore.waterConsumptionRecords.sort((a, b) => b.date.getTime() - a.date.getTime())
   const index = array.findIndex(
