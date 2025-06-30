@@ -1,5 +1,17 @@
 <script setup lang="ts">
+import { useDisplay } from 'vuetify/framework'
+
+const { mdAndDown } = useDisplay()
+
 const drawerIsOpened = ref(false)
+
+watch(
+  mdAndDown,
+  (isMobile) => {
+    drawerIsOpened.value = !isMobile
+  },
+  { immediate: true }
+)
 </script>
 
 <template>
