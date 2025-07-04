@@ -198,7 +198,7 @@ const onClickDeleteData = (data: CustomRecordDataDto) => {
             </template>
             <template #[`item.actions`]="{ item }">
               <v-btn
-                variant="elevated"
+                variant="outlined"
                 color="red"
                 @click="onClickDeleteData(item)"
                 :min-width="smAndUp ? '46px' : '32px'"

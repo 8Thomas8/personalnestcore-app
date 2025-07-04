@@ -310,7 +310,7 @@ const onRemoveQuantity = (item: UserDrugDto) => {
                   <v-icon>mdi-eye</v-icon>
                 </v-btn>
                 <v-btn
-                  variant="elevated"
+                  variant="outlined"
                   color="red"
                   @click="onClickDelete(item)"
                   :min-width="smAndUp ? '46px' : '32px'"
