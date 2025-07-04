@@ -27,7 +27,9 @@ watch(tab, (newTab) => useHead({ title: newTab }), { immediate: true })
       <v-window-item :value="Tabs.Pharmacy">
         <Pharmacy />
       </v-window-item>
-      <v-window-item :value="Tabs.KitBuilder"> <Soon /></v-window-item>
+      <v-window-item :value="Tabs.KitBuilder">
+        <KitBuilder />
+      </v-window-item>
       <v-window-item :value="Tabs.Container"> <Soon /></v-window-item>
       <v-window-item :value="Tabs.Brands"> <Soon /> </v-window-item>
       <v-window-item :value="Tabs.Names"> <Soon /> </v-window-item>
