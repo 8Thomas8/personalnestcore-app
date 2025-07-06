@@ -223,7 +223,7 @@ const getDiff = (item: WaterConsumptionRecordDto) => {
                   </template>
                 </v-tooltip>
                 <v-btn
-                  variant="elevated"
+                  variant="outlined"
                   color="red"
                   :min-width="smAndUp ? '46px' : '32px'"
                   class="px-0"

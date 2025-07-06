@@ -51,6 +51,7 @@ export default class UserDrugDto {
   })
   expirationDateTime!: string
 
+  @Expose()
   @Transform(({ value }) => (value ? new Date(value) : value), { toClassOnly: true })
   createdAt!: Date
 
