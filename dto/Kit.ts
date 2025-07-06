@@ -11,7 +11,7 @@ export class KitItem {
 
 export default class KitDto {
   @Expose()
-  id!: string
+  id!: number
 
   @Expose()
   name!: string

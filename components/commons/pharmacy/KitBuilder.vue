@@ -10,7 +10,7 @@ const { setToastMessage } = useToastMessage()
 const newItemInput = templateRef('newItemInput', null)
 const isLoading = ref(true)
 const kitIsLoading = ref(false)
-const selectedKit = ref<KitDto>(null)
+const selectedKit = ref<KitDto | null>(null)
 const newItemName = ref<string>()
 const newKitName = ref<string>()
 
@@ -174,7 +174,9 @@ const updateSelectedKit = async () => {
                 <v-list-item-content>
                   <v-table>
                     <tbody>
-                      <tr :key="item.name" v-for="item in selectedKit.list.sort((a, b) => a.name)">
+                      <tr
+                        :key="item.name"
+                        v-for="item in selectedKit.list.sort((a, b) => a.name.localeCompare(b.name))">
                         <td>
                           <v-checkbox
                             :loading="kitIsLoading"
