@@ -153,9 +153,9 @@ const updateSelectedKit = async () => {
           </v-col>
           <v-divider />
           <v-col cols="12">
-            <v-card-title class="align-center d-flex ga-6">
+            <v-card-title class="align-center d-flex ga-6 flex-wrap">
               <span class="font-weight-bold">Liste :</span>
-              <span class="font-italic">
+              <span class="font-italic can-break">
                 {{ capitalize(selectedKit?.name ?? 'Sélectionnez un kit pour voir les détails') }}</span
               >
               <v-btn variant="outlined" v-if="selectedKit" size="36px" color="red" @click="deleteSelectedKit()">
@@ -170,21 +170,32 @@ const updateSelectedKit = async () => {
                   <v-list-item-title class="brea">Aucun item dans ce kit</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
-              <v-list-item
-                v-else
-                :key="item.name"
-                v-for="item in selectedKit.list.sort((a, b) => a.name)"
-                class="d-flex">
-                <v-list-item-content class="d-flex align-center ga-8">
-                  <v-checkbox
-                    :loading="kitIsLoading"
-                    hide-details
-                    :label="item.name"
-                    v-model="item.checked"
-                    @update:modelValue="updateSelectedKit()" />
-                  <v-btn variant="outlined" :loading="kitIsLoading" size="26px" color="red" @click="deleteItem(item)">
-                    <v-icon size="16px">mdi-delete</v-icon>
-                  </v-btn>
+              <v-list-item v-else class="d-flex">
+                <v-list-item-content>
+                  <v-table>
+                    <tbody>
+                      <tr :key="item.name" v-for="item in selectedKit.list.sort((a, b) => a.name)">
+                        <td>
+                          <v-checkbox
+                            :loading="kitIsLoading"
+                            hide-details
+                            :label="item.name"
+                            v-model="item.checked"
+                            @update:modelValue="updateSelectedKit()" />
+                        </td>
+                        <td>
+                          <v-btn
+                            variant="outlined"
+                            :loading="kitIsLoading"
+                            size="26px"
+                            color="red"
+                            @click="deleteItem(item)">
+                            <v-icon size="16px">mdi-delete</v-icon>
+                          </v-btn>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </v-table>
                 </v-list-item-content>
               </v-list-item>
               <v-list-item>
@@ -212,3 +223,9 @@ const updateSelectedKit = async () => {
     </v-container>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.can-break {
+  white-space: normal;
+}
+</style>
