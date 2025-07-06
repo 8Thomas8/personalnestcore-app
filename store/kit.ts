@@ -40,7 +40,13 @@ export const useKitStore = defineStore('kitStore', () => {
         method: 'GET',
       })
       const kit = plainToInstance(KitDto, res)
-      kits.value[kits.value.findIndex((k) => k.id === kit.id)] = kit
+
+      const index = kits.value.findIndex((k) => k.id === kit.id)
+      if (index !== -1) {
+        kits.value[index] = kit
+      } else {
+        kits.value.push(kit)
+      }
     } catch {
       setToastMessage(ToastMessageType.TypeError, 'Impossible de récupérer votre kit')
     }

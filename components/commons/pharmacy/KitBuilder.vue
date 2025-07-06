@@ -49,7 +49,6 @@ const addNewKit = async () => {
   try {
     await kitStore.create(newKitName.value.trim())
     setToastMessage(ToastMessageType.TypeSuccess, 'Nouveau kit créé avec succès')
-    isLoading.value = true
     await refresh()
     selectedKit.value = kitStore.kits.find((kit) => kit.name === newKitName.value) || null
     newKitName.value = ''
@@ -110,7 +109,7 @@ const updateSelectedKit = async () => {
       setToastMessage(ToastMessageType.TypeError, "Erreur lors de la modification de l'item")
     }
   } catch {
-    setToastMessage(ToastMessageType.TypeError, "Erreur lors de la suppression de l'item")
+    setToastMessage(ToastMessageType.TypeError, "Erreur lors de la modification de l'item")
   }
   kitIsLoading.value = false
 }

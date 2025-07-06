@@ -1,6 +1,5 @@
 import 'reflect-metadata'
 import { Expose, Transform } from 'class-transformer'
-import { dateToString } from '~/utils/date'
 
 export class KitItem {
   @Expose()
@@ -21,14 +20,10 @@ export default class KitDto {
   list!: KitItem[]
 
   @Expose()
-  @Transform(({ value }: { value: string }) => (value ? dateToString(new Date(value)) : value), {
-    toClassOnly: true,
-  })
+  @Transform(({ value }) => (value ? new Date(value) : value), { toClassOnly: true })
   createdAt!: Date
 
   @Expose()
-  @Transform(({ value }: { value: string }) => (value ? dateToString(new Date(value)) : value), {
-    toClassOnly: true,
-  })
+  @Transform(({ value }) => (value ? new Date(value) : value), { toClassOnly: true })
   updatedAt!: Date
 }
