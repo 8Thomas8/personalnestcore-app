@@ -63,7 +63,6 @@ export const useKitStore = defineStore('kitStore', () => {
         method: 'POST',
         body: { name },
       })
-      return true
     } catch (e) {
       setToastMessage(
         ToastMessageType.TypeError,
@@ -72,7 +71,7 @@ export const useKitStore = defineStore('kitStore', () => {
     }
   }
 
-  const update = async (id: string, { name, list }: { name: string; list: KitItemDto }) => {
+  const update = async (id: string, { name, list }: { name: string; list: KitItemDto[] }) => {
     authStore.getToken()
 
     if (!authStore.token) return
