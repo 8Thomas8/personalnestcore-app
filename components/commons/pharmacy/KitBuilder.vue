@@ -84,31 +84,36 @@ const deleteItem = async (item) => {
     ) {
       selectedKit.value.list = selectedKit.value.list.filter((i) => i.name !== item.name)
       setToastMessage(ToastMessageType.TypeSuccess, 'Item supprimé avec succès')
-    } else {
-      setToastMessage(ToastMessageType.TypeError, "Erreur lors de la suppression de l'item")
     }
-  } catch {
-    setToastMessage(ToastMessageType.TypeError, "Erreur lors de la suppression de l'item")
-  }
+  } catch {}
   kitIsLoading.value = false
 
   newItemInput.value.focus()
 }
 
-const updateSelectedKit = async () => {
+const updateSelectedKit = async ({ uncheckAll }: { uncheckAll?: boolean } = {}) => {
   kitIsLoading.value = true
   try {
-    if (
-      await kitStore.update(selectedKit.value.id, {
-        name: selectedKit.value.name,
-        list: selectedKit.value.list,
-      })
-    ) {
+    const updatedList = uncheckAll
+      ? {
+          name: selectedKit.value.name,
+          list: selectedKit.value.list.map((item) => ({ ...item, checked: false })),
+        }
+      : {
+          name: selectedKit.value.name,
+          list: selectedKit.value.list,
+        }
+    if (await kitStore.update(selectedKit.value.id, updatedList)) {
+      if (uncheckAll) {
+        selectedKit.value.list.forEach((item) => (item.checked = false))
+      }
       setToastMessage(ToastMessageType.TypeSuccess, 'Item modifié avec succès')
     } else {
+      // TODO handle error with revert changes or something
       setToastMessage(ToastMessageType.TypeError, "Erreur lors de la modification de l'item")
     }
   } catch {
+    // TODO handle error with revert changes or something
     setToastMessage(ToastMessageType.TypeError, "Erreur lors de la modification de l'item")
   }
   kitIsLoading.value = false
@@ -174,6 +179,16 @@ const updateSelectedKit = async () => {
                 <v-list-item-content>
                   <v-table>
                     <tbody>
+                      <tr>
+                        <td>
+                          <v-btn
+                            @click="updateSelectedKit({ uncheckAll: true })"
+                            size="small"
+                            prepend-icon="mdi-checkbox-blank-outline"
+                            >Tout décocher</v-btn
+                          >
+                        </td>
+                      </tr>
                       <tr
                         :key="item.name"
                         v-for="item in selectedKit.list.sort((a, b) => a.name.localeCompare(b.name))">
