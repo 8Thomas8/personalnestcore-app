@@ -77,11 +77,17 @@ export const useKitStore = defineStore('kitStore', () => {
     if (!authStore.token) return
 
     try {
-      await $apiFetch(`/v1/kit/${id}`, {
+      const res = await $apiFetch(`/v1/kit/${id}`, {
         headers: { Authorization: `Bearer ${authStore.token}` },
         method: 'PUT',
         body: { name, list },
       })
+
+      if (res.error) {
+        setToastMessage(ToastMessageType.TypeError, 'Impossible de mettre à jour votre kit')
+        return false
+      }
+
       return true
     } catch {
       setToastMessage(ToastMessageType.TypeError, 'Impossible de mettre à jour votre kit')
